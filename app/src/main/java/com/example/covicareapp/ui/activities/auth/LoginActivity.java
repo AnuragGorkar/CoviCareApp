@@ -1,8 +1,5 @@
 package com.example.covicareapp.ui.activities.auth;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covicareapp.R;
 import com.example.covicareapp.ui.activities.HomeActivity;
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             emailTextInput.getEditText().setText(email);
             passwordTextInput.getEditText().setText(password);
         }catch (Exception e){
-            Log.i("Exception", e.getMessage().toString());
+            Log.i("Exception", e.getMessage());
         }
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -90,12 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if(firebaseUser.isEmailVerified()){
                                     showSnackbar("Welcome to CoviCare", "", "Success");
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            startActivity(intent);
-                                        }
-                                    }, 150);
+                                    startActivity(intent);
                                 }else{
                                     Snackbar snackbar = Snackbar.make(view, "Email-Id not verified.", Snackbar.LENGTH_LONG);
                                     snackbar.setDuration(3600);
