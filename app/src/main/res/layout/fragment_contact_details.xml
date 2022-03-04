@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    android:id="@+id/contact_details_fragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.auth.ContactDetailsFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="@string/contact_details"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            />
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/country_code_picker"
+            android:transitionName="email_tran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_showFlag="true"
+            app:ccp_showFullName="true"
+            app:ccp_showNameCode="true"
+            app:ccpDialog_backgroundColor="@color/black_800"
+            app:ccpDialog_textColor="@color/white_50"
+            app:ccp_arrowColor="@color/white_50"
+            app:ccp_textSize="18sp"
+            app:ccpDialog_searchEditTextTint="@color/purple_200"
+            android:outlineAmbientShadowColor="@color/purple_200"
+            android:background="@drawable/custom_layout_border_black"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/signup_user_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+
+            android:layout_marginVertical="5dp"
+
+            android:hint="@string/phone_number"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/purple_200"
+            android:textColorHint="@color/white_800"
+
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/purple_200"
+            app:boxStrokeErrorColor="@color/error_400"
+            app:startIconDrawable="@drawable/ic_outline_local_phone_24"
+            app:startIconTint="@color/white_800"
+            app:endIconDrawable="@drawable/ic_outline_cancel_24"
+            app:endIconTint="@color/white_800"
+            app:endIconMode="clear_text"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="phone"
+                android:textColor="@color/white_50" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:paddingVertical="7dp"
+            android:indeterminateTint="@color/purple_200"
+            android:layout_gravity="center"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/purple_200"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="7dp"
+            android:text="@string/signup"
+            android:textAllCaps="false"
+            android:textColor="@color/black_900"
+            android:textSize="20sp"
+            app:cornerRadius="10dp"
+            />
+
+
+
+    </LinearLayout>
+
+</FrameLayout>

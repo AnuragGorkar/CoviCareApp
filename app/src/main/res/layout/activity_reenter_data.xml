@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.auth.ReenterDataActivity"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:id="@+id/reenter_data_activity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            />
+
+        <ImageView
+            android:id="@+id/covicare_logo"
+            android:layout_width="match_parent"
+            android:transitionName="logo_tran"
+            android:layout_height="100dp"
+            android:src="@drawable/covicare_logo"
+            android:layout_marginBottom="30dp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="@string/personal_details"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/signup_user_full_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+
+        android:layout_marginVertical="5dp"
+
+        android:hint="@string/full_name"
+        app:hintEnabled="true"
+        app:hintTextColor="@color/purple_200"
+        android:textColorHint="@color/white_800"
+
+        app:boxCornerRadiusTopStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusBottomEnd="10dp"
+
+        app:boxStrokeWidthFocused="2dp"
+        app:boxStrokeColor="@color/purple_200"
+        app:boxStrokeErrorColor="@color/error_400"
+        app:startIconDrawable="@drawable/ic_outline_person_24"
+        app:startIconTint="@color/white_800"
+        app:endIconDrawable="@drawable/ic_outline_cancel_24"
+        app:endIconTint="@color/white_800"
+        app:endIconMode="clear_text"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white_50" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/custom_layout_border_black"
+
+        android:layout_marginTop="5dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_gender_24"
+                android:tint="@color/white_800"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender"
+                android:textSize="18sp"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/white_800"
+                />
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/radio_group_gender"
+            android:layout_width="match_parent"
+            android:transitionName="email_tran"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:checkedButton="@id/radio_male"
+            >
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radio_male"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_50"
+                android:fontFamily="@font/roboto"
+                android:buttonTint="@color/purple_200"
+                android:textSize="18sp"
+                android:text="Male" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radio_female"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_50"
+                android:fontFamily="@font/roboto"
+                android:buttonTint="@color/purple_200"
+                android:textSize="18sp"
+                android:text="Female" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/radio_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_50"
+                android:fontFamily="@font/roboto"
+                android:buttonTint="@color/purple_200"
+                android:textSize="18sp"
+                android:layout_weight="1"
+                android:text="Other" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/custom_layout_border_black"
+            android:layout_marginTop="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_outline_calendar_month_24"
+                    android:tint="@color/white_800"
+                    />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date_of_birth"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/roboto"
+                    android:textColor="@color/white_800"
+                    />
+            </LinearLayout>
+
+
+            <DatePicker
+                android:id="@+id/dob_date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"
+                android:spinnersShown="true"
+                android:theme="@style/DatePicker"
+                android:transitionName="password_tran"
+                />
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:fontFamily="@font/roboto_light"
+            android:text="@string/contact_details"
+            android:textAlignment="center"
+            android:textColor="@color/purple_200"
+            android:textSize="20sp"
+            />
+
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/country_code_picker"
+            android:transitionName="email_tran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_showFlag="true"
+            app:ccp_showFullName="true"
+            app:ccp_showNameCode="true"
+            app:ccpDialog_backgroundColor="@color/black_800"
+            app:ccpDialog_textColor="@color/white_50"
+            app:ccp_arrowColor="@color/white_50"
+            app:ccp_textSize="18sp"
+            app:ccpDialog_searchEditTextTint="@color/purple_200"
+            android:outlineAmbientShadowColor="@color/purple_200"
+            android:background="@drawable/custom_layout_border_black"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/signup_user_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+
+            android:layout_marginVertical="5dp"
+
+            android:hint="@string/phone_number"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/purple_200"
+            android:textColorHint="@color/white_800"
+
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/purple_200"
+            app:boxStrokeErrorColor="@color/error_400"
+            app:startIconDrawable="@drawable/ic_outline_local_phone_24"
+            app:startIconTint="@color/white_800"
+            app:endIconDrawable="@drawable/ic_outline_cancel_24"
+            app:endIconTint="@color/white_800"
+            app:endIconMode="clear_text"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="phone"
+                android:textColor="@color/white_50" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="7dp"
+            android:indeterminateTint="@color/purple_200"
+            android:layout_gravity="center"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signup_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/purple_200"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingHorizontal="60dp"
+            android:paddingVertical="7dp"
+            android:text="@string/signup"
+            android:textAllCaps="false"
+            android:textColor="@color/black_900"
+            android:textSize="20sp"
+            app:cornerRadius="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/already_have_account"
+                android:textColor="@color/white_50"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_login_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:transitionName="login_signup_tran"
+                android:text="@string/login"
+                android:textSize="18sp"
+                android:textColor="@color/purple_200"
+                android:background="@color/transparent"
+                android:fontFamily="@font/roboto_medium"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</ScrollView>
+

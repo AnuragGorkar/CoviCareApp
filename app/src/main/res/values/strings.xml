@@ -1,3 +1,84 @@
 <resources>
-    <string name="app_name">CoviCareApp</string>
+    <string name="app_name">CoviCare</string>
+
+    <!--    Login/Signup Page String Variables-->
+    <string name="enter_email">Enter E-mail</string>
+    <string name="email">E-mail</string>
+
+    <string name="signin_details">Sign-in Details</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+
+    <string name="personal_details">Personal Details</string>
+    <string name="full_name">Full Name</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="gender">Gender</string>
+
+    <string name="contact_details">Contact Details</string>
+    <string name="phone_number">Phone Number</string>
+
+    <string name="donot_have_account">Don\'t have an account?</string>
+    <string name="signup_instead">Sign Up</string>
+
+    <string name="already_have_account">Already have an account?</string>
+    <string name="login_instead">Login Up</string>
+
+    <string name="login">Login</string>
+
+    <string name="signup">Sign Up</string>
+
+    <string name="next">Next</string>
+
+    <string name="send_reset_password">Send Reset Password</string>
+
+    <string name="reset_email_info">Enter Email Id to Send Reset Password Link</string>
+
+    <string name="return_to_login">Return to Login?</string>
+    <string name="title_activity_login">LoginActivity</string>
+
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="verification_email_sent">Verification E-mail sent to</string>
+    <string name="title_activity_dash_board">DashBoardActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="go_to_personal_details">Go to Personal Details</string>
+    <string name="go_to_contact_details">Go to Contact Details</string>
+
+
+    <!--    Menu Headers-->
+    <string name="home">Home</string>
+    <string name="vitals_history">Vitals History</string>
+    <string name="added_profiles">Added Profiles</string>
+    <string name="profiles_added_to">Profiles Added To</string>
+    <string name="logout">Logout</string>
+    <string name="about">About</string>
+    <string name="profiles">Profiles</string>
+    <string name="share">Share</string>
+    <string name="title_activity_home">HomeActivity</string>
+
 </resources>

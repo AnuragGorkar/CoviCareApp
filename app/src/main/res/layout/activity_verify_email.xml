@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.auth.ResetPasswordActivity"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:id="@+id/verify_email_activity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/email_sent_anim" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sent_email_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/verification_email_sent"
+            android:textColor="@color/white_50"
+            android:paddingHorizontal="10dp"
+            android:textAlignment="center"
+            android:textSize="22sp"
+            />
+
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="7dp"
+            android:indeterminateTint="@color/purple_200"
+            android:layout_gravity="center"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/go_to_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/purple_200"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingHorizontal="60dp"
+            android:paddingVertical="7dp"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@color/black_900"
+            android:textSize="20dp"
+            app:cornerRadius="10dp"
+            />
+
+    </LinearLayout>
+</ScrollView>

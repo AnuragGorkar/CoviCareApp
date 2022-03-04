@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "570713929258",
+    "project_id": "covicare-a7df4",
+    "storage_bucket": "covicare-a7df4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570713929258:android:02253bd1d812a4413e3553",
+        "android_client_info": {
+          "package_name": "com.example.covicareapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570713929258-7jiedeq7u9np2u8s9djj56q779fapd1q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.covicareapp",
+            "certificate_hash": "8bac7196ef1bc2b91ab0fed8a17c2e1e36b1ebb9"
+          }
+        },
+        {
+          "client_id": "570713929258-ckm5hufdoehfujpi9vqblg3ffgvjq1nf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8dv8nqogrszIpZ88-ZMNxfe_XP7H0mP8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570713929258-ckm5hufdoehfujpi9vqblg3ffgvjq1nf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570713929258-ahp3hc0jrui5348l0ph36bbaji2psm1l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.covicare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

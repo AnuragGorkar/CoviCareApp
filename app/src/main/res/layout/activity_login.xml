@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.auth.LoginActivity"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:id="@+id/login_activity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            />
+
+        <ImageView
+            android:id="@+id/covicare_logo"
+            android:layout_width="match_parent"
+            android:transitionName="logo_tran"
+            android:layout_height="100dp"
+            android:src="@drawable/covicare_logo"
+            android:layout_marginBottom="30dp"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:id="@+id/user_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+
+            android:layout_marginVertical="5dp"
+
+            android:hint="@string/enter_email"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/purple_200"
+            android:textColorHint="@color/white_800"
+
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/purple_200"
+            app:boxStrokeErrorColor="@color/error_400"
+            app:startIconDrawable="@drawable/ic_outline_email_24"
+            app:startIconTint="@color/white_800"
+            app:endIconDrawable="@drawable/ic_outline_cancel_24"
+            app:endIconTint="@color/white_800"
+            app:endIconMode="clear_text"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/white_50" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_password"
+            android:hint="@string/enter_password"
+            android:layout_marginVertical="5dp"
+
+            app:hintEnabled="true"
+            app:hintTextColor="@color/purple_200"
+            android:textColorHint="@color/white_800"
+            android:textSize="18sp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusBottomEnd="10dp"
+
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/purple_200"
+            app:boxStrokeErrorColor="@color/error_400"
+            app:startIconDrawable="@drawable/ic_outline_lock_24"
+            app:startIconTint="@color/white_800"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/white_800"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textColor="@color/white_50"
+                android:fontFamily="@font/roboto"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/forgot_pass_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textColor="@color/error_400"
+            android:background="@color/transparent"
+            android:layout_gravity="right"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:paddingVertical="7dp"
+            android:indeterminateTint="@color/purple_200"
+            android:layout_gravity="center"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/purple_200"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingHorizontal="60dp"
+            android:paddingVertical="7dp"
+            android:text="@string/login"
+            android:textAllCaps="false"
+            android:textColor="@color/black_900"
+            android:textSize="20sp"
+            app:cornerRadius="10dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/donot_have_account"
+                android:textColor="@color/white_50"
+                android:textSize="14sp"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/go_signup_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:transitionName="login_signup_tran"
+                android:text="@string/signup"
+                android:textSize="16sp"
+                android:textColor="@color/purple_200"
+                android:background="@color/transparent"
+                android:fontFamily="@font/roboto_medium"
+                android:textAllCaps="false"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

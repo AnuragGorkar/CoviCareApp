@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.auth.SignupActivity"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:id="@+id/signup_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <ImageView
+            android:id="@+id/covicare_logo"
+            android:layout_width="match_parent"
+            android:transitionName="logo_tran"
+            android:layout_height="100dp"
+            android:src="@drawable/covicare_logo"
+            android:layout_marginBottom="5dp"
+            />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="480dp">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.example.covicareapp.ui.fragments.auth.SigninDetailsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="480dp" />
+
+        </FrameLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/return_login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:transitionName="login_signup_tran"
+            android:text="@string/return_to_login"
+            android:textColor="@color/white_50"
+            android:background="@color/transparent"
+            android:fontFamily="@font/roboto"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+
+
+</ScrollView>
