@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.ui.activities.HomeActivity;
+import com.example.covicareapp.ui.activities.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 firebaseUser = firebaseAuth.getCurrentUser();
                                 if(firebaseUser.isEmailVerified()){
                                     showSnackbar("Welcome to CoviCare", "", "Success");
-                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }else{
                                     Snackbar snackbar = Snackbar.make(view, "Email-Id not verified.", Snackbar.LENGTH_LONG);

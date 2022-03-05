@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view"
-    >
+    tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
 
@@ -12,57 +11,34 @@
             android:title="@string/home" />
 
         <item
-            android:id="@+id/vitals_history"
+            android:id="@+id/nav_vitals_history"
             android:icon="@drawable/ic_baseline_insert_chart_outlined_24"
             android:title="@string/vitals_history" />
 
-    </group>
+        <item
+            android:id="@+id/nav_profiles_added_to"
+            android:icon="@drawable/ic_outline_person_add_24"
+            android:title="@string/profiles_added_to" />
 
+        <item
+            android:id="@+id/nav_added_profiles"
+            android:icon="@drawable/ic_outline_group_add_24"
+            android:title="@string/added_profiles" />
 
-    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="@string/logout" />
 
-        <item android:title="@string/profiles">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_outline_info_24"
+            android:title="@string/about" />
 
-            <menu>
-                <item
-                    android:id="@+id/nav_profiles_added_to"
-                    android:icon="@drawable/ic_outline_person_add_24"
-                    android:title="@string/profiles_added_to" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_outline_share_24"
+            android:title="@string/share" />
 
-                <item
-                    android:id="@+id/nav_added_profiles"
-                    android:icon="@drawable/ic_outline_group_add_24"
-                    android:title="@string/added_profiles" />
-
-            </menu>
-
-        </item>
-    </group>
-
-
-    <group android:checkableBehavior="single">
-
-        <item android:title="Actions">
-
-            <menu>
-
-                <item
-                    android:id="@+id/logout"
-                    android:icon="@drawable/ic_baseline_logout_24"
-                    android:title="@string/logout" />
-
-                <item
-                    android:id="@+id/about"
-                    android:icon="@drawable/ic_outline_info_24"
-                    android:title="@string/about" />
-
-                <item
-                    android:id="@+id/share"
-                    android:icon="@drawable/ic_outline_share_24"
-                    android:title="@string/share" />
-
-            </menu>
-
-        </item>
     </group>
 </menu>
