@@ -27,6 +27,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/black_700</item>
         <item name="snackbarStyle">@style/MySnackbar</item>
+
     </style>
 
     <style name="DatePicker">
@@ -54,4 +55,5 @@
         <item name="fontFamily">@font/roboto</item>
         <item name="titleTextColor">@color/white_50</item>
     </style>
+
 </resources>

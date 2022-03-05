@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/black_700</item>
         <item name="snackbarStyle">@style/MySnackbar</item>
+
     </style>
 
     <style name="MySnackbar" parent="Widget.MaterialComponents.Snackbar">
