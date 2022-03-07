@@ -1,4 +1,4 @@
-package com.example.covicareapp.helpers;
+package com.example.covicareapp.models;
 
 
 import java.sql.Timestamp;
@@ -7,13 +7,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserHelper {
+public class UserModel {
     String raspiUId, fullName, email, userId, gender, dateOfBirth, phoneNumber, countryCode, countryName;
 
-    public UserHelper() {
+    public UserModel() {
     }
 
-    public UserHelper(String raspiUId, String fullName, String email, String userId, String gender, String dateOfBirth, String phoneNumber, String countryCode, String countryName) {
+    public UserModel(String raspiUId, String fullName, String email, String userId, String gender, String dateOfBirth, String phoneNumber, String countryCode, String countryName) {
         this.raspiUId = raspiUId;
         this.fullName = fullName;
         this.email = email;

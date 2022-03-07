@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.helpers.UserHelper;
+import com.example.covicareapp.models.UserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -80,7 +80,7 @@ public class VerifyEmailActivity extends AppCompatActivity {
                                 FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                                 userCollectionReference = firebaseFirestore.collection("users");
 
-                                UserHelper userHelperClass = new UserHelper(raspiUid, fullName, email, userId, gender, dateOfBirth, phoneNumber, countryCode, countryName);
+                                UserModel userHelperClass = new UserModel(raspiUid, fullName, email, userId, gender, dateOfBirth, phoneNumber, countryCode, countryName);
 
                                 userCollectionReference.document(userHelperClass.getEmail()).set(userHelperClass.getUserData()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

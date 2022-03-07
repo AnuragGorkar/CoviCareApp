@@ -84,5 +84,6 @@
     <string name="record_vitals">Record Vitals</string>
     <string name="one_time_record">One Time Record</string>
     <string name="continuous_monitor">Continuous Monitor</string>
+    <string name="scan_ct_image">Scan CT Image</string>
 
 </resources>
