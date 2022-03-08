@@ -14,12 +14,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.ui.fragments.AddedProfilesFragment;
 import com.example.covicareapp.ui.fragments.HomeFragment;
 import com.example.covicareapp.ui.fragments.ProfilesAddedToFragment;
 import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
+import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupsFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
 
+    HashMap<String, Object> userData = new HashMap<String, Object>();
+    ArrayList<String> groupsCreatedIds = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (id == R.id.nav_added_profiles) {
             toolbar.setTitle("Added Profiles");
-            showFragments(new AddedProfilesFragment());
+            getFirebaseUserData();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -98,5 +110,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             super.onBackPressed();
         }
 
+    }
+
+    public void getFirebaseUserData() {
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        CollectionReference userCollectionReference = firebaseFirestore.collection("users");
+        CollectionReference allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
+
+        userCollectionReference.document(firebaseUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        userData = (HashMap<String, Object>) documentSnapshot.getData();
+
+                        userCollectionReference.document(userData.get("email").toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    if (documentSnapshot.exists()) {
+                                        groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("Groups Created");
+                                        groupsCreatedIds.remove(userData.get("email").toString());
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("userData", userData);
+                                        bundle.putSerializable("groupsCreatedIds", groupsCreatedIds);
+                                        AddedGroupsFragment addedGroupOnlineUsersFragment = new AddedGroupsFragment();
+                                        addedGroupOnlineUsersFragment.setArguments(bundle);
+
+                                        showFragments(addedGroupOnlineUsersFragment);
+                                    } else {
+                                        // No Profile Created
+
+                                    }
+                                } else {
+                                    // Error Fetching Profiles
+                                }
+
+                            }
+                        });
+
+                    } else {
+                        // No User
+                    }
+
+                } else {
+                    // No User
+                }
+            }
+        });
     }
 }

@@ -20,6 +20,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Pattern;
 
@@ -39,10 +40,13 @@ public class LoginActivity extends AppCompatActivity {
     //    Firebase Variable
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
 
         // UI Hooks
@@ -55,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.GONE);
 
-        //        Firebase Auth Instance
-        firebaseAuth = FirebaseAuth.getInstance();
         Intent intent = getIntent();
         try{
             email = intent.getStringExtra("email");
@@ -88,9 +90,9 @@ public class LoginActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 firebaseUser = firebaseAuth.getCurrentUser();
                                 if(firebaseUser.isEmailVerified()){
-                                    showSnackbar("Welcome to CoviCare", "", "Success");
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
+                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }else{
                                     Snackbar snackbar = Snackbar.make(view, "Email-Id not verified.", Snackbar.LENGTH_LONG);
                                     snackbar.setDuration(3600);
@@ -138,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private boolean validateEmail() {
         String emailVal = emailTextInput.getEditText().getText().toString().trim();

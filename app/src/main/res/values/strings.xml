@@ -86,4 +86,17 @@
     <string name="continuous_monitor">Continuous Monitor</string>
     <string name="scan_ct_image">Scan CT Image</string>
 
+    <string name="enter_group_name">Enter Group Name</string>
+    <string name="enter_group_description">Enter Group Description</string>
+    <string name="add_new_group">Add New Group</string>
+    <string name="title_activity_group_data">GroupDataActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="online_users">Online Users</string>
+    <string name="online_users_description">Online users are signed up to CoviCare. The vitals data for these users is stored locally on this device, however their personal and contact information is hosted in CoviCare servers."</string>
+    <string name="local_users">Local Users</string>
+    <string name="local_users_description">Local users are not signed up to CoviCare. The personal and contact information and the vitals data for these users is stored locally on this device.</string>
 </resources>

@@ -4,25 +4,31 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
-        <activity android:name=".ui.activities.ScanQrActivity"></activity>
         <activity
-            android:name=".ui.activities.MainActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.CoviCareApp.NoActionBar">
+            android:name=".ui.activities.OnboardingActivity"
+            android:theme="@style/MyOnboardingTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activities.GroupAddedInfoActivity"></activity>
+        <activity android:name=".ui.activities.ScanQrActivity" />
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.CoviCareApp.NoActionBar"></activity>
         <activity android:name=".ui.activities.auth.ReenterDataActivity" />
         <activity android:name=".ui.activities.auth.VerifyEmailActivity" />
         <activity
@@ -33,7 +39,6 @@
             android:name=".ui.activities.auth.SignupActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity android:name=".ui.activities.auth.LoginActivity">
-
         </activity>
     </application>
 
