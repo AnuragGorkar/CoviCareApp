@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
         <activity
-            android:name=".ui.activities.OnboardingActivity"
+            android:name=".ui.activities.OnBoardingActivity"
             android:theme="@style/MyOnboardingTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

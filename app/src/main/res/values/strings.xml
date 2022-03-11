@@ -73,11 +73,11 @@
     <!--    Menu Headers-->
     <string name="home">Home</string>
     <string name="vitals_history">Vitals History</string>
-    <string name="added_profiles">Added Profiles</string>
-    <string name="profiles_added_to">Profiles Added To</string>
+    <string name="added_groups">Added Groups</string>
+    <string name="groups_added_to">Groups Added To</string>
     <string name="logout">Logout</string>
     <string name="about">About</string>
-    <string name="profiles">Profiles</string>
+    <string name="groups">Groups</string>
     <string name="share">Share</string>
     <string name="title_activity_home">HomeActivity</string>
 

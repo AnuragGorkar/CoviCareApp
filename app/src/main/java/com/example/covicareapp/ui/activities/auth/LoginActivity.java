@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     FirebaseFirestore firebaseFirestore;
-    FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +56,20 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_indicator);
         passwordTextInput = findViewById(R.id.user_password);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+
         progressBar.setVisibility(View.GONE);
 
         Intent intent = getIntent();
-        try{
+        try {
             email = intent.getStringExtra("email");
             password = intent.getStringExtra("password");
             emailTextInput.getEditText().setText(email);
             passwordTextInput.getEditText().setText(password);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i("Exception", e.getMessage());
         }
 
@@ -89,7 +93,10 @@ public class LoginActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             if(task.isSuccessful()){
                                 firebaseUser = firebaseAuth.getCurrentUser();
-                                if(firebaseUser.isEmailVerified()){
+                                if(firebaseUser.isEmailVerified()) {
+                                    loginButton.setBackgroundColor(getColor(R.color.success_400));
+                                    loginButton.setText("Welcome to CoviCare");
+
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     startActivity(intent);
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

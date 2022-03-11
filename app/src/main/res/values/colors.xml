@@ -35,12 +35,26 @@
     <color name="warning_400">#FFFFBB33</color>
     <color name="warning_900">#FFFF8800</color>
 
-<!--    Success Shades-->
+    <!--    Success Shades-->
     <color name="success_400">#FF00C851</color>
     <color name="success_800">#FF007E33</color>
 
-<!--    Information Shades-->
+    <!--    Information Shades-->
     <color name="information_400">#FF33B5E5</color>
     <color name="information_800">#FF0099CC</color>
 
+    <!--    Male Color-->
+    <color name="gender_male_light">#FF2476FF</color>
+    <color name="gender_male_dark">#FF0053B3</color>
+
+    <!--    Female Color-->
+    <color name="gender_female_light">#FFFF25E5</color>
+    <color name="gender_female_dark">#FF91278F</color>
+
+    <!--    Other Color-->
+    <color name="other_female_light"></color>
+    <color name="other_female_dark"></color>
+
+
 </resources>
+

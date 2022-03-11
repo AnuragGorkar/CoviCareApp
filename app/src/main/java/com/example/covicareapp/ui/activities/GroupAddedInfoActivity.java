@@ -2,6 +2,7 @@ package com.example.covicareapp.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
@@ -42,6 +43,14 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
         groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers);
 
         materialToolbar.setTitle(groupName);
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GroupAddedInfoActivity.this, MainActivity.class);
+                intent.putExtra("Fragment", "Added Groups");
+                startActivity(intent);
+            }
+        });
 
         viewPager2.setAdapter(groupAddedTabViewPagerAdapter);
 
@@ -50,5 +59,13 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
             tab.setText(tabTitle[position]);
         })).attach();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(GroupAddedInfoActivity.this, MainActivity.class);
+        intent.putExtra("Fragment", "Added Groups");
+        startActivity(intent);
     }
 }

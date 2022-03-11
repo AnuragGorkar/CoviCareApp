@@ -16,14 +16,14 @@
             android:title="@string/vitals_history" />
 
         <item
-            android:id="@+id/nav_profiles_added_to"
-            android:icon="@drawable/ic_outline_person_add_24"
-            android:title="@string/profiles_added_to" />
-
-        <item
             android:id="@+id/nav_added_profiles"
             android:icon="@drawable/ic_outline_group_add_24"
-            android:title="@string/added_profiles" />
+            android:title="@string/added_groups" />
+
+        <item
+            android:id="@+id/nav_profiles_added_to"
+            android:icon="@drawable/ic_outline_person_add_24"
+            android:title="@string/groups_added_to" />
 
         <item
             android:id="@+id/nav_logout"

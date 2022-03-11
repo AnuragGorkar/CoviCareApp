@@ -24,8 +24,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:padding="5dp"
                     android:src="@drawable/ic_outline_info_24"
                     android:tint="@color/purple_200" />
@@ -36,7 +36,7 @@
                     android:layout_gravity="center"
                     android:text="Group Description"
                     android:textColor="@color/purple_200"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -63,8 +63,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:padding="5dp"
                     android:src="@drawable/ic_outline_calendar_month_24"
                     android:tint="@color/purple_200" />
@@ -75,7 +75,7 @@
                     android:layout_gravity="center"
                     android:text="Group Created "
                     android:textColor="@color/purple_200"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -103,8 +103,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:padding="5dp"
                     android:src="@drawable/ic_outline_people_alt_24"
                     android:tint="@color/purple_200" />
@@ -115,7 +115,7 @@
                     android:layout_gravity="center"
                     android:text="No. of Users"
                     android:textColor="@color/purple_200"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="match_parent"

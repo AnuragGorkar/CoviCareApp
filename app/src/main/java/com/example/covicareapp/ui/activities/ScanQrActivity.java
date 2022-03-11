@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class ScanQrActivity extends AppCompatActivity {
     //    UI Variables
     CodeScanner codeScanner;
     CodeScannerView codeScannerView;
+    TextView scannedCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class ScanQrActivity extends AppCompatActivity {
 
         //        UI Hooks
         codeScannerView = findViewById(R.id.scanner_view);
+        scannedCode = findViewById(R.id.scanned_value);
+
         codeScanner = new CodeScanner(this, codeScannerView);
 
         codeScanner.setDecodeCallback(new DecodeCallback() {
@@ -36,6 +40,7 @@ public class ScanQrActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.i("The result from the QR Code", result.getText());
+                        scannedCode.setText(result.getText());
 
                         Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
                         intent.putExtra("Vitals Data", result.getText());

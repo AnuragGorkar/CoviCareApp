@@ -39,8 +39,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
                 app:tabSelectedTextColor="@color/purple_200"
-                app:tabTextAppearance="@style/MyTabLayoutTextAppearance"
-                app:tabTextColor="@color/black">
+                app:tabTextAppearance="@style/MyTabLayoutTextAppearance">
 
                 <com.google.android.material.tabs.TabItem
                     android:id="@+id/group_info"
