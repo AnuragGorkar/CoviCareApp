@@ -2,6 +2,11 @@ package com.example.covicareapp.ui.activities.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covicareapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -11,12 +16,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-import android.widget.ProgressBar;
 
 import java.util.regex.Pattern;
 
@@ -65,7 +64,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                             } else {
                                 resetPasswordBtn.setVisibility(View.VISIBLE);
                                 progressBar.setVisibility(View.GONE);
-                                showSnackbar("Error " + task.getException().getMessage().toString(), "", "Error");
+                                showSnackbar("Error " + task.getException().getMessage(), "", "Error");
                             }
                         }
                     });

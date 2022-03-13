@@ -31,7 +31,7 @@
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/loading_lottie"
                 android:layout_width="125dp"
-                android:layout_height="155dp"
+                android:layout_height="125dp"
                 android:layout_gravity="center"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
@@ -47,7 +47,7 @@
                 android:fontFamily="@font/roboto"
                 android:text="Loading Groups..."
                 android:textColor="@color/white_800"
-                android:textSize="26sp" />
+                android:textSize="24sp" />
 
         </LinearLayout>
 
