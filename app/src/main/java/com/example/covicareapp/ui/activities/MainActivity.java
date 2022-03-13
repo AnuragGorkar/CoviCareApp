@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -156,6 +157,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.share_info_by_qr:
+                Toast.makeText(this, "Sharing info by QR", Toast.LENGTH_SHORT);
+                break;
+            case R.id.share_vitals_by_qr:
+                Toast.makeText(this, "Sharing vitals by QR", Toast.LENGTH_SHORT);
+                break;
+            case R.id.add_new_user:
+                Toast.makeText(this, "Add new user", Toast.LENGTH_SHORT);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
