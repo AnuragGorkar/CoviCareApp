@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/share_vitals_by_qr"
-        android:icon="@drawable/ic_outline_qr_code_24"
-        android:orderInCategory="100"
-        android:title="Share vitals by QR"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/share_info_by_qr"
-        android:icon="@drawable/ic_outline_qr_code_24"
-        android:orderInCategory="100"
-        android:title="Share info by QR"
-        app:showAsAction="never" />
+        android:id="@+id/overflowMenu"
+        android:icon="@drawable/ic_baseline_menu_24"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
 
-    <item
-        android:id="@+id/add_new_user"
-        android:icon="@drawable/ic_outline_person_add_24"
-        android:orderInCategory="100"
-        android:title="Add new user"
-        app:showAsAction="never" />
+            <item
+                android:id="@+id/share_vitals_by_qr"
+                android:icon="@drawable/ic_outline_qr_code_24"
+                android:orderInCategory="100"
+                android:title="Share vitals by QR"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/share_info_by_qr"
+                android:icon="@drawable/ic_outline_qr_code_24"
+                android:orderInCategory="100"
+                android:title="Share info by QR"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/add_new_user"
+                android:icon="@drawable/ic_outline_person_add_24"
+                android:orderInCategory="100"
+                android:title="Add new user"
+                app:showAsAction="never" />
 
 
+        </menu>
+    </item>
 </menu>

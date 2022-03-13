@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loadingAnimation.setVisibility(View.GONE);
 
         setSupportActionBar(toolbar);
+        toolbar.showOverflowMenu();
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
@@ -150,22 +151,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_app_bar, menu);
-        return true;
+        getMenuInflater().inflate(R.menu.options_app_bar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.share_info_by_qr:
-                Toast.makeText(this, "Sharing info by QR", Toast.LENGTH_SHORT);
-                break;
-            case R.id.share_vitals_by_qr:
-                Toast.makeText(this, "Sharing vitals by QR", Toast.LENGTH_SHORT);
-                break;
-            case R.id.add_new_user:
-                Toast.makeText(this, "Add new user", Toast.LENGTH_SHORT);
+        int id = item.getItemId();
+
+        if(id == R.id.share_info_by_qr) {
+            Toast.makeText(this, "Sharing info by QR", Toast.LENGTH_SHORT).show();
+        } else if(id == R.id.share_vitals_by_qr) {
+            Toast.makeText(this, "Sharing vitals by QR", Toast.LENGTH_SHORT).show();
+        } else if(id == R.id.add_new_user) {
+            Toast.makeText(this, "Add new user", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);
