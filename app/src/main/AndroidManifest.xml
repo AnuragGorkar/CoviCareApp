@@ -14,6 +14,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
+        <activity android:name=".ui.activities.AddLocalUsersInfoActivity"></activity>
+        <activity android:name=".ui.activities.AddNewUserActivity"></activity>
         <activity
             android:name=".ui.activities.OnBoardingActivity"
             android:theme="@style/MyOnboardingTheme">
@@ -23,12 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.GroupAddedInfoActivity"></activity>
+        <activity android:name=".ui.activities.GroupAddedInfoActivity" />
         <activity android:name=".ui.activities.ScanQrActivity" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.CoviCareApp.NoActionBar"></activity>
+            android:theme="@style/Theme.CoviCareApp.NoActionBar" />
         <activity android:name=".ui.activities.auth.ReenterDataActivity" />
         <activity android:name=".ui.activities.auth.VerifyEmailActivity" />
         <activity
@@ -38,8 +40,7 @@
         <activity
             android:name=".ui.activities.auth.SignupActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
-        <activity android:name=".ui.activities.auth.LoginActivity">
-        </activity>
+        <activity android:name=".ui.activities.auth.LoginActivity" />
     </application>
 
 </manifest>

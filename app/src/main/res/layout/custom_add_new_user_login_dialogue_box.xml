@@ -24,7 +24,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_outline_group_add_24"
+            android:src="@drawable/ic_outline_person_add_24"
             android:tint="@color/purple_200" />
 
         <Space
@@ -33,13 +33,13 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/group_name"
+            android:id="@+id/add_email"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
 
-            android:hint="@string/enter_group_name"
+            android:hint="@string/enter_email"
 
             android:textColorHint="@color/white_800"
             android:textSize="18sp"
@@ -57,25 +57,25 @@
             app:endIconTint="@color/white_800"
             app:hintEnabled="true"
             app:hintTextColor="@color/purple_200"
-            app:startIconDrawable="@drawable/ic_outline_people_alt_24"
+            app:startIconDrawable="@drawable/ic_outline_email_24"
             app:startIconTint="@color/white_800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/white_50" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/group_desc"
+            android:id="@+id/add_password"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
 
-            android:hint="@string/enter_group_name"
+            android:hint="@string/enter_password"
 
             android:textColorHint="@color/white_800"
             android:textSize="18sp"
@@ -88,22 +88,24 @@
             app:boxStrokeErrorColor="@color/error_400"
 
             app:boxStrokeWidthFocused="2dp"
-            app:endIconDrawable="@drawable/ic_outline_cancel_24"
-            app:endIconMode="clear_text"
+            app:endIconMode="password_toggle"
             app:endIconTint="@color/white_800"
             app:hintEnabled="true"
             app:hintTextColor="@color/purple_200"
-            app:startIconDrawable="@drawable/ic_outline_info_24"
+            app:startIconDrawable="@drawable/ic_outline_lock_24"
             app:startIconTint="@color/white_800">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:inputType="textMultiLine"
+                android:inputType="textPassword"
                 android:textColor="@color/white_50" />
-
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
 
         <ProgressBar
             android:id="@+id/progress_indicator"
@@ -115,7 +117,7 @@
             android:paddingVertical="7dp" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/add_group_btn"
+            android:id="@+id/add_new_online_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -124,11 +126,41 @@
             android:fontFamily="@font/roboto_medium"
             android:paddingHorizontal="60dp"
             android:paddingVertical="7dp"
-            android:text="@string/add_new_group"
+            android:text="Add New User"
             android:textAllCaps="false"
             android:textColor="@color/black_900"
             android:textSize="20sp"
             app:cornerRadius="10dp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_outline_qr_code_24"
+                android:tint="@color/purple_200" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/scan_qr_add_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/transparent"
+                android:fontFamily="@font/roboto"
+                android:text="Scan QR to add new user"
+                android:textAllCaps="false"
+                android:textColor="@color/purple_200"
+                android:textSize="16sp"
+                android:transitionName="login_signup_tran" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

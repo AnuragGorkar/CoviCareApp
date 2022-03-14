@@ -2,16 +2,17 @@ package com.example.covicareapp.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -27,7 +28,6 @@ import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,21 +41,19 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    private AppBarConfiguration mAppBarConfiguration;
-
     // Variables
     int prevItemId;
-
     //      UI Variables
-    MaterialToolbar toolbar;
+    Toolbar toolbar;
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     LottieAnimationView loadingAnimation;
     TextView loadingTv;
-
+    Menu menu;
     HashMap<String, Object> userData = new HashMap<String, Object>();
     ArrayList<String> groupsCreatedIds = new ArrayList<String>();
+    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //      UI Hooks
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setNavigationIconTint(getColor(R.color.teal_200));
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -126,20 +123,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (id == R.id.nav_home) {
                 prevItemId = id;
                 toolbar.setTitle("CoviCare");
+                showMenuOptions(true);
                 showFragments(new HomeFragment());
             }
             if (id == R.id.nav_vitals_history) {
+                prevItemId = id;
                 toolbar.setTitle("Vitals History");
+                showMenuOptions(false);
                 showFragments(new VitalsHistoryFragment());
             }
             if (id == R.id.nav_profiles_added_to) {
                 prevItemId = id;
                 toolbar.setTitle("Groups Added to");
+                showMenuOptions(false);
                 showFragments(new ProfilesAddedToFragment());
             }
             if (id == R.id.nav_added_profiles) {
                 prevItemId = id;
                 toolbar.setTitle("Added Groups");
+                showMenuOptions(false);
                 getFirebaseUserData();
             }
         }
@@ -148,24 +150,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    public void showMenuOptions(boolean show) {
+        if (menu != null) {
+            if (show) {
+                menu.setGroupVisible(R.id.expandable_options_menu, true);
+                menu.setGroupVisible(R.id.show_qr_options, true);
+            } else {
+                menu.setGroupVisible(R.id.expandable_options_menu, false);
+                menu.setGroupVisible(R.id.show_qr_options, false);
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_app_bar, menu);
+        inflater.inflate(R.menu.options_app_bar, this.menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.share_info_by_qr:
-                Toast.makeText(this, "Sharing info by QR", Toast.LENGTH_SHORT);
+            case R.id.settings:
+                Log.i("Options Menu Click", "Settings Clicked");
                 break;
-            case R.id.share_vitals_by_qr:
-                Toast.makeText(this, "Sharing vitals by QR", Toast.LENGTH_SHORT);
+            case R.id.logout:
+                Log.i("Options Menu Click", "Logout Clicked");
                 break;
-            case R.id.add_new_user:
-                Toast.makeText(this, "Add new user", Toast.LENGTH_SHORT);
+            case R.id.share_by_qr:
+                Log.i("Options Menu Click", "Share Info by QR Clicked");
+                break;
+            case R.id.add_new_user: {
+                Intent intent = new Intent(MainActivity.this, AddNewUserActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
         }
 
         return super.onOptionsItemSelected(item);

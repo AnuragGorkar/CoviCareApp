@@ -38,9 +38,8 @@
         <item name="android:windowBackground">@drawable/custom_onboarding_background</item>
     </style>
 
-    <style name="MyPopUpTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.AppCompat.MyOptionsTheme" parent="Theme.AppCompat.DayNight">
         <item name="android:colorBackground">@color/black_600</item>
-        <item name="android:textColor">@color/white_50</item>
-        <item name="iconTint">@color/purple_200</item>
+        <item name="background">@drawable/custom_toolbar_background</item>
     </style>
 </resources>

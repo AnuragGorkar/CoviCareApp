@@ -8,12 +8,13 @@
     android:padding="10dp"
     tools:context=".ui.activities.MainActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/custom_toolbar_background"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/Theme.AppCompat.MyOptionsTheme"
         app:title="@string/app_name" />
 
     <FrameLayout

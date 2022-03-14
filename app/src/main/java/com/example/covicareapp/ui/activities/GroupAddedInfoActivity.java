@@ -17,6 +17,7 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
     private final int[] tabIcon = new int[]{R.drawable.ic_outline_info_24, R.drawable.ic_outline_cloud_24, R.drawable.ic_outline_sd_storage_24};
     private final String[] tabTitle = new String[]{"Info", "Online Users", "Local Users"};
     String groupId, groupName, groupDateCreated, groupDescription, groupOfflineUsers, groupOnlineUsers;
+
     // UI Variables
     MaterialToolbar materialToolbar;
     TabLayout tabLayout;

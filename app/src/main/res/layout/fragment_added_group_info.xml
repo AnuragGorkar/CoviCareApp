@@ -205,7 +205,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/online_users_description"
+                        android:text="@string/local_users_description"
                         android:textColor="@color/white_50"
                         android:textSize="16sp" />
 
