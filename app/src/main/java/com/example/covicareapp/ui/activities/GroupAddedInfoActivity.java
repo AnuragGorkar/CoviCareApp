@@ -14,6 +14,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class GroupAddedInfoActivity extends AppCompatActivity {
+    int tabShow;
     private final int[] tabIcon = new int[]{R.drawable.ic_outline_info_24, R.drawable.ic_outline_cloud_24, R.drawable.ic_outline_sd_storage_24};
     private final String[] tabTitle = new String[]{"Info", "Online Users", "Local Users"};
     String groupId, groupName, groupDateCreated, groupDescription, groupOfflineUsers, groupOnlineUsers;
@@ -36,12 +37,14 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
         groupDescription = intent.getStringExtra("groupDescription");
         groupOnlineUsers = String.valueOf(intent.getStringExtra("groupOnlineUsers"));
         groupOfflineUsers = intent.getStringExtra("groupOfflineUsers");
+        tabShow = intent.getIntExtra("tabShow", 0);
+
 
         // UI Hooks
         materialToolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.view_pager);
-        groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers);
+        groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers, tabShow);
 
         materialToolbar.setTitle(groupName);
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
