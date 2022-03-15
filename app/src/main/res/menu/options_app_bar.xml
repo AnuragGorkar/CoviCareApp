@@ -15,7 +15,6 @@
             android:icon="@drawable/ic_outline_more_vert_24"
             android:title=""
             app:showAsAction="always">
-
             <menu>
                 <item
                     android:id="@+id/add_new_user"
