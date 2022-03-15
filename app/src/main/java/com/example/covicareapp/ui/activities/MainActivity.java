@@ -22,8 +22,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
+import com.example.covicareapp.ui.fragments.GroupAddedToFragment;
 import com.example.covicareapp.ui.fragments.HomeFragment;
-import com.example.covicareapp.ui.fragments.ProfilesAddedToFragment;
 import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -90,21 +90,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 prevItemId = R.id.nav_home;
                 toolbar.setTitle("CoviCare");
                 navigationView.setCheckedItem(R.id.nav_home);
-                showFragments(new HomeFragment());
+                showFragments(new HomeFragment(), true);
             } else if (fragmentName.equals("Vitals History")) {
                 prevItemId = R.id.nav_vitals_history;
                 toolbar.setTitle("Vitals History");
                 navigationView.setCheckedItem(R.id.nav_vitals_history);
-                showFragments(new VitalsHistoryFragment());
+                showFragments(new VitalsHistoryFragment(), false);
             } else if (fragmentName.equals("Groups Added to")) {
                 prevItemId = R.id.nav_profiles_added_to;
                 toolbar.setTitle("Groups Added to");
                 navigationView.setCheckedItem(R.id.nav_profiles_added_to);
-                showFragments(new ProfilesAddedToFragment());
+                showFragments(new GroupAddedToFragment(), false);
             } else if (fragmentName.equals("Added Groups")) {
                 prevItemId = R.id.nav_added_profiles;
                 toolbar.setTitle("Added Groups");
                 navigationView.setCheckedItem(R.id.nav_added_profiles);
+                showMenuOptions(false);
                 getFirebaseUserData();
             }
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             prevItemId = R.id.nav_home;
             toolbar.setTitle("CoviCare");
             navigationView.setCheckedItem(R.id.nav_home);
-            showFragments(new HomeFragment());
+            showFragments(new HomeFragment(), true);
         }
     }
 
@@ -124,19 +125,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 prevItemId = id;
                 toolbar.setTitle("CoviCare");
                 showMenuOptions(true);
-                showFragments(new HomeFragment());
+                showFragments(new HomeFragment(), true);
             }
             if (id == R.id.nav_vitals_history) {
                 prevItemId = id;
                 toolbar.setTitle("Vitals History");
                 showMenuOptions(false);
-                showFragments(new VitalsHistoryFragment());
+                showFragments(new VitalsHistoryFragment(), false);
             }
             if (id == R.id.nav_profiles_added_to) {
                 prevItemId = id;
                 toolbar.setTitle("Groups Added to");
                 showMenuOptions(false);
-                showFragments(new ProfilesAddedToFragment());
+                showFragments(new GroupAddedToFragment(), false);
             }
             if (id == R.id.nav_added_profiles) {
                 prevItemId = id;
@@ -152,14 +153,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void showMenuOptions(boolean show) {
         if (menu != null) {
+            Log.i("Menu", "Menu is not null");
             if (show) {
+                Log.i("Menu Options Show", "True");
                 menu.setGroupVisible(R.id.expandable_options_menu, true);
                 menu.setGroupVisible(R.id.show_qr_options, true);
             } else {
+                Log.i("Menu Options Show", "False");
                 menu.setGroupVisible(R.id.expandable_options_menu, false);
                 menu.setGroupVisible(R.id.show_qr_options, false);
             }
-        }
+        } else
+            Log.i("Menu", "Menu is null");
     }
 
     @Override
@@ -183,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("Options Menu Click", "Share Info by QR Clicked");
                 break;
             case R.id.add_new_user: {
-                Intent intent = new Intent(MainActivity.this, AddNewUserActivity.class);
+                Intent intent = new Intent(MainActivity.this, SelectGroupActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -192,7 +197,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    private void showFragments(Fragment fragment) {
+    private void showFragments(Fragment fragment, boolean showOptions) {
+        showMenuOptions(showOptions);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -220,7 +227,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
         CollectionReference userCollectionReference = firebaseFirestore.collection("users");
-        CollectionReference allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
 
         userCollectionReference.document(firebaseUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -236,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot documentSnapshot = task.getResult();
                                     if (documentSnapshot.exists()) {
-                                        groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("Groups Created");
+                                        groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("groupsCreated");
                                         groupsCreatedIds.remove(userData.get("email").toString());
 
                                         Bundle bundle = new Bundle();
@@ -246,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         addedGroupOnlineUsersFragment.setArguments(bundle);
                                         loadingTv.setVisibility(View.GONE);
                                         loadingAnimation.setVisibility(View.GONE);
-                                        showFragments(addedGroupOnlineUsersFragment);
+                                        showFragments(addedGroupOnlineUsersFragment, false);
                                     } else {
                                         // No Profile Created
 

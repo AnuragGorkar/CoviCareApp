@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.covicareapp.R;
 
-public class ProfilesAddedToFragment extends Fragment {
+public class GroupAddedToFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

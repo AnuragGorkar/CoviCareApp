@@ -139,7 +139,7 @@ public class VerifyEmailActivity extends AppCompatActivity {
                                                         Map<String, Object> userGroupsListData = new HashMap<String, Object>();
                                                         ArrayList<String> userGroupsList = new ArrayList<String>();
                                                         userGroupsList.add(newDocRef.getId());
-                                                        userGroupsListData.put("Groups Created", userGroupsList);
+                                                        userGroupsListData.put("groupsCreated", userGroupsList);
 
                                                         userCollectionReference.document(email).update(userGroupsListData).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override

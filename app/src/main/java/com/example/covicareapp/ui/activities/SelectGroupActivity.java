@@ -1,28 +1,27 @@
-package com.example.covicareapp.ui.fragments.addedGroups;
+package com.example.covicareapp.ui.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
 import com.example.covicareapp.models.AddedGroupsModel;
-import com.example.covicareapp.ui.activities.GroupAddedInfoActivity;
 import com.example.covicareapp.ui.adapters.AddedGroupsAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -43,20 +42,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class AddedGroupsFragment extends Fragment {
-    View rootView;
+public class SelectGroupActivity extends AppCompatActivity {
 
     // Variables
     String groupName, groupDescription;
 
     // UI Variables
+    RecyclerView recyclerView;
     FloatingActionButton addNewGroupFab;
+    LottieAnimationView loadingLottieAnimation;
     ProgressBar progressBar;
     ImageButton closeDialogueButton;
     TextInputLayout groupNameTextInput, groupDescriptionTextInput;
     MaterialButton addNewGroupButton;
-    RecyclerView recyclerView;
+    TextView loadingTextView;
+    MaterialToolbar materialToolbar;
     ImageView errorImage;
     TextView errorText;
 
@@ -67,31 +67,26 @@ public class AddedGroupsFragment extends Fragment {
     CollectionReference userCollectionReference, allGroupsCollectionReference;
 
     // User Data
-    HashMap<String, Object> userDataVal;
-    ArrayList<String> groupsCreatedIdsVal;
+    HashMap<String, Object> userData;
+    ArrayList<String> groupsCreatedIds;
 
     AddedGroupsAdapter addedGroupsAdapter;
 
-    public static AddedGroupsFragment newInstance(@NonNull HashMap<String, Object> userData, @NonNull ArrayList<String> groupsCreatedIds) {
-        AddedGroupsFragment fragment = new AddedGroupsFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("userData", userData);
-        args.putSerializable("groupsCreatedIds", groupsCreatedIds);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_select_group);
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_added_groups, container, false);
-        Bundle args = getArguments();
-        userDataVal = (HashMap<String, Object>) args.getSerializable("userData");
-        groupsCreatedIdsVal = (ArrayList<String>) args.getSerializable("groupsCreatedIds");
+        Intent intent = getIntent();
 
-        // UI Hooks
-        addNewGroupFab = rootView.findViewById(R.id.add_profile_fab);
-        progressBar = rootView.findViewById(R.id.progress_indicator);
-        errorImage = rootView.findViewById(R.id.error_image);
-        errorText = rootView.findViewById(R.id.error_text);
+        //UI Hooks
+        recyclerView = findViewById(R.id.recycler_view);
+        addNewGroupFab = findViewById(R.id.add_group_fab);
+        loadingLottieAnimation = findViewById(R.id.loading_lottie);
+        loadingTextView = findViewById(R.id.loading_text);
+        materialToolbar = findViewById(R.id.toolbar);
+        errorImage = findViewById(R.id.error_image);
+        errorText = findViewById(R.id.error_text);
 
         errorText.setVisibility(View.GONE);
         errorImage.setVisibility(View.GONE);
@@ -102,7 +97,16 @@ public class AddedGroupsFragment extends Fragment {
         userCollectionReference = firebaseFirestore.collection("users");
         allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
 
-        initRecyclerView();
+        materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SelectGroupActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                if (addedGroupsAdapter != null)
+                    addedGroupsAdapter.stopListening();
+            }
+        });
 
         addNewGroupFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,31 +115,32 @@ public class AddedGroupsFragment extends Fragment {
             }
         });
 
-        return rootView;
+        getFirebaseUserData();
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(SelectGroupActivity.this, MainActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         if (addedGroupsAdapter != null)
-            addedGroupsAdapter.startListening();
-
+            addedGroupsAdapter.stopListening();
     }
 
-
     public void initRecyclerView() {
-        recyclerView = rootView.findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        if (groupsCreatedIdsVal.isEmpty()) {
+        if (groupsCreatedIds.isEmpty()) {
             errorText.setVisibility(View.VISIBLE);
             errorImage.setVisibility(View.VISIBLE);
         } else {
             errorText.setVisibility(View.GONE);
             errorImage.setVisibility(View.GONE);
 
-            Query query = allGroupsCollectionReference.whereIn("groupId", groupsCreatedIdsVal);
+            Query query = allGroupsCollectionReference.whereIn("groupId", groupsCreatedIds);
 
             FirestoreRecyclerOptions<AddedGroupsModel> options = new FirestoreRecyclerOptions.Builder<AddedGroupsModel>().setQuery(query, AddedGroupsModel.class).build();
 
@@ -143,12 +148,14 @@ public class AddedGroupsFragment extends Fragment {
 
             recyclerView.setAdapter(addedGroupsAdapter);
 
+            addedGroupsAdapter.startListening();
+
             addedGroupsAdapter.setOnItemClickListener(new AddedGroupsAdapter.OnItemClickListener() {
                 @Override
                 public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                     Map<String, Object> data = documentSnapshot.getData();
 
-                    Intent intent = new Intent(getActivity(), GroupAddedInfoActivity.class);
+                    Intent intent = new Intent(SelectGroupActivity.this, AddNewUserActivity.class);
                     intent.putExtra("groupId", data.get("groupId").toString());
                     intent.putExtra("groupName", data.get("groupName").toString());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMMM yyyy");
@@ -158,21 +165,66 @@ public class AddedGroupsFragment extends Fragment {
                     intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
                     intent.putExtra("groupOfflineUsers", "0");
                     startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
         }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (addedGroupsAdapter != null)
-            addedGroupsAdapter.stopListening();
+    public void getFirebaseUserData() {
+        loadingTextView.setVisibility(View.VISIBLE);
+        loadingLottieAnimation.setVisibility(View.VISIBLE);
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        CollectionReference userCollectionReference = firebaseFirestore.collection("users");
+
+        userCollectionReference.document(firebaseUser.getEmail()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if (documentSnapshot.exists()) {
+                        userData = (HashMap<String, Object>) documentSnapshot.getData();
+
+                        userCollectionReference.document(userData.get("email").toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    if (documentSnapshot.exists()) {
+                                        groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("groupsCreated");
+                                        groupsCreatedIds.remove(userData.get("email").toString());
+
+                                        loadingTextView.setVisibility(View.GONE);
+                                        loadingLottieAnimation.setVisibility(View.GONE);
+
+                                        initRecyclerView();
+                                    } else {
+                                        // No Profile Created
+
+                                    }
+                                } else {
+                                    // Error Fetching Profiles
+                                }
+
+                            }
+                        });
+
+                    } else {
+                        // No User
+                    }
+
+                } else {
+                    // No User
+                }
+            }
+        });
     }
 
     public void showAddProfileDialogue() {
-        Dialog dialog = new Dialog(getActivity());
+        Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_add_group_dialogue_box);
 
         // UI Hooks
@@ -217,7 +269,7 @@ public class AddedGroupsFragment extends Fragment {
     public void addNewGroup(Dialog dialog) {
         Map<String, Object> groupData = new HashMap<String, Object>();
         groupData.put("dateCreated", Timestamp.now());
-        groupData.put("createdBy", userDataVal.get("email"));
+        groupData.put("createdBy", userData.get("email"));
         groupData.put("groupName", groupName);
         groupData.put("groupInfo", groupDescription);
         groupData.put("groupUsers", new ArrayList<String>());
@@ -231,7 +283,7 @@ public class AddedGroupsFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    userCollectionReference.document(userDataVal.get("email").toString()).update("groupsCreated", FieldValue.arrayUnion(newDocRef.getId())).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    userCollectionReference.document(userData.get("email").toString()).update("groupsCreated", FieldValue.arrayUnion(newDocRef.getId())).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             progressBar.setVisibility(View.GONE);
@@ -241,9 +293,8 @@ public class AddedGroupsFragment extends Fragment {
                                 showSnackbar("Group created successfully ", "", "Success");
                                 if (addedGroupsAdapter != null)
                                     addedGroupsAdapter.stopListening();
-                                groupsCreatedIdsVal.add(newDocRef.getId());
+                                groupsCreatedIds.add(newDocRef.getId());
                                 initRecyclerView();
-                                addedGroupsAdapter.startListening();
                                 dialog.dismiss();
                             } else {
                                 showSnackbar("Error! " + task.getException().toString(), "", "Error");
@@ -302,27 +353,27 @@ public class AddedGroupsFragment extends Fragment {
     protected void showSnackbar(String messageStr, String actionStr, String resultState) {
         // pass the mSnackbarLayout as the view
         // to the make function
-        Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.drawer_layout).getRootView(), messageStr, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.recycler_view).getRootView(), messageStr, Snackbar.LENGTH_LONG);
 
         // the duration is in terms of milliseconds
         snackbar.setDuration(3600);
         // set the background tint color for the snackbar
         switch (resultState) {
             case "Success":
-                snackbar.setBackgroundTint(getActivity().getColor(R.color.success_800));
+                snackbar.setBackgroundTint(getColor(R.color.success_800));
                 break;
             case "Warning":
-                snackbar.setBackgroundTint(getActivity().getColor(R.color.warning_900));
+                snackbar.setBackgroundTint(getColor(R.color.warning_900));
                 break;
             case "Error":
-                snackbar.setBackgroundTint(getActivity().getColor(R.color.error_400));
+                snackbar.setBackgroundTint(getColor(R.color.error_400));
                 break;
             default:
-                snackbar.setBackgroundTint(getActivity().getColor(R.color.information_800));
+                snackbar.setBackgroundTint(getColor(R.color.information_800));
         }
         // set the action button text color of the snackbar however this is optional
-        snackbar.setTextColor(getActivity().getColor(R.color.white_50));
-        snackbar.setActionTextColor(getActivity().getColor(R.color.white_50));
+        snackbar.setTextColor(getColor(R.color.white_50));
+        snackbar.setActionTextColor(getColor(R.color.white_50));
 
         snackbar.setAction(actionStr, new View.OnClickListener() {
             @Override

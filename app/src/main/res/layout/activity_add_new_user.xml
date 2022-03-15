@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
+    android:id="@+id/add_new_user_activity"
     tools:context=".ui.activities.AddNewUserActivity">
 
     <LinearLayout
@@ -38,6 +39,26 @@
             android:orientation="vertical"
             android:paddingVertical="5dp">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Add new user to"
+                android:textColor="@color/white_50"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/group_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/roboto_light"
+                android:gravity="center"
+                android:text="GroupName"
+                android:textColor="@color/purple_200"
+                android:textSize="26sp" />
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -63,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:fontFamily="@font/roboto_medium"
-                        android:text="Add New Online User"
+                        android:text="Add Online User"
                         android:textAllCaps="false"
                         android:textSize="18sp"
                         app:cornerRadius="10dp" />
@@ -112,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:fontFamily="@font/roboto_medium"
-                        android:text="Add New Local User"
+                        android:text="Add Local User"
                         android:textAllCaps="false"
                         android:textSize="18sp"
                         app:cornerRadius="10dp" />

@@ -231,7 +231,7 @@
             android:fontFamily="@font/roboto_medium"
             android:paddingHorizontal="60dp"
             android:paddingVertical="7dp"
-            android:text="Add New Local User"
+            android:text="Add Local User"
             android:textAllCaps="false"
             android:textColor="@color/black_900"
             android:textSize="18sp"

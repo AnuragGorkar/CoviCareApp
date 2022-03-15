@@ -14,8 +14,9 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
-        <activity android:name=".ui.activities.AddLocalUsersInfoActivity"></activity>
-        <activity android:name=".ui.activities.AddNewUserActivity"></activity>
+        <activity android:name=".ui.activities.SelectGroupActivity" />
+        <activity android:name=".ui.activities.AddLocalUsersInfoActivity" />
+        <activity android:name=".ui.activities.AddNewUserActivity" />
         <activity
             android:name=".ui.activities.OnBoardingActivity"
             android:theme="@style/MyOnboardingTheme">
