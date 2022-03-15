@@ -15,13 +15,11 @@ import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupOnlineUsersFra
 public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
 
     private final String[] tabTitle = new String[]{"Info", "Online Users", "Local Users"};
-    int tabShowVal;
     String groupIdVal, groupDescriptionVal, groupDateCreatedVal, groupOnlineUsersVal, groupOfflineUsersVal;
     Bundle bundle;
 
-    public GroupAddedTabViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, String groupId, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers, int tabShow) {
+    public GroupAddedTabViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, String groupId, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers) {
         super(fragmentActivity);
-        tabShowVal = tabShow;
         groupIdVal = groupId;
         groupDateCreatedVal = groupDateCreated;
         groupDescriptionVal = groupDescription;
@@ -32,10 +30,6 @@ public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if (tabShowVal != -1) {
-            position = tabShowVal;
-            tabShowVal = -1;
-        }
         switch (position) {
             case 1:
                 bundle = new Bundle();

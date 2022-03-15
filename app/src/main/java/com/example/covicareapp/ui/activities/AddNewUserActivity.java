@@ -28,12 +28,14 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class AddNewUserActivity extends AppCompatActivity {
 
     // Variables
     String groupId, groupName, groupDateCreated, groupDescription, groupOfflineUsers, groupOnlineUsers, email, password;
+    ArrayList<String> groupOnlineUsersList = new ArrayList<String>();
 
     // UI Variables
     Dialog dialog;
@@ -69,6 +71,7 @@ public class AddNewUserActivity extends AppCompatActivity {
         groupDescription = intent.getStringExtra("groupDescription");
         groupOnlineUsers = String.valueOf(intent.getStringExtra("groupOnlineUsers"));
         groupOfflineUsers = intent.getStringExtra("groupOfflineUsers");
+        groupOnlineUsersList = (ArrayList<String>) intent.getSerializableExtra("groupOnlineUsersList");
 
         groupNameTextView.setText(groupName);
 
@@ -118,7 +121,6 @@ public class AddNewUserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i("Firebase Applications", FirebaseApp.getApps(getApplicationContext()).toString());
                 if (validateInput()) {
-                    setDialogueDismissable(false);
                     addOnlineUser(view);
                 } else {
                 }
@@ -214,6 +216,7 @@ public class AddNewUserActivity extends AppCompatActivity {
     }
 
     public void addOnlineUser(View view) {
+        setDialogueDismissable(false);
         FirebaseAuth currentFirebaseAuth = FirebaseAuth.getInstance();
         String currentEmail = currentFirebaseAuth.getCurrentUser().getEmail();
         if (currentEmail.equals(email)) {
@@ -231,69 +234,85 @@ public class AddNewUserActivity extends AppCompatActivity {
             progressBar.setVisibility(View.VISIBLE);
             addNewUserButton.setVisibility(View.GONE);
 
-            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    addNewUserButton.setVisibility(View.VISIBLE);
-                    progressBar.setVisibility(View.GONE);
-                    addNewUser.delete();
+            if (groupOnlineUsersList.contains(email)) {
+                addNewUser.delete();
+                setDialogueDismissable(true);
+                progressBar.setVisibility(View.GONE);
+                addNewUserButton.setVisibility(View.VISIBLE);
+                showSnackbar("Warning! " + "User already added in group. Try to add another user.", "", "Warning", view);
+            } else {
+                firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        addNewUser.delete();
+                        if (task.isSuccessful()) {
+                            firebaseUser = firebaseAuth.getCurrentUser();
+                            if (firebaseUser.isEmailVerified()) {
+                                firebaseFirestore = FirebaseFirestore.getInstance();
+                                userCollectionReference = firebaseFirestore.collection("users");
+                                allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
 
-                    if (task.isSuccessful()) {
-                        firebaseUser = firebaseAuth.getCurrentUser();
-                        if (firebaseUser.isEmailVerified()) {
-                            firebaseFirestore = FirebaseFirestore.getInstance();
-                            userCollectionReference = firebaseFirestore.collection("users");
-                            allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
+                                userCollectionReference.document(email).update("groupsAddedTo", FieldValue.arrayUnion(groupId)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            allGroupsCollectionReference.document(groupId).update("groupUsers", FieldValue.arrayUnion(email)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        progressBar.setVisibility(View.GONE);
+                                                        addNewUserButton.setVisibility(View.VISIBLE);
+                                                        addNewUserButton.setBackgroundColor(getColor(R.color.success_400));
+                                                        addNewUserButton.setText("New User Added");
 
+                                                        final Handler handler = new Handler();
+                                                        handler.postDelayed(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                // Do something after 5s = 5000ms
+                                                                Intent intent = new Intent(AddNewUserActivity.this, GroupAddedInfoActivity.class);
+                                                                intent.putExtra("goToTab", "Online Users");
+                                                                intent.putExtra("groupId", groupId);
+                                                                intent.putExtra("groupName", groupName);
+                                                                intent.putExtra("groupDateCreated", groupDateCreated);
+                                                                intent.putExtra("groupDescription", groupDescription);
+                                                                intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+                                                                intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+                                                                intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                                                                startActivity(intent);
+                                                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                                            }
+                                                        }, 500);
+                                                    } else {
+                                                        setDialogueDismissable(true);
+                                                        progressBar.setVisibility(View.GONE);
+                                                        addNewUserButton.setVisibility(View.VISIBLE);
+                                                        Log.e("Error", task.getException().getMessage());
+                                                        // Handle Error
+                                                    }
 
-                            userCollectionReference.document(email).update("groupsAddedTo", FieldValue.arrayUnion(groupId)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        allGroupsCollectionReference.document(groupId).update("groupUsers", FieldValue.arrayUnion(email)).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    addNewUserButton.setBackgroundColor(getColor(R.color.success_400));
-                                                    addNewUserButton.setText("New User Added");
-
-                                                    final Handler handler = new Handler();
-                                                    handler.postDelayed(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            // Do something after 5s = 5000ms
-                                                            Intent intent = new Intent(AddNewUserActivity.this, GroupAddedInfoActivity.class);
-                                                            intent.putExtra("goToTab", "Online Users");
-                                                            intent.putExtra("groupId", groupId);
-                                                            intent.putExtra("groupName", groupName);
-                                                            intent.putExtra("groupDateCreated", groupDateCreated);
-                                                            intent.putExtra("groupDescription", groupDescription);
-                                                            intent.putExtra("groupOnlineUsers", groupOnlineUsers);
-                                                            intent.putExtra("groupOfflineUsers", groupOfflineUsers);
-                                                            startActivity(intent);
-                                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                                        }
-                                                    }, 500);
-                                                } else {
-                                                    Log.e("Error", task.getException().getMessage());
-                                                    // Handle Error
                                                 }
-
-                                            }
-                                        });
-                                    } else {
-                                        Log.e("Error", task.getException().getMessage());
-                                        // Handle Error
+                                            });
+                                        } else {
+                                            setDialogueDismissable(true);
+                                            progressBar.setVisibility(View.GONE);
+                                            addNewUserButton.setVisibility(View.VISIBLE);
+                                            Log.e("Error", task.getException().getMessage());
+                                            // Handle Error
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
+                        } else {
+                            setDialogueDismissable(true);
+                            progressBar.setVisibility(View.GONE);
+                            addNewUserButton.setVisibility(View.VISIBLE);
+                            showSnackbar("Error! " + task.getException().getMessage(), "", "Error", view);
                         }
-                    } else {
-                        setDialogueDismissable(true);
-                        showSnackbar("Error! " + task.getException().getMessage(), "", "Error", view);
                     }
-                }
-            });
+                });
+            }
+
 
         }
 

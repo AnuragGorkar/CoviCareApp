@@ -157,7 +157,6 @@ public class AddedGroupsFragment extends Fragment {
                     intent.putExtra("groupDescription", data.get("groupInfo").toString());
                     intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
                     intent.putExtra("groupOfflineUsers", "0");
-                    intent.putExtra("tabShow", 0);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

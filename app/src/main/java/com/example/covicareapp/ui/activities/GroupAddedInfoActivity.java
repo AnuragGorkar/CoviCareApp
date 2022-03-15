@@ -37,14 +37,12 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
         groupDescription = intent.getStringExtra("groupDescription");
         groupOnlineUsers = String.valueOf(intent.getStringExtra("groupOnlineUsers"));
         groupOfflineUsers = intent.getStringExtra("groupOfflineUsers");
-        tabShow = intent.getIntExtra("tabShow", 0);
-
 
         // UI Hooks
         materialToolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.view_pager);
-        groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers, tabShow);
+        groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers);
 
         materialToolbar.setTitle(groupName);
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {

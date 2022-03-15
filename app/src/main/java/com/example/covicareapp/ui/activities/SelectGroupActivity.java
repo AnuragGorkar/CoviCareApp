@@ -162,6 +162,7 @@ public class SelectGroupActivity extends AppCompatActivity {
                     Date date = ((Timestamp) data.get("dateCreated")).toDate();
                     intent.putExtra("groupDateCreated", simpleDateFormat.format(date));
                     intent.putExtra("groupDescription", data.get("groupInfo").toString());
+                    intent.putExtra("groupOnlineUsersList", (ArrayList<String>) data.get("groupUsers"));
                     intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
                     intent.putExtra("groupOfflineUsers", "0");
                     startActivity(intent);
