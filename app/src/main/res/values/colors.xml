@@ -52,8 +52,8 @@
     <color name="gender_female_dark">#FF91278F</color>
 
     <!--    Other Color-->
-    <color name="other_female_light"></color>
-    <color name="other_female_dark"></color>
+    <color name="gender_other_light">#FF00C851</color>
+    <color name="gender_other_dark">#FF007E33</color>
 
 
 </resources>

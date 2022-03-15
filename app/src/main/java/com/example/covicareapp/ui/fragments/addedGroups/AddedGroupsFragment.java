@@ -155,7 +155,9 @@ public class AddedGroupsFragment extends Fragment {
                     Date date = ((Timestamp) data.get("dateCreated")).toDate();
                     intent.putExtra("groupDateCreated", simpleDateFormat.format(date));
                     intent.putExtra("groupDescription", data.get("groupInfo").toString());
+                    intent.putExtra("groupOnlineUsersList", (ArrayList<String>) data.get("groupUsers"));
                     intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
+                    intent.putExtra("groupOfflineUsersList", new ArrayList<String>());
                     intent.putExtra("groupOfflineUsers", "0");
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

@@ -114,7 +114,8 @@ public class VerifyEmailActivity extends AppCompatActivity {
                                 userCollectionReference = firebaseFirestore.collection("users");
                                 allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
 
-                                UserModel userHelperClass = new UserModel(raspiUid, fullName, email, userId, gender, dateOfBirth, phoneNumber, countryCode, countryName);
+
+                                UserModel userHelperClass = new UserModel(raspiUid, fullName, email, userId, gender, new Timestamp(java.sql.Timestamp.valueOf(dateOfBirth)), phoneNumber, countryCode, countryName, new ArrayList<String>(), new ArrayList<String>());
 
                                 userCollectionReference.document(userHelperClass.getEmail()).set(userHelperClass.getUserData()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

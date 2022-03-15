@@ -12,15 +12,23 @@ import androidx.fragment.app.Fragment;
 
 import com.example.covicareapp.R;
 
+import java.util.ArrayList;
+
 public class AddedGroupLocalUsersFragment extends Fragment {
 
     // UI Variables
     TextView textView;
 
-    public static AddedGroupLocalUsersFragment newInstance(@NonNull String groupId) {
+    public static AddedGroupLocalUsersFragment newInstance(@NonNull String groupId, String groupDescription, String groupCreated, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         AddedGroupLocalUsersFragment fragment = new AddedGroupLocalUsersFragment();
         Bundle args = new Bundle();
         args.putString("groupId", groupId);
+        args.putString("groupDescription", groupDescription);
+        args.putString("groupCreated", groupCreated);
+        args.putString("groupOnlineUsers", groupOnlineUsers);
+        args.putString("groupOfflineUsers", groupOfflineUsers);
+        args.putSerializable("groupOnlineUsersList", groupOnlineUsersList);
+        args.putSerializable("groupOfflineUsers", groupOfflineUsersList);
         fragment.setArguments(args);
         return fragment;
     }

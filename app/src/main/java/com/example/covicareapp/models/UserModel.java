@@ -4,16 +4,19 @@ package com.example.covicareapp.models;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserModel {
-    String raspiUId, fullName, email, userId, gender, dateOfBirth, phoneNumber, countryCode, countryName;
+    String raspiUId, fullName, email, userId, gender, phoneNumber, countryCode, countryName;
+    com.google.firebase.Timestamp dateOfBirth;
+    ArrayList<String> groupsAddedTo, groupsCreated;
 
     public UserModel() {
     }
 
-    public UserModel(String raspiUId, String fullName, String email, String userId, String gender, String dateOfBirth, String phoneNumber, String countryCode, String countryName) {
+    public UserModel(String raspiUId, String fullName, String email, String userId, String gender, com.google.firebase.Timestamp dateOfBirth, String phoneNumber, String countryCode, String countryName, ArrayList<String> groupsAddedTo, ArrayList<String> groupsCreated) {
         this.raspiUId = raspiUId;
         this.fullName = fullName;
         this.email = email;
@@ -23,11 +26,54 @@ public class UserModel {
         this.phoneNumber = phoneNumber;
         this.countryCode = countryCode;
         this.countryName = countryName;
+        this.groupsAddedTo = groupsAddedTo;
+        this.groupsCreated = groupsCreated;
     }
 
-    public String getRaspiUId() { return raspiUId; }
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "raspiUId='" + raspiUId + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", userId='" + userId + '\'' +
+                ", gender='" + gender + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", groupsAddedTo=" + groupsAddedTo +
+                ", groupsCreated=" + groupsCreated +
+                '}';
+    }
 
-    public void setRapsiUId(String raspiUId) { this.raspiUId = raspiUId; }
+    public void setRaspiUId(String raspiUId) {
+        this.raspiUId = raspiUId;
+    }
+
+    public ArrayList<String> getGroupsAddedTo() {
+        return groupsAddedTo;
+    }
+
+    public void setGroupsAddedTo(ArrayList<String> groupsAddedTo) {
+        this.groupsAddedTo = groupsAddedTo;
+    }
+
+    public ArrayList<String> getGroupsCreated() {
+        return groupsCreated;
+    }
+
+    public void setGroupsCreated(ArrayList<String> groupsCreated) {
+        this.groupsCreated = groupsCreated;
+    }
+
+    public String getRaspiUId() {
+        return raspiUId;
+    }
+
+    public void setRapsiUId(String raspiUId) {
+        this.raspiUId = raspiUId;
+    }
 
     public String getFullName() {
         return fullName;
@@ -61,11 +107,11 @@ public class UserModel {
         this.gender = gender;
     }
 
-    public String getDateOfBirth() {
+    public com.google.firebase.Timestamp getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(com.google.firebase.Timestamp dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -102,13 +148,15 @@ public class UserModel {
         userMapData.put("gender", this.gender);
 
         DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.from(formatDateTime.parse(this.dateOfBirth));
+        LocalDate localDate = LocalDate.from(formatDateTime.parse(this.dateOfBirth.toString()));
         Timestamp timestamp = Timestamp.valueOf(localDate + " 00:00:00.000000000");
 
         userMapData.put("dateOfBirth", timestamp);
         userMapData.put("phoneNumber", this.phoneNumber);
         userMapData.put("countryCode", this.countryCode);
         userMapData.put("countryName", this.countryName);
+        userMapData.put("groupsAddedTo", this.groupsAddedTo);
+        userMapData.put("groupsCreated", this.groupsCreated);
         return userMapData;
     }
 

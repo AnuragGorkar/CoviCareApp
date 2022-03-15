@@ -164,6 +164,7 @@ public class SelectGroupActivity extends AppCompatActivity {
                     intent.putExtra("groupDescription", data.get("groupInfo").toString());
                     intent.putExtra("groupOnlineUsersList", (ArrayList<String>) data.get("groupUsers"));
                     intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
+                    intent.putExtra("groupOfflineUsersList", new ArrayList<String>());
                     intent.putExtra("groupOfflineUsers", "0");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

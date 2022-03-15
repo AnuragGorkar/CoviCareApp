@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+
 public class AddedGroupInfoFragment extends Fragment {
 
     // UI Variables
@@ -27,7 +29,7 @@ public class AddedGroupInfoFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     CollectionReference userCollectionReference, allGroupsCollectionReference;
 
-    public static AddedGroupInfoFragment newInstance(@NonNull String groupId, String groupDescription, String groupCreated, String groupOnlineUsers, String groupOfflineUsers) {
+    public static AddedGroupInfoFragment newInstance(@NonNull String groupId, String groupDescription, String groupCreated, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         AddedGroupInfoFragment fragment = new AddedGroupInfoFragment();
         Bundle args = new Bundle();
         args.putString("groupId", groupId);
@@ -35,6 +37,8 @@ public class AddedGroupInfoFragment extends Fragment {
         args.putString("groupCreated", groupCreated);
         args.putString("groupOnlineUsers", groupOnlineUsers);
         args.putString("groupOfflineUsers", groupOfflineUsers);
+        args.putSerializable("groupOnlineUsersList", groupOnlineUsersList);
+        args.putSerializable("groupOfflineUsers", groupOfflineUsersList);
         fragment.setArguments(args);
         return fragment;
     }

@@ -1,7 +1,6 @@
 package com.example.covicareapp.ui.adapters;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,19 +11,25 @@ import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupInfoFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupLocalUsersFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupOnlineUsersFragment;
 
+import java.util.ArrayList;
+
 public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
 
     private final String[] tabTitle = new String[]{"Info", "Online Users", "Local Users"};
     String groupIdVal, groupDescriptionVal, groupDateCreatedVal, groupOnlineUsersVal, groupOfflineUsersVal;
+    ArrayList<String> groupOnlineUsersListVal = new ArrayList<String>();
+    ArrayList<String> groupOfflineUsersListVal = new ArrayList<String>();
     Bundle bundle;
 
-    public GroupAddedTabViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, String groupId, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers) {
+    public GroupAddedTabViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, String groupId, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         super(fragmentActivity);
         groupIdVal = groupId;
         groupDateCreatedVal = groupDateCreated;
         groupDescriptionVal = groupDescription;
         groupOnlineUsersVal = groupOnlineUsers;
         groupOfflineUsersVal = groupOfflineUsers;
+        groupOnlineUsersListVal = groupOnlineUsersList;
+        groupOfflineUsersListVal = groupOfflineUsersList;
     }
 
     @NonNull
@@ -34,12 +39,26 @@ public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 bundle = new Bundle();
                 bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupDateCreated", groupDateCreatedVal);
+                bundle.putString("groupDescription", groupDescriptionVal);
+                bundle.putString("groupOnlineUsers", groupOnlineUsersVal);
+                bundle.putString("groupOfflineUsers", groupOfflineUsersVal);
+                bundle.putSerializable("groupOnlineUsersList", groupOnlineUsersListVal);
+                bundle.putSerializable("groupOfflineUsersList", groupOfflineUsersListVal);
                 AddedGroupOnlineUsersFragment addedGroupOnlineUsersFragment = new AddedGroupOnlineUsersFragment();
                 addedGroupOnlineUsersFragment.setArguments(bundle);
                 return addedGroupOnlineUsersFragment;
             case 2:
                 bundle = new Bundle();
                 bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupDateCreated", groupDateCreatedVal);
+                bundle.putString("groupDescription", groupDescriptionVal);
+                bundle.putString("groupOnlineUsers", groupOnlineUsersVal);
+                bundle.putString("groupOfflineUsers", groupOfflineUsersVal);
+                bundle.putSerializable("groupOnlineUsersList", groupOnlineUsersListVal);
+                bundle.putSerializable("groupOfflineUsersList", groupOfflineUsersListVal);
                 AddedGroupLocalUsersFragment addedGroupLocalUsersFragment = new AddedGroupLocalUsersFragment();
                 addedGroupLocalUsersFragment.setArguments(bundle);
                 return addedGroupLocalUsersFragment;
@@ -47,11 +66,11 @@ public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
                 bundle = new Bundle();
                 bundle.putString("groupId", groupIdVal);
                 bundle.putString("groupDateCreated", groupDateCreatedVal);
-                Log.i("Date Added Val", groupDateCreatedVal);
                 bundle.putString("groupDescription", groupDescriptionVal);
                 bundle.putString("groupOnlineUsers", groupOnlineUsersVal);
-                Log.i("Online Users Val", String.valueOf(groupOnlineUsersVal));
                 bundle.putString("groupOfflineUsers", groupOfflineUsersVal);
+                bundle.putSerializable("groupOnlineUsersList", groupOnlineUsersListVal);
+                bundle.putSerializable("groupOfflineUsersList", groupOfflineUsersListVal);
                 AddedGroupInfoFragment addedGroupInfoFragment = new AddedGroupInfoFragment();
                 addedGroupInfoFragment.setArguments(bundle);
                 return addedGroupInfoFragment;
