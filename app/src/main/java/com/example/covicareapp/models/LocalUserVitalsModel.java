@@ -2,17 +2,17 @@ package com.example.covicareapp.models;
 
 import java.sql.Timestamp;
 
-public class OfflineUserVitalsModel {
+public class LocalUserVitalsModel {
     double hbRating, o2Saturation, bodyTemp;
     int coughAnalysis;
     String raspiId, userId, analysisResult;
     Timestamp recDateTime;
 
-    public OfflineUserVitalsModel() {
+    public LocalUserVitalsModel() {
 
     }
 
-    public OfflineUserVitalsModel(double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, String raspiId, String userId, String analysisResult, Timestamp recDateTime) {
+    public LocalUserVitalsModel(double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, String raspiId, String userId, String analysisResult, Timestamp recDateTime) {
         this.hbRating = hbRating;
         this.o2Saturation = o2Saturation;
         this.bodyTemp = bodyTemp;
@@ -25,7 +25,7 @@ public class OfflineUserVitalsModel {
 
     @Override
     public String toString() {
-        return "OfflineUserVitalsModel{" +
+        return "LocalUserVitalsModel{" +
                 "hbRating=" + hbRating +
                 ", o2Saturation=" + o2Saturation +
                 ", bodyTemp=" + bodyTemp +

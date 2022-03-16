@@ -9,102 +9,95 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.covicareapp.models.OfflineUserModel;
+import com.example.covicareapp.helpers.VitalsContract.LocalUsers;
+import com.example.covicareapp.helpers.VitalsContract.LocalUsersData;
+import com.example.covicareapp.helpers.VitalsContract.LocalUsersProfilesRelation;
+import com.example.covicareapp.helpers.VitalsContract.OnlineUsersData;
+import com.example.covicareapp.models.LocalUserModel;
+import com.example.covicareapp.models.LocalUserVitalsModel;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class VitalsSQLiteHelper extends SQLiteOpenHelper {
-
-
-    public static final String ONLINE_USERS_DATA = "ONLINE_USERS_DATA";
-    public static final String RASPI_UID = "RASPI_UID";
-    public static final String DATE_REC = "DATE_REC";
-    public static final String RASPI_ID = "RASPI_ID";
-    public static final String UID = "UID";
-    public static final String PID = "PID";
-    public static final String O_2_VAL = "O2_VAL";
-    public static final String HB_VAL = "HB_VAL";
-    public static final String TEMP_VAL = "TEMP_VAL";
-    public static final String COUGH_VAL = "COUGH_VAL";
-    public static final String ANALYSIS_RES = "ANALYSIS_RES";
-
-    public static final String OFFLINE_USERS = "OFFLINE_USERS";
-    public static final String OFFLINE_USERS_DATA = "OFFLINE_USERS_DATA";
-    public static final String OFFLINE_USERS_PROFILES = "OFFLINE_USERS_PROFILES";
-    public static final String LUID = "LUID";
-    public static final String NAME = "NAME";
-    public static final String GENDER = "GENDER";
-    public static final String DATE_OF_BIRTH = "DATE_OF_BIRTH";
-    public static final String DATE_ADDED = "DATE_ADDED";
+    public static final String COVICARE_DATA_DB = "covicareData.db";
+    public static final int DATABASE_VERSION = 1;
 
 
     public VitalsSQLiteHelper(@Nullable Context context) {
-        super(context, "covicareData.db", null, 1);
+        super(context, COVICARE_DATA_DB, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createOnlineUsersDataTable =
-                "CREATE TABLE " + ONLINE_USERS_DATA + " ("
-                        + UID + " TEXT NOT NULL , "
-                        + RASPI_UID + " TEXT NOT NULL , "
-                        + RASPI_ID + " TEXT NOT NULL, "
-                        + PID + " TEXT NOT NULL, "
-                        + O_2_VAL + " REAL NOT NULL, "
-                        + HB_VAL + " REAL NOT NULL, "
-                        + TEMP_VAL + " REAL NOT NULL, "
-                        + COUGH_VAL + " INTEGER NOT NULL, "
-                        + DATE_REC + " NUMERIC NOT NULL, "
-                        + ANALYSIS_RES + " TEXT NOT NULL, "
-                        + " PRIMARY KEY(" + RASPI_UID + "," + DATE_REC + "))";
+        final String createOnlineUsersDataTable =
+                "CREATE TABLE " + OnlineUsersData.ONLINE_USERS_DATA + " ("
+                        + OnlineUsersData.EMAIL_ID + " TEXT NOT NULL , "
+                        + OnlineUsersData.RASPI_UID + " TEXT NOT NULL , "
+                        + OnlineUsersData.RASPI_ID + " TEXT NOT NULL, "
+                        + OnlineUsersData.GROUP_ID + " TEXT NOT NULL, "
+                        + OnlineUsersData.O_2_VAL + " REAL NOT NULL, "
+                        + OnlineUsersData.HB_VAL + " REAL NOT NULL, "
+                        + OnlineUsersData.TEMP_VAL + " REAL NOT NULL, "
+                        + OnlineUsersData.COUGH_VAL + " INTEGER NOT NULL, "
+                        + OnlineUsersData.DATE_REC + " TEXT NOT NULL, "
+                        + OnlineUsersData.ANALYSIS_RES + " TEXT NOT NULL, "
+                        + OnlineUsersData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
+//                        + " PRIMARY KEY(" + OnlineUsersData.RASPI_UID + "," + OnlineUsersData.DATE_REC + "));";
 
         sqLiteDatabase.execSQL(createOnlineUsersDataTable);
 
-        String createOfflineUsersTable =
-                "CREATE TABLE " + OFFLINE_USERS + " ("
-                        + LUID + " TEXT NOT NULL , "
-                        + NAME + " TEXT NOT NULL , "
-                        + GENDER + " TEXT NOT NULL , "
-                        + DATE_OF_BIRTH + " NUMERIC NOT NULL , "
-                        + DATE_ADDED + " NUMERIC NOT NULL , "
-                        + " PRIMARY KEY(" + LUID + "))";
+        final String createLocalUsersTable =
+                "CREATE TABLE " + LocalUsers.LOCAL_USERS + " ("
+                        + LocalUsers.LUID + " TEXT NOT NULL , "
+                        + LocalUsers.NAME + " TEXT NOT NULL , "
+                        + LocalUsers.GENDER + " TEXT NOT NULL , "
+                        + LocalUsers.DATE_OF_BIRTH + " TEXT NOT NULL , "
+                        + LocalUsers.DATE_ADDED + " TEXT NOT NULL , "
+                        + LocalUsers._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
+//                        + " PRIMARY KEY(" + LocalUsers.LUID + "));";
 
-        sqLiteDatabase.execSQL(createOfflineUsersTable);
+        sqLiteDatabase.execSQL(createLocalUsersTable);
 
-        String createOfflineUsersDataTable =
-                "CREATE TABLE " + OFFLINE_USERS_DATA + " ("
-                        + LUID + " TEXT NOT NULL , "
-                        + RASPI_ID + " TEXT NOT NULL , "
-                        + PID + " TEXT NOT NULL, "
-                        + O_2_VAL + " REAL NOT NULL ,  "
-                        + HB_VAL + " REAL NOT NULL ,  "
-                        + TEMP_VAL + " REAL NOT NULL ,  "
-                        + COUGH_VAL + " INTEGER NOT NULL ,  "
-                        + DATE_REC + " NUMERIC NOT NULL ,  "
-                        + ANALYSIS_RES + " TEXT NOT NULL ,  "
-                        + "FOREIGN KEY (" + LUID + ")"
-                        + "REFERENCES " + OFFLINE_USERS
-                        + "(" + LUID + "), "
-                        + "PRIMARY KEY(" + LUID + "," + DATE_REC + "))";
+        final String createLocalUsersDataTable =
+                "CREATE TABLE " + LocalUsersData.LOCAL_USERS_DATA + " ("
+                        + LocalUsersData.LUID + " TEXT NOT NULL , "
+                        + LocalUsersData.RASPI_ID + " TEXT NOT NULL , "
+                        + LocalUsersData.GROUP_ID + " TEXT NOT NULL, "
+                        + LocalUsersData.O_2_VAL + " REAL NOT NULL ,  "
+                        + LocalUsersData.HB_VAL + " REAL NOT NULL ,  "
+                        + LocalUsersData.TEMP_VAL + " REAL NOT NULL ,  "
+                        + LocalUsersData.COUGH_VAL + " INTEGER NOT NULL ,  "
+                        + LocalUsersData.DATE_REC + " TEXT NOT NULL ,  "
+                        + LocalUsersData.ANALYSIS_RES + " TEXT NOT NULL ,  "
+                        + LocalUsersData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
+//                        + "FOREIGN KEY (" + LocalUsersData.LUID + ")"
+//                        + "REFERENCES " + LocalUsers.LOCAL_USERS
+//                        + "(" + LocalUsersData.LUID + "), "
+//                        + "PRIMARY KEY(" + LocalUsersData.LUID + "," + LocalUsersData.DATE_REC + "));";
 
-        sqLiteDatabase.execSQL(createOfflineUsersDataTable);
+        sqLiteDatabase.execSQL(createLocalUsersDataTable);
 
-        String createOfflineUsersProfilesRelationTable =
-                "CREATE TABLE " + OFFLINE_USERS_PROFILES + " ("
-                        + LUID + " TEXT NOT NULL , "
-                        + PID + " TEXT NOT NULL , "
-                        + "PRIMARY KEY(" + LUID + "," + PID + "))";
+        final String createLocalUsersProfilesRelationTable =
+                "CREATE TABLE " + LocalUsersProfilesRelation.LOCAL_USERS_PROFILES + " ("
+                        + LocalUsersProfilesRelation.LUID + " TEXT NOT NULL , "
+                        + LocalUsersProfilesRelation.GROUP_ID + " TEXT NOT NULL , "
+                        + LocalUsersProfilesRelation._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
+//                        + "PRIMARY KEY(" + LocalUsersProfilesRelation.LUID + "," + LocalUsersProfilesRelation.GROUP_ID + "));";
 
-        sqLiteDatabase.execSQL(createOfflineUsersProfilesRelationTable);
+        sqLiteDatabase.execSQL(createLocalUsersProfilesRelationTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + OnlineUsersData.ONLINE_USERS_DATA);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LocalUsers.LOCAL_USERS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LocalUsersData.LOCAL_USERS_DATA);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + LocalUsersProfilesRelation.LOCAL_USERS_PROFILES);
+        onCreate(sqLiteDatabase);
 
     }
 
@@ -113,25 +106,27 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Timestamp timestamp = onlineUserVitalsModel.getRecDateTime();
-        Date date = new Date(timestamp.getTime());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//        Timestamp timestamp = onlineUserVitalsModel.getRecDateTime();
+//        Date date = new Date(timestamp.getTime());
 
-        contentValues.put(UID, onlineUserVitalsModel.getUserId());
-        contentValues.put(RASPI_UID, onlineUserVitalsModel.getRaspiUId());
-        contentValues.put(RASPI_ID, onlineUserVitalsModel.getRaspiId());
-        contentValues.put(PID, onlineUserVitalsModel.getProfileId());
-        contentValues.put(O_2_VAL, onlineUserVitalsModel.getO2Saturation());
-        contentValues.put(HB_VAL, onlineUserVitalsModel.getHbRating());
-        contentValues.put(TEMP_VAL, onlineUserVitalsModel.getBodyTemp());
-        contentValues.put(COUGH_VAL, onlineUserVitalsModel.getCoughAnalysis());
-        contentValues.put(DATE_REC, dateFormat.format(date));
-        contentValues.put(ANALYSIS_RES, onlineUserVitalsModel.getAnalysisResult());
+        String timestampNow = String.valueOf(com.google.firebase.Timestamp.now().getSeconds());
+
+        contentValues.put(OnlineUsersData.EMAIL_ID, onlineUserVitalsModel.getUserId());
+        contentValues.put(OnlineUsersData.RASPI_UID, onlineUserVitalsModel.getRaspiUId());
+        contentValues.put(OnlineUsersData.RASPI_ID, onlineUserVitalsModel.getRaspiId());
+        contentValues.put(OnlineUsersData.GROUP_ID, onlineUserVitalsModel.getProfileId());
+        contentValues.put(OnlineUsersData.O_2_VAL, onlineUserVitalsModel.getO2Saturation());
+        contentValues.put(OnlineUsersData.HB_VAL, onlineUserVitalsModel.getHbRating());
+        contentValues.put(OnlineUsersData.TEMP_VAL, onlineUserVitalsModel.getBodyTemp());
+        contentValues.put(OnlineUsersData.COUGH_VAL, onlineUserVitalsModel.getCoughAnalysis());
+        contentValues.put(OnlineUsersData.DATE_REC, timestampNow);
+        contentValues.put(OnlineUsersData.ANALYSIS_RES, onlineUserVitalsModel.getAnalysisResult());
 
         boolean returnVal;
 
         try {
-            long insert = sqLiteDatabase.insert(ONLINE_USERS_DATA, null, contentValues);
+            long insert = sqLiteDatabase.insert(OnlineUsersData.ONLINE_USERS_DATA, null, contentValues);
             returnVal = insert != -1;
         } catch (Exception e) {
             Log.i("Exception while adding vitals data   ", e.toString());
@@ -149,7 +144,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         boolean returnVal;
 
         try {
-            sqLiteDatabase.execSQL("delete from " + ONLINE_USERS_DATA);
+            sqLiteDatabase.execSQL("DELETE FROM " + OnlineUsersData.ONLINE_USERS_DATA + " ;");
             returnVal = true;
         } catch (Exception e) {
             Log.i("Exception while adding vitals data   ", e.toString());
@@ -162,7 +157,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
     public boolean deleteUserVitalsOnline(String userUniqueId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "DELETE FROM " + ONLINE_USERS_DATA + " WHERE " + UID + " = '" + userUniqueId + "'";
+        String queryString = "DELETE FROM " + OnlineUsersData.ONLINE_USERS_DATA + " WHERE " + OnlineUsersData.EMAIL_ID + " = '" + userUniqueId + "'" + " ;";
 
         boolean returnVal;
 
@@ -177,10 +172,10 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public boolean deleteUserVitalsForProfileOnline(String userUniqueId, String profileUniqueId) {
+    public boolean deleteUserVitalsForProfileOnline(String userUniqueId, String groupUniqueId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "DELETE FROM " + ONLINE_USERS_DATA + " WHERE " + UID + " = '" + userUniqueId + "' AND " + PID + " = '" + profileUniqueId + "'";
+        String queryString = "DELETE FROM " + OnlineUsersData.ONLINE_USERS_DATA + " WHERE " + OnlineUsersData.EMAIL_ID + " = '" + userUniqueId + "' AND " + OnlineUsersData.GROUP_ID + " = '" + groupUniqueId + "'" + " ;";
 
         boolean returnVal;
 
@@ -195,12 +190,12 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public List<OnlineUserVitalsModel> getAllVitalsListOnline() {
-        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
+    public ArrayList<OnlineUserVitalsModel> getAllVitalsListOnline() {
+        ArrayList<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "SELECT * FROM " + ONLINE_USERS_DATA;
+        String queryString = "SELECT * FROM " + OnlineUsersData.ONLINE_USERS_DATA + " ;";
 
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 
@@ -240,12 +235,12 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return allVitalsList;
     }
 
-    public List<OnlineUserVitalsModel> getVitalsForUserListOnline(String userUniqueId) {
-        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
+    public ArrayList<OnlineUserVitalsModel> getVitalsForUserListOnline(String userUniqueId) {
+        ArrayList<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "SELECT * FROM " + ONLINE_USERS_DATA + " WHERE " + UID + " = '" + userUniqueId + "'";
+        String queryString = "SELECT * FROM " + OnlineUsersData.ONLINE_USERS_DATA + " WHERE " + OnlineUsersData.EMAIL_ID + " = '" + userUniqueId + "'" + " ;";
 
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 
@@ -285,51 +280,145 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return allVitalsList;
     }
 
-    //    For Offline Users
-    public boolean addUserOffline(String profileUniqueId, OfflineUserModel offlineUserModel) {
+    //    For Local Users
+    public Cursor getCursorForRecyclerViewForGroup(String groupUniqueId) {
+        ArrayList<String> userIds = getLocalUsersIdsForGroupList(groupUniqueId);
+
+        String inQueryList = "";
+
+        for (String userId : userIds) {
+            inQueryList = inQueryList + "'" + userId + "',";
+        }
+        if (inQueryList.length() > 0)
+            inQueryList = inQueryList.substring(0, inQueryList.length() - 1);
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String queryString = "SELECT * FROM " + LocalUsers.LOCAL_USERS + " WHERE " + LocalUsers.LUID + " IN (" + inQueryList + ") ORDER BY " + LocalUsers.DATE_ADDED + " DESC;";
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        Log.i("Number :", String.valueOf(cursor.getCount()));
+
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                Log.i("User Data : ", cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3) + " " + cursor.getString(4));
+
+            } while (cursor.moveToNext());
+        }
+
+        sqLiteDatabase.close();
+        return cursor;
+    }
+
+    public String getCountForRecyclerViewForGroup(String groupUniqueId) {
+        ArrayList<String> userIds = getLocalUsersIdsForGroupList(groupUniqueId);
+
+        String inQueryList = "";
+
+        for (String userId : userIds) {
+            inQueryList = inQueryList + "'" + userId + "',";
+        }
+        if (inQueryList.length() > 0)
+            inQueryList = inQueryList.substring(0, inQueryList.length() - 1);
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        String queryString = "SELECT * FROM " + LocalUsers.LOCAL_USERS + " WHERE " + LocalUsers.LUID + " IN (" + inQueryList + ") ORDER BY " + LocalUsers.DATE_ADDED + " DESC;";
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        return String.valueOf(cursor.getCount());
+    }
+
+    public ArrayList<String> getExistingLocalUsersIdList() {
+        ArrayList<String> allLocalUsersIdsList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String queryString = "SELECT " + LocalUsers.LUID + " FROM " + LocalUsers.LOCAL_USERS + " ;";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String userId = cursor.getString(0);
+
+                Log.i("userId : ", userId);
+
+                allLocalUsersIdsList.add(userId);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allLocalUsersIdsList;
+    }
+
+    public ArrayList<String> getLocalUsersIdsForGroupList(String groupUniqueId) {
+        ArrayList<String> allLocalUsersIdsList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String queryString = "SELECT DISTINCT " + LocalUsersProfilesRelation.LUID + " FROM " + LocalUsersProfilesRelation.LOCAL_USERS_PROFILES + " WHERE " + LocalUsersData.GROUP_ID + " = '" + groupUniqueId + "';";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String userId = cursor.getString(0);
+
+                Log.i("userId : ", userId);
+
+                allLocalUsersIdsList.add(userId);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allLocalUsersIdsList;
+    }
+
+    public boolean addUserLocal(String groupUniqueId, LocalUserModel LocalUserModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Timestamp timestamp = offlineUserModel.getDateOfBirth();
-        Date date = new Date(timestamp.getTime());
+        com.google.firebase.Timestamp timestamp = LocalUserModel.getDateOfBirth();
 
-        Date dateAdded = new Date(System.currentTimeMillis());
+        String timestampNow = String.valueOf(com.google.firebase.Timestamp.now().getSeconds());
 
-        contentValues.put(LUID, offlineUserModel.getLocalUserId());
-        contentValues.put(NAME, offlineUserModel.getName());
-        contentValues.put(DATE_OF_BIRTH, dateFormat.format(date));
-        contentValues.put(GENDER, offlineUserModel.getGender());
-        contentValues.put(DATE_ADDED, dateFormat.format(dateAdded));
+        contentValues.put(LocalUsers.LUID, LocalUserModel.getLocalUserId());
+        contentValues.put(LocalUsers.NAME, LocalUserModel.getName());
+        contentValues.put(LocalUsers.DATE_OF_BIRTH, String.valueOf(timestamp.getSeconds()));
+        contentValues.put(LocalUsers.GENDER, LocalUserModel.getGender());
+        contentValues.put(LocalUsers.DATE_ADDED, timestampNow);
 
         boolean returnVal;
 
         try {
-            long insert = sqLiteDatabase.insert(OFFLINE_USERS, null, contentValues);
+            long insert = sqLiteDatabase.insert(LocalUsers.LOCAL_USERS, null, contentValues);
             if (insert == -1) {
                 returnVal = false;
             } else {
                 contentValues = new ContentValues();
 
-                contentValues.put(LUID, offlineUserModel.getLocalUserId());
-                contentValues.put(PID, profileUniqueId);
+                contentValues.put(LocalUsersProfilesRelation.LUID, LocalUserModel.getLocalUserId());
+                contentValues.put(LocalUsersProfilesRelation.GROUP_ID, groupUniqueId);
 
                 try {
-                    insert = sqLiteDatabase.insert(OFFLINE_USERS_PROFILES, null, contentValues);
+                    insert = sqLiteDatabase.insert(LocalUsersProfilesRelation.LOCAL_USERS_PROFILES, null, contentValues);
                     if (insert == -1) {
-                        deleteUserOffline(offlineUserModel.getLocalUserId());
+                        deleteUserLocal(LocalUserModel.getLocalUserId());
                         returnVal = false;
                     } else {
                         returnVal = true;
                     }
                 } catch (Exception e) {
-                    deleteUserOffline(offlineUserModel.getLocalUserId());
-                    Log.i("Exception while adding offline user data   ", e.toString());
+                    deleteUserLocal(LocalUserModel.getLocalUserId());
+                    Log.i("Exception while adding Local user data   ", e.toString());
                     returnVal = false;
                 }
             }
         } catch (Exception e) {
-            Log.i("Exception while adding offline user data   ", e.toString());
+            Log.i("Exception while adding Local user data   ", e.toString());
             returnVal = false;
         }
 
@@ -337,22 +426,20 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public boolean updateUserOffline(OfflineUserModel offlineUserModel) {
+    public boolean updateUserLocal(LocalUserModel LocalUserModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Timestamp timestamp = offlineUserModel.getDateOfBirth();
-        Date date = new Date(timestamp.getTime());
+        com.google.firebase.Timestamp timestamp = LocalUserModel.getDateOfBirth();
 
-        contentValues.put(NAME, offlineUserModel.getName());
-        contentValues.put(DATE_OF_BIRTH, dateFormat.format(date));
-        contentValues.put(GENDER, offlineUserModel.getGender());
+        contentValues.put(LocalUsers.NAME, LocalUserModel.getName());
+        contentValues.put(LocalUsers.DATE_OF_BIRTH, timestamp.getSeconds());
+        contentValues.put(LocalUsers.GENDER, LocalUserModel.getGender());
 
         boolean returnVal;
 
         try {
-            long insert = sqLiteDatabase.update(OFFLINE_USERS, contentValues, "LUID=?", new String[]{offlineUserModel.getLocalUserId()});
+            long insert = sqLiteDatabase.update(LocalUsers.LOCAL_USERS, contentValues, "LUID=?", new String[]{LocalUserModel.getLocalUserId()});
             returnVal = insert != -1;
         } catch (Exception e) {
             Log.i("Exception while updating local users data   ", e.toString());
@@ -362,16 +449,16 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public boolean deleteUserOffline(String userUniqueId) {
+    public boolean deleteUserLocal(String userUniqueId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "DELETE FROM " + OFFLINE_USERS + " WHERE " + UID + " = '" + userUniqueId + "'";
+        String queryString = "DELETE FROM " + LocalUsers.LOCAL_USERS + " WHERE " + LocalUsers.LUID + " = '" + userUniqueId + "'" + " ;";
 
         boolean returnVal;
 
         try {
             sqLiteDatabase.rawQuery(queryString, null);
-            queryString = "DELETE FROM " + OFFLINE_USERS_PROFILES + " WHERE " + UID + " = '" + userUniqueId + "'";
+            queryString = "DELETE FROM " + LocalUsersProfilesRelation.LOCAL_USERS_PROFILES + " WHERE " + LocalUsersProfilesRelation.LUID + " = '" + userUniqueId + "'" + " ;";
             returnVal = true;
         } catch (Exception e) {
             Log.i("Exception while deleting user   ", e.toString());
@@ -381,10 +468,10 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public boolean deleteUserOfflineFromProfile(String userUniqueId, String profileUniqueId) {
+    public boolean deleteUserLocalFromProfile(String userUniqueId, String groupUniqueId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "DELETE FROM " + ONLINE_USERS_DATA + " WHERE " + UID + " = '" + userUniqueId + "'";
+        String queryString = "DELETE FROM " + LocalUsersProfilesRelation.LOCAL_USERS_PROFILES + " WHERE " + LocalUsersProfilesRelation.LUID + " = '" + userUniqueId + "'";
 
         boolean returnVal;
 
@@ -398,64 +485,76 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public boolean deleteAllUsersOffline() {
+    public boolean deleteAllUsersLocal() {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+        boolean returnVal;
+
         try {
-            sqLiteDatabase.execSQL("delete from " + ONLINE_USERS_DATA);
+            sqLiteDatabase.execSQL("delete from " + OnlineUsersData.ONLINE_USERS_DATA);
+            returnVal = true;
         } catch (Exception e) {
             Log.i("Exception while adding vitals data   ", e.toString());
-            return false;
+            returnVal = false;
         }
-        return true;
+        sqLiteDatabase.close();
+        return returnVal;
     }
 
-
-    public boolean addOneVitalsEntryOffline(OnlineUserVitalsModel onlineUserVitalsModel) {
+    public boolean addOneVitalsEntryLocal(LocalUserVitalsModel LocalUserVitalsModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Timestamp timestamp = onlineUserVitalsModel.getRecDateTime();
+        Timestamp timestamp = LocalUserVitalsModel.getRecDateTime();
         Date date = new Date(timestamp.getTime());
 
-        contentValues.put(UID, onlineUserVitalsModel.getUserId());
-        contentValues.put(RASPI_UID, onlineUserVitalsModel.getRaspiUId());
-        contentValues.put(RASPI_ID, onlineUserVitalsModel.getRaspiId());
-        contentValues.put(O_2_VAL, onlineUserVitalsModel.getO2Saturation());
-        contentValues.put(HB_VAL, onlineUserVitalsModel.getHbRating());
-        contentValues.put(TEMP_VAL, onlineUserVitalsModel.getBodyTemp());
-        contentValues.put(COUGH_VAL, onlineUserVitalsModel.getCoughAnalysis());
-        contentValues.put(DATE_REC, dateFormat.format(date));
-        contentValues.put(ANALYSIS_RES, onlineUserVitalsModel.getAnalysisResult());
+        contentValues.put(LocalUsersData.LUID, LocalUserVitalsModel.getUserId());
+        contentValues.put(LocalUsersData.RASPI_ID, LocalUserVitalsModel.getRaspiId());
+        contentValues.put(LocalUsersData.O_2_VAL, LocalUserVitalsModel.getO2Saturation());
+        contentValues.put(LocalUsersData.HB_VAL, LocalUserVitalsModel.getHbRating());
+        contentValues.put(LocalUsersData.TEMP_VAL, LocalUserVitalsModel.getBodyTemp());
+        contentValues.put(LocalUsersData.COUGH_VAL, LocalUserVitalsModel.getCoughAnalysis());
+        contentValues.put(LocalUsersData.DATE_REC, dateFormat.format(date));
+        contentValues.put(LocalUsersData.ANALYSIS_RES, LocalUserVitalsModel.getAnalysisResult());
+
+        boolean returnVal;
 
         try {
-            long insert = sqLiteDatabase.insert(ONLINE_USERS_DATA, null, contentValues);
-            return insert != -1;
+            long insert = sqLiteDatabase.insert(LocalUsersData.LOCAL_USERS_DATA, null, contentValues);
+            sqLiteDatabase.close();
+            returnVal = insert != -1;
         } catch (Exception e) {
             Log.i("Exception while adding vitals data   ", e.toString());
-            return false;
+            returnVal = false;
         }
+
+        sqLiteDatabase.close();
+        return returnVal;
     }
 
-    public boolean deleteAllUserVitalsOffline() {
+    public boolean deleteAllUserVitalsLocal() {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
+        boolean returnVal;
         try {
-            sqLiteDatabase.execSQL("delete from " + ONLINE_USERS_DATA);
+            sqLiteDatabase.execSQL("delete from " + LocalUsersData.LOCAL_USERS_DATA);
+            returnVal = true;
         } catch (Exception e) {
             Log.i("Exception while adding vitals data   ", e.toString());
-            return false;
+            returnVal = false;
         }
-        return true;
+
+        sqLiteDatabase.close();
+        return returnVal;
     }
 
-    public boolean deleteUserVitalsOffline(String userUniqueId) {
+    public boolean deleteUserVitalsLocal(String userUniqueId) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "DELETE FROM " + ONLINE_USERS_DATA + " WHERE " + UID + " = '" + userUniqueId + "'";
+        String queryString = "DELETE FROM " + LocalUsersData.LOCAL_USERS_DATA + " WHERE " + LocalUsersData.LUID + " = '" + userUniqueId + "'";
 
         try {
             sqLiteDatabase.rawQuery(queryString, null);
@@ -466,7 +565,24 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return true;
     }
 
-//    public List<OnlineUserVitalsModel> getAllVitalsListOffline() {
+    public boolean addLocalUserToGroup(String userUniqueId, String groupUniqueId) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(LocalUsersProfilesRelation.LUID, userUniqueId);
+        contentValues.put(LocalUsersProfilesRelation.GROUP_ID, groupUniqueId);
+
+        try {
+            long insert = sqLiteDatabase.insert(LocalUsersProfilesRelation.LOCAL_USERS_PROFILES, null, contentValues);
+            return insert != -1;
+        } catch (Exception e) {
+            Log.i("Exception while adding vitals data   ", e.toString());
+            return false;
+        }
+
+    }
+
+//    public List<OnlineUserVitalsModel> getAllVitalsListLocal() {
 //        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
 //
 //        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -509,12 +625,12 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
 //        return allVitalsList;
 //    }
 
-//    public List<OnlineUserVitalsModel> getVitalsForUserListOffline(String userUniqueId) {
+//    public List<OnlineUserVitalsModel> getVitalsForUserListLocal(String userUniqueId) {
 //        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
 //
 //        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 //
-//        String queryString = "SELECT * FROM " + ONLINE_USERS_DATA + " WHERE " + UID + " = '" + userUniqueId + "'";
+//        String queryString = "SELECT * FROM " + ONLINE_USERS_DATA + " WHERE " + EMAIL_ID + " = '" + userUniqueId + "'";
 //
 //        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 //

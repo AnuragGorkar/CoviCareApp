@@ -1,16 +1,14 @@
 package com.example.covicareapp.models;
 
-import java.sql.Timestamp;
-
-public class OfflineUserModel {
+public class LocalUserModel {
     String localUserId, name, gender;
-    Timestamp dateOfBirth;
+    com.google.firebase.Timestamp dateOfBirth;
 
-    public OfflineUserModel() {
+    public LocalUserModel() {
 
     }
 
-    public OfflineUserModel(String localUserId, String name, String gender, Timestamp dateOfBirth) {
+    public LocalUserModel(String localUserId, String name, String gender, com.google.firebase.Timestamp dateOfBirth) {
         this.localUserId = localUserId;
         this.name = name;
         this.gender = gender;
@@ -19,7 +17,7 @@ public class OfflineUserModel {
 
     @Override
     public String toString() {
-        return "OfflineUserModel{" +
+        return "LocalUserModel{" +
                 "localUserId='" + localUserId + '\'' +
                 ", name='" + name + '\'' +
                 ", gender='" + gender + '\'' +
@@ -51,11 +49,11 @@ public class OfflineUserModel {
         this.gender = gender;
     }
 
-    public Timestamp getDateOfBirth() {
+    public com.google.firebase.Timestamp getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Timestamp dateOfBirth) {
+    public void setDateOfBirth(com.google.firebase.Timestamp dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 }

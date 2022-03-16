@@ -2,6 +2,7 @@ package com.example.covicareapp.ui.activities.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -9,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.models.UserModel;
+import com.example.covicareapp.models.OnlineUserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -80,7 +81,7 @@ public class VerifyEmailActivity extends AppCompatActivity {
         email = intent.getStringExtra("email");
         password = intent.getStringExtra("password");
         gender = intent.getStringExtra("gender");
-        dateOfBirth = intent.getStringExtra("dateOfBirth");
+        dateOfBirth = intent.getStringExtra("dateOfBirth") + " 00:00:00";
         phoneNumber = intent.getStringExtra("phoneNumber");
         countryName = intent.getStringExtra("countryName");
         countryCode = intent.getStringExtra("countryCode");
@@ -114,8 +115,9 @@ public class VerifyEmailActivity extends AppCompatActivity {
                                 userCollectionReference = firebaseFirestore.collection("users");
                                 allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
 
+                                Log.i("User DOB Format at signup :", dateOfBirth);
 
-                                UserModel userHelperClass = new UserModel(raspiUid, fullName, email, userId, gender, new Timestamp(java.sql.Timestamp.valueOf(dateOfBirth)), phoneNumber, countryCode, countryName, new ArrayList<String>(), new ArrayList<String>());
+                                OnlineUserModel userHelperClass = new OnlineUserModel(raspiUid, fullName, email, userId, gender, new Timestamp(java.sql.Timestamp.valueOf(dateOfBirth)), phoneNumber, countryCode, countryName, new ArrayList<String>(), new ArrayList<String>());
 
                                 userCollectionReference.document(userHelperClass.getEmail()).set(userHelperClass.getUserData()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override

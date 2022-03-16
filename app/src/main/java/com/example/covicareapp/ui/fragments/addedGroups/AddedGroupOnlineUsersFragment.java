@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.models.UserModel;
-import com.example.covicareapp.ui.adapters.UserAdapter;
+import com.example.covicareapp.models.OnlineUserModel;
+import com.example.covicareapp.ui.adapters.OnlineUserAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,7 +46,7 @@ public class AddedGroupOnlineUsersFragment extends Fragment {
     FirebaseFirestore firebaseFirestore;
     CollectionReference userCollectionReference, allGroupsCollectionReference;
 
-    UserAdapter userAdapter;
+    OnlineUserAdapter userAdapter;
 
     public static AddedGroupOnlineUsersFragment newInstance(@NonNull String groupId, String groupDescription, String groupCreated, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         AddedGroupOnlineUsersFragment fragment = new AddedGroupOnlineUsersFragment();
@@ -109,13 +109,13 @@ public class AddedGroupOnlineUsersFragment extends Fragment {
 
             Log.i("ONLINE USERS", groupOnlineUsersList.toString());
 
-            FirestoreRecyclerOptions<UserModel> options = new FirestoreRecyclerOptions.Builder<UserModel>().setQuery(query, UserModel.class).build();
+            FirestoreRecyclerOptions<OnlineUserModel> options = new FirestoreRecyclerOptions.Builder<OnlineUserModel>().setQuery(query, OnlineUserModel.class).build();
 
-            userAdapter = new UserAdapter(options);
+            userAdapter = new OnlineUserAdapter(options);
 
             recyclerView.setAdapter(userAdapter);
 
-            userAdapter.setOnItemClickListener(new UserAdapter.OnItemClickListener() {
+            userAdapter.setOnItemClickListener(new OnlineUserAdapter.OnItemClickListener() {
                 @Override
                 public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
 

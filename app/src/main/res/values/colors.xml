@@ -44,12 +44,12 @@
     <color name="information_800">#FF0099CC</color>
 
     <!--    Male Color-->
-    <color name="gender_male_light">#FF2476FF</color>
-    <color name="gender_male_dark">#FF0053B3</color>
+    <color name="gender_male_light">#FF0053B3</color>
+    <color name="gender_male_dark">#FF2476FF</color>
 
     <!--    Female Color-->
-    <color name="gender_female_light">#FFFF25E5</color>
-    <color name="gender_female_dark">#FF91278F</color>
+    <color name="gender_female_light">#FF91278F</color>
+    <color name="gender_female_dark">#FFFF25E5</color>
 
     <!--    Other Color-->
     <color name="gender_other_light">#FF00C851</color>

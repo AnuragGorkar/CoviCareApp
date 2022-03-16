@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.models.UserModel;
+import com.example.covicareapp.models.OnlineUserModel;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.Timestamp;
@@ -23,21 +23,21 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.TimeZone;
 
-public class UserAdapter extends FirestoreRecyclerAdapter<UserModel, UserAdapter.UserHolder> {
+public class OnlineUserAdapter extends FirestoreRecyclerAdapter<OnlineUserModel, OnlineUserAdapter.UserHolder> {
     /**
      * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
      * FirestoreRecyclerOptions} for configuration options.
      *
      * @param options
      */
-    private UserAdapter.OnItemClickListener listener;
+    private OnlineUserAdapter.OnItemClickListener listener;
 
-    public UserAdapter(@NonNull FirestoreRecyclerOptions<UserModel> options) {
+    public OnlineUserAdapter(@NonNull FirestoreRecyclerOptions<OnlineUserModel> options) {
         super(options);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull UserAdapter.UserHolder holder, int position, @NonNull UserModel model) {
+    protected void onBindViewHolder(@NonNull OnlineUserAdapter.UserHolder holder, int position, @NonNull OnlineUserModel model) {
         holder.userName.setText(model.getFullName());
         holder.userEmail.setText((model.getEmail()));
         try {
@@ -58,17 +58,7 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserModel, UserAdapter
 
     }
 
-    public String getAge(UserModel model) throws ParseException {
-//        long dateOfBirth = java.sql.Timestamp.valueOf(model.getDateOfBirth().toString()) .getTime();
-//        long dateNow = java.sql.Timestamp.valueOf(Timestamp.now().toString()).getTime();
-//
-//        LocalDate doB = LocalDateTime.ofInstant(Instant.ofEpochSecond(dateOfBirth), TimeZone.getDefault().toZoneId()).toLocalDate();
-//        LocalDate dNow = LocalDateTime.ofInstant(Instant.ofEpochSecond(dateNow), TimeZone.getDefault().toZoneId()).toLocalDate();
-//
-//        Period p = Period.between(doB, dNow);
-//
-//        return String.valueOf(p.getYears());
-
+    public String getAge(OnlineUserModel model) throws ParseException {
         long dobSeconds = model.getDateOfBirth().getSeconds();
         long nowSeconds = Timestamp.now().getSeconds();
 
@@ -80,15 +70,15 @@ public class UserAdapter extends FirestoreRecyclerAdapter<UserModel, UserAdapter
         return String.valueOf(p.getYears());
     }
 
-    public void setOnItemClickListener(UserAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(OnlineUserAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public UserAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OnlineUserAdapter.UserHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_online_users_card, parent, false);
-        return new UserAdapter.UserHolder(view);
+        return new OnlineUserAdapter.UserHolder(view);
     }
 
     public interface OnItemClickListener {

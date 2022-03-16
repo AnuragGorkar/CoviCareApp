@@ -5,7 +5,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 
-import com.example.covicareapp.models.UserModel;
+import com.example.covicareapp.models.OnlineUserModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -17,11 +17,11 @@ import java.util.Map;
 
 public class FirestoreDatabaseFunctions {
 
-    public Map<String, Object> addNewUser(UserModel userModel, FirebaseFirestore firebaseFirestore, MaterialButton button, ProgressBar progressBar) {
+    public Map<String, Object> addNewUser(OnlineUserModel onlineUserModel, FirebaseFirestore firebaseFirestore, MaterialButton button, ProgressBar progressBar) {
         Map<String, Object> resultMap = new HashMap<>();
         CollectionReference userCollectionReference = firebaseFirestore.collection("users");
 
-        userCollectionReference.document(userModel.getEmail()).set(userModel.getUserData()).addOnCompleteListener(new OnCompleteListener<Void>() {
+        userCollectionReference.document(onlineUserModel.getEmail()).set(onlineUserModel.getUserData()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

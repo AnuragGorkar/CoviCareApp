@@ -25,10 +25,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class AddNewUserActivity extends AppCompatActivity {
@@ -36,6 +38,7 @@ public class AddNewUserActivity extends AppCompatActivity {
     // Variables
     String groupId, groupName, groupDateCreated, groupDescription, groupOfflineUsers, groupOnlineUsers, email, password;
     ArrayList<String> groupOnlineUsersList = new ArrayList<String>();
+    ArrayList<String> groupOfflineUsersList = new ArrayList<String>();
 
     // UI Variables
     Dialog dialog;
@@ -95,6 +98,14 @@ public class AddNewUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddNewUserActivity.this, AddLocalUsersInfoActivity.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupName", groupName);
+                intent.putExtra("groupDateCreated", groupDateCreated);
+                intent.putExtra("groupDescription", groupDescription);
+                intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+                intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+                intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -265,24 +276,40 @@ public class AddNewUserActivity extends AppCompatActivity {
                                                         addNewUserButton.setBackgroundColor(getColor(R.color.success_400));
                                                         addNewUserButton.setText("New User Added");
 
-                                                        final Handler handler = new Handler();
-                                                        handler.postDelayed(new Runnable() {
+                                                        allGroupsCollectionReference.document(groupId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                             @Override
-                                                            public void run() {
-                                                                // Do something after 5s = 5000ms
-                                                                Intent intent = new Intent(AddNewUserActivity.this, GroupAddedInfoActivity.class);
-                                                                intent.putExtra("goToTab", "Online Users");
-                                                                intent.putExtra("groupId", groupId);
-                                                                intent.putExtra("groupName", groupName);
-                                                                intent.putExtra("groupDateCreated", groupDateCreated);
-                                                                intent.putExtra("groupDescription", groupDescription);
-                                                                intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
-                                                                intent.putExtra("groupOnlineUsers", groupOnlineUsers);
-                                                                intent.putExtra("groupOfflineUsers", groupOfflineUsers);
-                                                                startActivity(intent);
-                                                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                                                    Map<String, Object> data = documentSnapshot.getData();
+
+                                                                    final Handler handler = new Handler();
+                                                                    handler.postDelayed(new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            Intent intent = new Intent(AddNewUserActivity.this, GroupAddedInfoActivity.class);
+                                                                            intent.putExtra("groupId", groupId);
+                                                                            intent.putExtra("groupName", groupName);
+                                                                            intent.putExtra("groupDateCreated", groupDateCreated);
+                                                                            intent.putExtra("groupDescription", groupDescription);
+                                                                            intent.putExtra("groupOnlineUsersList", (ArrayList<String>) data.get("groupUsers"));
+                                                                            intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
+                                                                            intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                                                                            intent.putExtra("groupOfflineUsersList", groupOnlineUsersList);
+                                                                            startActivity(intent);
+                                                                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                                                        }
+                                                                    }, 200);
+
+                                                                } else {
+                                                                    setDialogueDismissable(true);
+                                                                    progressBar.setVisibility(View.GONE);
+                                                                    addNewUserButton.setVisibility(View.VISIBLE);
+                                                                    Log.e("Error", task.getException().getMessage());
+                                                                }
+
                                                             }
-                                                        }, 500);
+                                                        });
                                                     } else {
                                                         setDialogueDismissable(true);
                                                         progressBar.setVisibility(View.GONE);

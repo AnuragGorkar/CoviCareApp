@@ -2,6 +2,7 @@ package com.example.covicareapp.ui.fragments.addedGroups;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -53,6 +55,8 @@ public class AddedGroupInfoFragment extends Fragment {
         String groupOnlineUsers = args.getString("groupOnlineUsers");
         String groupOfflineUsers = args.getString("groupOfflineUsers");
 
+        VitalsSQLiteHelper vitalsSQLiteHelper = new VitalsSQLiteHelper(getActivity());
+
         groupDescriptionTextView = rootView.findViewById(R.id.group_description);
         groupCreatedTextView = rootView.findViewById(R.id.date_created);
         totalUsersTextView = rootView.findViewById(R.id.total_users_number);
@@ -67,11 +71,16 @@ public class AddedGroupInfoFragment extends Fragment {
 
         groupDescriptionTextView.setText(groupDescription);
         groupCreatedTextView.setText(groupCreated);
-        localUsersTextView.setText(groupOfflineUsers);
+        localUsersTextView.setText(vitalsSQLiteHelper.getCountForRecyclerViewForGroup(groupId));
         onlineUsersTextView.setText(groupOnlineUsers);
 
+        Log.i("The number of online users are", groupOnlineUsers);
+
+        Log.i("The number of local users are", vitalsSQLiteHelper.getCountForRecyclerViewForGroup(groupId));
+
+
         ValueAnimator animator = new ValueAnimator();
-        animator.setObjectValues(0, 2);
+        animator.setObjectValues(0, Integer.parseInt((String) vitalsSQLiteHelper.getCountForRecyclerViewForGroup(groupId)) + Integer.parseInt((String) groupOnlineUsers));
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
                 totalUsersTextView.setText(String.valueOf(animation.getAnimatedValue()));

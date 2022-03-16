@@ -1,22 +1,19 @@
 package com.example.covicareapp.models;
 
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserModel {
+public class OnlineUserModel {
     String raspiUId, fullName, email, userId, gender, phoneNumber, countryCode, countryName;
     com.google.firebase.Timestamp dateOfBirth;
     ArrayList<String> groupsAddedTo, groupsCreated;
 
-    public UserModel() {
+    public OnlineUserModel() {
     }
 
-    public UserModel(String raspiUId, String fullName, String email, String userId, String gender, com.google.firebase.Timestamp dateOfBirth, String phoneNumber, String countryCode, String countryName, ArrayList<String> groupsAddedTo, ArrayList<String> groupsCreated) {
+    public OnlineUserModel(String raspiUId, String fullName, String email, String userId, String gender, com.google.firebase.Timestamp dateOfBirth, String phoneNumber, String countryCode, String countryName, ArrayList<String> groupsAddedTo, ArrayList<String> groupsCreated) {
         this.raspiUId = raspiUId;
         this.fullName = fullName;
         this.email = email;
@@ -32,7 +29,7 @@ public class UserModel {
 
     @Override
     public String toString() {
-        return "UserModel{" +
+        return "OnlineUserModel{" +
                 "raspiUId='" + raspiUId + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
@@ -45,10 +42,6 @@ public class UserModel {
                 ", groupsAddedTo=" + groupsAddedTo +
                 ", groupsCreated=" + groupsCreated +
                 '}';
-    }
-
-    public void setRaspiUId(String raspiUId) {
-        this.raspiUId = raspiUId;
     }
 
     public ArrayList<String> getGroupsAddedTo() {
@@ -69,6 +62,10 @@ public class UserModel {
 
     public String getRaspiUId() {
         return raspiUId;
+    }
+
+    public void setRaspiUId(String raspiUId) {
+        this.raspiUId = raspiUId;
     }
 
     public void setRapsiUId(String raspiUId) {
@@ -139,7 +136,7 @@ public class UserModel {
         this.countryName = countryName;
     }
 
-    public Map<String, Object> getUserData(){
+    public Map<String, Object> getUserData() {
         Map<String, Object> userMapData = new HashMap<>();
         userMapData.put("raspiUId", this.raspiUId);
         userMapData.put("userId", this.userId);
@@ -147,11 +144,31 @@ public class UserModel {
         userMapData.put("email", this.email);
         userMapData.put("gender", this.gender);
 
-        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.from(formatDateTime.parse(this.dateOfBirth.toString()));
-        Timestamp timestamp = Timestamp.valueOf(localDate + " 00:00:00.000000000");
+//        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        Log.i("User DOB Format at date formatter :", this.dateOfBirth.toString());
+//        LocalDate localDate = LocalDate.from(formatDateTime.parse(this.dateOfBirth.toString()));
+//        Timestamp timestamp = Timestamp.valueOf(localDate + ".000000000");
 
-        userMapData.put("dateOfBirth", timestamp);
+//        DateFormat formatDateTime = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = (Date)formatter.parse(str_date);
+//
+//
+//        Log.i("User DOB Format at date formatter :", this.dateOfBirth.toString());
+//        Timestamp timestamp = new ;
+//
+//        Date date = new Date(this.dateOfBirth.toString())
+//
+//        try {
+//            timestamp = Timestamp.valueOf(formatDateTime.parse(this.dateOfBirth.toString()) + ".000000000");
+//        } catch (ParseException e) {
+//            Log.i("Exception", e.getMessage().toString());
+//            timestamp = Timestamp.valueOf(this.dateOfBirth.toString()  + ".000000000");
+//
+//            e.printStackTrace();
+//        }
+
+
+        userMapData.put("dateOfBirth", this.dateOfBirth);
         userMapData.put("phoneNumber", this.phoneNumber);
         userMapData.put("countryCode", this.countryCode);
         userMapData.put("countryName", this.countryName);

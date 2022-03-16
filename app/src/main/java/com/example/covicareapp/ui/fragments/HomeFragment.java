@@ -62,7 +62,6 @@ public class HomeFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         String vitals_data = intent.getStringExtra("Vitals Data");
 
-
         recordVitals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

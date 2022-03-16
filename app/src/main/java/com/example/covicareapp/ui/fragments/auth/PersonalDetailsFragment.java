@@ -141,7 +141,7 @@ public class PersonalDetailsFragment extends Fragment {
         else
             monthStr = "" + month;
 
-        return dayStr + "/" + monthStr + "/" + year;
+        return year + "-" + monthStr + "-" + dayStr;
     }
 
     protected void showSnackbar(View view, String messageStr, String actionStr, String resultState) {
