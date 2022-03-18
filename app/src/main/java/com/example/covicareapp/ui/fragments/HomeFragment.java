@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.covicareapp.R;
-import com.example.covicareapp.ui.activities.ScanQrActivity;
+import com.example.covicareapp.ui.activities.qrscan.ScanQrActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;

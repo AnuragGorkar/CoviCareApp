@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_toolbar_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/back_dialogue"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="left"
+                android:background="@color/black_600"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:tint="@color/white_50" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/close_dialogue"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right"
+                android:background="@color/black_600"
+                android:src="@drawable/ic_baseline_close_24"
+                android:tint="@color/white_50" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/select_qr_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_titled_text_view"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/show_add_user_qr"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="30dp"
+                        android:text="add  user QR Code"
+                        android:textSize="14sp"
+                        app:cornerRadius="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:justificationMode="inter_word"
+                        android:text="Display QR code to add your Online CoviCare account to another Online CoviCare user. This will not share your vitals data. The scanner can use this to add you to their group."
+                        android:textColor="@color/white_50"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/black_600"
+                    android:paddingHorizontal="8dp"
+                    android:text="Add User to Group"
+                    android:textColor="@color/white_50"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_titled_text_view"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/show_share_vitals_qr"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="share vitals QR Code"
+                        android:textSize="14sp"
+                        app:cornerRadius="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:justificationMode="inter_word"
+                        android:text="Display QR Code to share all you vitals data. This data will be encrypted. The user must scan this code to import all your vitals data."
+                        android:textColor="@color/white_50"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/black_600"
+                    android:paddingHorizontal="8dp"
+                    android:text="Share Vitals"
+                    android:textColor="@color/white_50"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/share_by_qr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <ImageView
+                android:id="@+id/qr_code_view"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:src="@drawable/ic_baseline_error_outline_24" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/qr_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="Scan QR to add online user"
+                android:textAllCaps="true"
+                android:textColor="@color/purple_200"
+                android:textSize="18dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

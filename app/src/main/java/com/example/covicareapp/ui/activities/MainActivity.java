@@ -1,12 +1,17 @@
 package com.example.covicareapp.ui.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,12 +27,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
+import com.example.covicareapp.logic.EncryptDecryptData;
 import com.example.covicareapp.ui.fragments.GroupAddedToFragment;
 import com.example.covicareapp.ui.fragments.HomeFragment;
 import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,18 +45,29 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     // Variables
     int prevItemId;
+    String email;
+
     //      UI Variables
+    Dialog dialog;
+    ImageView qr_code;
+    TextView qr_info;
+    LinearLayout select_qr_type_layout, show_qr_layout;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
+    ImageButton closeDialogueButton, backDialogueButton;
     ActionBarDrawerToggle actionBarDrawerToggle;
     NavigationView navigationView;
     LottieAnimationView loadingAnimation;
     TextView loadingTv;
+    MaterialButton show_add_user_qr_code, show_share_vitals_qr_code;
     Menu menu;
     HashMap<String, Object> userData = new HashMap<String, Object>();
     ArrayList<String> groupsCreatedIds = new ArrayList<String>();
@@ -67,6 +85,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = findViewById(R.id.nav_view);
         loadingAnimation = findViewById(R.id.loading_lottie);
         loadingTv = findViewById(R.id.loading_text);
+
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        email = firebaseUser.getEmail();
 
         loadingTv.setVisibility(View.GONE);
         loadingAnimation.setVisibility(View.GONE);
@@ -185,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("Options Menu Click", "Logout Clicked");
                 break;
             case R.id.share_by_qr:
-                Log.i("Options Menu Click", "Share Info by QR Clicked");
+                showAddOnlineUserDialogue();
                 break;
             case R.id.add_new_user: {
                 Intent intent = new Intent(MainActivity.this, SelectGroupActivity.class);
@@ -196,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
+
 
     private void showFragments(Fragment fragment, boolean showOptions) {
         showMenuOptions(showOptions);
@@ -215,6 +239,81 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else {
             super.onBackPressed();
         }
+
+    }
+
+    public void showAddOnlineUserDialogue() {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custom_show_qr_dialogue);
+
+        // UI Hooks
+        closeDialogueButton = dialog.findViewById(R.id.close_dialogue);
+        backDialogueButton = dialog.findViewById(R.id.back_dialogue);
+        select_qr_type_layout = dialog.findViewById(R.id.select_qr_type);
+        show_add_user_qr_code = dialog.findViewById(R.id.show_add_user_qr);
+        show_share_vitals_qr_code = dialog.findViewById(R.id.show_share_vitals_qr);
+
+        show_qr_layout = dialog.findViewById(R.id.share_by_qr);
+        qr_code = dialog.findViewById(R.id.qr_code_view);
+        qr_info = dialog.findViewById(R.id.qr_info);
+
+        show_qr_layout.setVisibility(View.GONE);
+        backDialogueButton.setVisibility(View.GONE);
+
+        show_add_user_qr_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                select_qr_type_layout.setVisibility(View.GONE);
+                show_qr_layout.setVisibility(View.VISIBLE);
+                backDialogueButton.setVisibility(View.VISIBLE);
+
+                EncryptDecryptData encryptDecryptData = new EncryptDecryptData();
+
+                try {
+                    String val = encryptDecryptData.encryptEmail(email).toString();
+
+                    QRGEncoder qrgEncoder = new QRGEncoder(val, null, QRGContents.Type.TEXT, 200);
+                    Bitmap qrBits = qrgEncoder.getBitmap();
+                    qr_code.setImageBitmap(qrBits);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+        show_share_vitals_qr_code.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        backDialogueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                select_qr_type_layout.setVisibility(View.VISIBLE);
+                show_qr_layout.setVisibility(View.GONE);
+                backDialogueButton.setVisibility(View.GONE);
+
+
+            }
+        });
+
+        closeDialogueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.70);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_toolbar_background);
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
 
     }
 

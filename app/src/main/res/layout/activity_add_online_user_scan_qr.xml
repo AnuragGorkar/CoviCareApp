@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.qrscan.ScanQrActivity">
+    tools:context=".ui.activities.qrscan.AddOnlineUserScanQrActivity">
 
     <com.budiyev.android.codescanner.CodeScannerView
         android:id="@+id/scanner_view"
@@ -27,17 +27,18 @@
         android:id="@+id/scanned_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/roboto_medium"
+        android:text="Scan QR code to add new online user"
         android:textAlignment="center"
         android:textAllCaps="true"
-        android:fontFamily="@font/roboto_medium"
-        android:text="Scan QR code to import vitals data"
         android:textColor="@color/purple_200"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/scanner_view"
         app:layout_constraintEnd_toEndOf="@+id/scanner_view"
         app:layout_constraintStart_toStartOf="@+id/scanner_view" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

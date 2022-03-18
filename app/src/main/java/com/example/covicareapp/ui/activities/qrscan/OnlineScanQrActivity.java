@@ -1,4 +1,4 @@
-package com.example.covicareapp.ui.activities;
+package com.example.covicareapp.ui.activities.qrscan;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,9 +13,10 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.covicareapp.R;
+import com.example.covicareapp.ui.activities.MainActivity;
 import com.google.zxing.Result;
 
-public class ScanQrActivity extends AppCompatActivity {
+public class OnlineScanQrActivity extends AppCompatActivity {
 
     //    UI Variables
     CodeScanner codeScanner;
@@ -25,7 +26,7 @@ public class ScanQrActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_qr);
+        setContentView(R.layout.activity_online_scan_qr);
 
         //        UI Hooks
         codeScannerView = findViewById(R.id.scanner_view);
@@ -42,7 +43,7 @@ public class ScanQrActivity extends AppCompatActivity {
                         Log.i("The result from the QR Code", result.getText());
                         scannedCode.setText(result.getText());
 
-                        Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
+                        Intent intent = new Intent(OnlineScanQrActivity.this, MainActivity.class);
                         intent.putExtra("Vitals Data", result.getText());
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);

@@ -14,6 +14,9 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
+        <activity android:name=".ui.activities.qrscan.AddOnlineUserScanQrActivity"></activity>
+        <activity android:name=".ui.activities.qrscan.OnlineScanQrActivity" />
+        <activity android:name=".ui.activities.qrscan.LocalScanQrActivity" />
         <activity android:name=".ui.activities.SelectGroupActivity" />
         <activity android:name=".ui.activities.AddLocalUsersInfoActivity" />
         <activity android:name=".ui.activities.AddNewUserActivity" />
@@ -27,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.GroupAddedInfoActivity" />
-        <activity android:name=".ui.activities.ScanQrActivity" />
+        <activity android:name=".ui.activities.qrscan.ScanQrActivity" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_home"
