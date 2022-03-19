@@ -1,4 +1,4 @@
-package com.example.covicareapp.ui.activities;
+package com.example.covicareapp.ui.activities.addedGroups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +28,7 @@ import java.util.Calendar;
 public class AddLocalUsersInfoActivity extends AppCompatActivity {
 
     //    Data Variables
+    String backActivity;
     String groupId, groupName, groupDateCreated, groupDescription, groupOfflineUsers, groupOnlineUsers;
     String fullName, gender, dateOfBirth, localUserId;
     ArrayList<String> groupOnlineUsersList = new ArrayList<String>();
@@ -76,6 +77,7 @@ public class AddLocalUsersInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_local_users_info);
 
         Intent intent = getIntent();
+        backActivity = intent.getStringExtra("backTo");
         groupId = intent.getStringExtra("groupId");
         groupName = intent.getStringExtra("groupName");
         groupDateCreated = intent.getStringExtra("groupDateCreated");
@@ -98,8 +100,24 @@ public class AddLocalUsersInfoActivity extends AppCompatActivity {
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddLocalUsersInfoActivity.this, AddNewUserActivity.class);
+                Intent intent;
+                if (backActivity != null && backActivity.equals("AddedGroupLocalUsersFragment")) {
+                    intent = new Intent(AddLocalUsersInfoActivity.this, GroupAddedInfoActivity.class);
+
+                } else {
+                    intent = new Intent(AddLocalUsersInfoActivity.this, AddNewUserActivity.class);
+
+                }
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupName", groupName);
+                intent.putExtra("groupDateCreated", groupDateCreated);
+                intent.putExtra("groupDescription", groupDescription);
+                intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+                intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+                intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -133,7 +151,7 @@ public class AddLocalUsersInfoActivity extends AppCompatActivity {
                     LocalUserModel offlineUserModel = new LocalUserModel(localUserId, fullName, gender, new Timestamp(java.sql.Timestamp.valueOf(dateOfBirth)));
                     Log.i("New Offline User Data: ", offlineUserModel.toString());
 
-                    if (vitalsSQLiteHelper.addUserLocal(groupId, offlineUserModel)) {
+                    if (vitalsSQLiteHelper.addNewUserLocal(groupId, offlineUserModel)) {
                         addLocalUser.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.GONE);
                         addLocalUser.setBackgroundColor(getColor(R.color.success_400));
@@ -156,6 +174,7 @@ public class AddLocalUsersInfoActivity extends AppCompatActivity {
                                 intent.putExtra("groupOfflineUsers", groupOfflineUsers);
                                 intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
                                 startActivity(intent);
+                                finish();
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         }, 200);
@@ -175,8 +194,24 @@ public class AddLocalUsersInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(AddLocalUsersInfoActivity.this, AddNewUserActivity.class);
+        Intent intent;
+        if (backActivity != null && backActivity.equals("AddedGroupLocalUsersFragment")) {
+            intent = new Intent(AddLocalUsersInfoActivity.this, GroupAddedInfoActivity.class);
+
+        } else {
+            intent = new Intent(AddLocalUsersInfoActivity.this, AddNewUserActivity.class);
+
+        }
+        intent.putExtra("groupId", groupId);
+        intent.putExtra("groupName", groupName);
+        intent.putExtra("groupDateCreated", groupDateCreated);
+        intent.putExtra("groupDescription", groupDescription);
+        intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+        intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+        intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+        intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 

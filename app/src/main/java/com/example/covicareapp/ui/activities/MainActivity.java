@@ -28,6 +28,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
 import com.example.covicareapp.logic.EncryptDecryptData;
+import com.example.covicareapp.ui.activities.addedGroups.SelectGroupActivity;
 import com.example.covicareapp.ui.fragments.GroupAddedToFragment;
 import com.example.covicareapp.ui.fragments.HomeFragment;
 import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
@@ -213,6 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.add_new_user: {
                 Intent intent = new Intent(MainActivity.this, SelectGroupActivity.class);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         }
@@ -244,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void showAddOnlineUserDialogue() {
         dialog = new Dialog(this);
-        dialog.setContentView(R.layout.custom_show_qr_dialogue);
+        dialog.setContentView(R.layout.custom_show_qr_dialogue_box);
 
         // UI Hooks
         closeDialogueButton = dialog.findViewById(R.id.close_dialogue);

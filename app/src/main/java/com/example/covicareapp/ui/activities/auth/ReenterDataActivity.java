@@ -85,6 +85,7 @@ public class ReenterDataActivity extends AppCompatActivity {
                     intent.putExtra("countryCode", countryCode);
 
                     startActivity(intent);
+                    finish();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             }
@@ -97,6 +98,7 @@ public class ReenterDataActivity extends AppCompatActivity {
 
         Intent intent = new Intent(ReenterDataActivity.this, VerifyEmailActivity.class);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 

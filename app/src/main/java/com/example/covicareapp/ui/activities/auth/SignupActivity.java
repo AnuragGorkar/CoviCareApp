@@ -64,6 +64,7 @@ public class SignupActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -75,6 +76,7 @@ public class SignupActivity extends AppCompatActivity
             case "Signin Details":{
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
             break;
@@ -139,6 +141,7 @@ public class SignupActivity extends AppCompatActivity
                     intent.putExtra("countryCode", countryCodeVal);
 
                     startActivity(intent);
+                    finish();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else{
                     showSnackbar(task.getException().getMessage().trim(), "", "Error");

@@ -1,4 +1,4 @@
-package com.example.covicareapp.ui.activities;
+package com.example.covicareapp.ui.activities.addedGroups;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.ui.activities.MainActivity;
 import com.example.covicareapp.ui.adapters.GroupAddedTabViewPagerAdapter;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
@@ -48,7 +49,7 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
         materialToolbar = findViewById(R.id.toolbar);
         tabLayout = findViewById(R.id.tabLayout);
         viewPager2 = findViewById(R.id.view_pager);
-        groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers, groupOnlineUsersList, groupOfflineUsersList);
+        groupAddedTabViewPagerAdapter = new GroupAddedTabViewPagerAdapter(this, groupId, groupName, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers, groupOnlineUsersList, groupOfflineUsersList);
 
         materialToolbar.setTitle(groupName);
         materialToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -66,7 +67,6 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
             tab.setIcon(tabIcon[position]);
             tab.setText(tabTitle[position]);
         })).attach();
-
     }
 
     @Override

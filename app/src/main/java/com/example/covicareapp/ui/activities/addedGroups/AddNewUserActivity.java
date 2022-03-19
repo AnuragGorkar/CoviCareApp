@@ -1,5 +1,6 @@
-package com.example.covicareapp.ui.activities;
+package com.example.covicareapp.ui.activities.addedGroups;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.ui.activities.MainActivity;
+import com.example.covicareapp.ui.activities.qrscan.AddOnlineUserScanQrActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -28,6 +31,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,7 +56,7 @@ public class AddNewUserActivity extends AppCompatActivity {
     ProgressBar progressBar;
     ImageButton closeDialogueButton;
     TextInputLayout userNameTextInput, userPasswordTextInput;
-    MaterialButton addNewUserButton, scanQRToAddNewUserButton;
+    MaterialButton addNewUserButton, scanQRToAddNewUserButton, addNewLocalUser, addExistingLocalUser;
     TextView groupNameTextView;
 
     //    Firebase Variable
@@ -83,6 +92,7 @@ public class AddNewUserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AddNewUserActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -97,6 +107,24 @@ public class AddNewUserActivity extends AppCompatActivity {
         add_local_users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showAddLocalUserDialogue();
+            }
+        });
+
+    }
+
+    public void showAddLocalUserDialogue() {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custom_add_new_local_user_dialogue_box);
+
+        // UI Hooks
+        closeDialogueButton = dialog.findViewById(R.id.close_dialogue);
+        addNewLocalUser = dialog.findViewById(R.id.add_new_local_user);
+        addExistingLocalUser = dialog.findViewById(R.id.add_existing_local_user);
+
+        addNewLocalUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(AddNewUserActivity.this, AddLocalUsersInfoActivity.class);
                 intent.putExtra("groupId", groupId);
                 intent.putExtra("groupName", groupName);
@@ -107,9 +135,42 @@ public class AddNewUserActivity extends AppCompatActivity {
                 intent.putExtra("groupOfflineUsers", groupOfflineUsers);
                 intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        addExistingLocalUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddNewUserActivity.this, SelectExsitingLocalUserActivity.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupName", groupName);
+                intent.putExtra("groupDateCreated", groupDateCreated);
+                intent.putExtra("groupDescription", groupDescription);
+                intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+                intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+                intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        closeDialogueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.70);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_toolbar_background);
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
 
     }
 
@@ -126,6 +187,14 @@ public class AddNewUserActivity extends AppCompatActivity {
         scanQRToAddNewUserButton = dialog.findViewById(R.id.scan_qr_add_user);
 
         progressBar.setVisibility(View.GONE);
+
+        scanQRToAddNewUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestCameraPermission(view);
+
+            }
+        });
 
         addNewUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,16 +220,45 @@ public class AddNewUserActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_toolbar_background);
         dialog.getWindow().setLayout(width, height);
         dialog.show();
-
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         Intent intent = new Intent(AddNewUserActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    public void requestCameraPermission(View view) {
+        Dexter.withContext(AddNewUserActivity.this).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                Intent intent = new Intent(AddNewUserActivity.this, AddOnlineUserScanQrActivity.class);
+                intent.putExtra("groupId", groupId);
+                intent.putExtra("groupName", groupName);
+                intent.putExtra("groupDateCreated", groupDateCreated);
+                intent.putExtra("groupDescription", groupDescription);
+                intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+                intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+                intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                showSnackbar("Please allow permission for QR code Camera scan", "", "Error", view);
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                showSnackbar("Please allow permission for QR code Camera scan", "", "Error", view);
+            }
+        }).check();
     }
 
     private boolean validateEmail() {
@@ -271,15 +369,15 @@ public class AddNewUserActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        progressBar.setVisibility(View.GONE);
-                                                        addNewUserButton.setVisibility(View.VISIBLE);
-                                                        addNewUserButton.setBackgroundColor(getColor(R.color.success_400));
-                                                        addNewUserButton.setText("New User Added");
-
                                                         allGroupsCollectionReference.document(groupId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                                                 if (task.isSuccessful()) {
+                                                                    progressBar.setVisibility(View.GONE);
+                                                                    addNewUserButton.setVisibility(View.VISIBLE);
+                                                                    addNewUserButton.setBackgroundColor(getColor(R.color.success_400));
+                                                                    addNewUserButton.setText("New User Added");
+
                                                                     DocumentSnapshot documentSnapshot = task.getResult();
                                                                     Map<String, Object> data = documentSnapshot.getData();
 
@@ -297,6 +395,7 @@ public class AddNewUserActivity extends AppCompatActivity {
                                                                             intent.putExtra("groupOfflineUsers", groupOfflineUsers);
                                                                             intent.putExtra("groupOfflineUsersList", groupOnlineUsersList);
                                                                             startActivity(intent);
+                                                                            finish();
                                                                             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                                                         }
                                                                     }, 200);

@@ -1,4 +1,4 @@
-package com.example.covicareapp.ui.activities;
+package com.example.covicareapp.ui.activities.addedGroups;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
 import com.example.covicareapp.models.AddedGroupsModel;
+import com.example.covicareapp.ui.activities.MainActivity;
 import com.example.covicareapp.ui.adapters.AddedGroupsAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -102,6 +103,7 @@ public class SelectGroupActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SelectGroupActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 if (addedGroupsAdapter != null)
                     addedGroupsAdapter.stopListening();
@@ -123,6 +125,7 @@ public class SelectGroupActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(SelectGroupActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         if (addedGroupsAdapter != null)
             addedGroupsAdapter.stopListening();
@@ -167,6 +170,7 @@ public class SelectGroupActivity extends AppCompatActivity {
                     intent.putExtra("groupOfflineUsersList", new ArrayList<String>());
                     intent.putExtra("groupOfflineUsers", "0");
                     startActivity(intent);
+                    finish();
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });

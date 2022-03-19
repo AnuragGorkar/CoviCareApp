@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covicareapp.R;
 import com.example.covicareapp.models.AddedGroupsModel;
-import com.example.covicareapp.ui.activities.GroupAddedInfoActivity;
+import com.example.covicareapp.ui.activities.addedGroups.GroupAddedInfoActivity;
 import com.example.covicareapp.ui.adapters.AddedGroupsAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -160,6 +160,7 @@ public class AddedGroupsFragment extends Fragment {
                     intent.putExtra("groupOfflineUsersList", new ArrayList<String>());
                     intent.putExtra("groupOfflineUsers", "0");
                     startActivity(intent);
+                    getActivity().finish();
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });

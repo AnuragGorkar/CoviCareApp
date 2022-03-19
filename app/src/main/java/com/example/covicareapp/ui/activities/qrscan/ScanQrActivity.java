@@ -55,6 +55,7 @@ public class ScanQrActivity extends AppCompatActivity {
                         Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
                         intent.putExtra("Vitals Data", result.getText());
                         startActivity(intent);
+                        finish();
                         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                     }
                 });

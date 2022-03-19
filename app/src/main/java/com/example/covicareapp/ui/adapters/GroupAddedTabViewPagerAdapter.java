@@ -16,14 +16,15 @@ import java.util.ArrayList;
 public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
 
     private final String[] tabTitle = new String[]{"Info", "Online Users", "Local Users"};
-    String groupIdVal, groupDescriptionVal, groupDateCreatedVal, groupOnlineUsersVal, groupOfflineUsersVal;
+    String groupIdVal, groupNameVal, groupDescriptionVal, groupDateCreatedVal, groupOnlineUsersVal, groupOfflineUsersVal;
     ArrayList<String> groupOnlineUsersListVal = new ArrayList<String>();
     ArrayList<String> groupOfflineUsersListVal = new ArrayList<String>();
     Bundle bundle;
 
-    public GroupAddedTabViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, String groupId, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
+    public GroupAddedTabViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, String groupId, String groupName, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         super(fragmentActivity);
         groupIdVal = groupId;
+        groupNameVal = groupName;
         groupDateCreatedVal = groupDateCreated;
         groupDescriptionVal = groupDescription;
         groupOnlineUsersVal = groupOnlineUsers;
@@ -39,7 +40,7 @@ public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 bundle = new Bundle();
                 bundle.putString("groupId", groupIdVal);
-                bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupName", groupNameVal);
                 bundle.putString("groupDateCreated", groupDateCreatedVal);
                 bundle.putString("groupDescription", groupDescriptionVal);
                 bundle.putString("groupOnlineUsers", groupOnlineUsersVal);
@@ -52,7 +53,7 @@ public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
             case 2:
                 bundle = new Bundle();
                 bundle.putString("groupId", groupIdVal);
-                bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupName", groupNameVal);
                 bundle.putString("groupDateCreated", groupDateCreatedVal);
                 bundle.putString("groupDescription", groupDescriptionVal);
                 bundle.putString("groupOnlineUsers", groupOnlineUsersVal);
@@ -65,6 +66,7 @@ public class GroupAddedTabViewPagerAdapter extends FragmentStateAdapter {
             default:
                 bundle = new Bundle();
                 bundle.putString("groupId", groupIdVal);
+                bundle.putString("groupName", groupNameVal);
                 bundle.putString("groupDateCreated", groupDateCreatedVal);
                 bundle.putString("groupDescription", groupDescriptionVal);
                 bundle.putString("groupOnlineUsers", groupOnlineUsersVal);

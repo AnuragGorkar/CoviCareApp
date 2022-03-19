@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:id="@+id/add_new_user_activity"
-    tools:context=".ui.activities.AddNewUserActivity">
+    tools:context=".ui.activities.addedGroups.AddNewUserActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

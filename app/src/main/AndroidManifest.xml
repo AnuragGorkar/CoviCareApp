@@ -14,12 +14,14 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
-        <activity android:name=".ui.activities.qrscan.AddOnlineUserScanQrActivity"></activity>
+        <activity android:name=".ui.activities.LocalUserVitalsInfoActivity"></activity>
+        <activity android:name=".ui.activities.addedGroups.SelectExsitingLocalUserActivity" />
+        <activity android:name=".ui.activities.qrscan.AddOnlineUserScanQrActivity" />
         <activity android:name=".ui.activities.qrscan.OnlineScanQrActivity" />
         <activity android:name=".ui.activities.qrscan.LocalScanQrActivity" />
-        <activity android:name=".ui.activities.SelectGroupActivity" />
-        <activity android:name=".ui.activities.AddLocalUsersInfoActivity" />
-        <activity android:name=".ui.activities.AddNewUserActivity" />
+        <activity android:name=".ui.activities.addedGroups.SelectGroupActivity" />
+        <activity android:name=".ui.activities.addedGroups.AddLocalUsersInfoActivity" />
+        <activity android:name=".ui.activities.addedGroups.AddNewUserActivity" />
         <activity
             android:name=".ui.activities.OnBoardingActivity"
             android:theme="@style/MyOnboardingTheme">
@@ -29,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.GroupAddedInfoActivity" />
+        <activity android:name=".ui.activities.addedGroups.GroupAddedInfoActivity" />
         <activity android:name=".ui.activities.qrscan.ScanQrActivity" />
         <activity
             android:name=".ui.activities.MainActivity"

@@ -281,8 +281,12 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
     }
 
     //    For Local Users
-    public Cursor getCursorForRecyclerViewForGroup(String groupUniqueId) {
+    public Cursor getCursorForRecyclerViewForNotInGroup(String groupUniqueId) {
+        Log.i("Group Unique Id", groupUniqueId);
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ArrayList<String> userIds = getLocalUsersIdsForGroupList(groupUniqueId);
+
+        sqLiteDatabase = this.getReadableDatabase();
 
         String inQueryList = "";
 
@@ -292,22 +296,30 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         if (inQueryList.length() > 0)
             inQueryList = inQueryList.substring(0, inQueryList.length() - 1);
 
+        String queryString = "SELECT * FROM " + LocalUsers.LOCAL_USERS + " WHERE " + LocalUsers.LUID + " NOT IN (" + inQueryList + ") ORDER BY " + LocalUsers.DATE_ADDED + " DESC;";
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        return cursor;
+    }
+
+    public Cursor getCursorForRecyclerViewForGroup(String groupUniqueId) {
+        Log.i("Group Unique Id", groupUniqueId);
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ArrayList<String> userIds = getLocalUsersIdsForGroupList(groupUniqueId);
+
+        sqLiteDatabase = this.getReadableDatabase();
+
+        String inQueryList = "";
+
+        for (String userId : userIds) {
+            inQueryList = inQueryList + "'" + userId + "',";
+        }
+        if (inQueryList.length() > 0)
+            inQueryList = inQueryList.substring(0, inQueryList.length() - 1);
+
         String queryString = "SELECT * FROM " + LocalUsers.LOCAL_USERS + " WHERE " + LocalUsers.LUID + " IN (" + inQueryList + ") ORDER BY " + LocalUsers.DATE_ADDED + " DESC;";
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 
-        Log.i("Number :", String.valueOf(cursor.getCount()));
-
-        if (cursor.moveToFirst()) {
-            do {
-
-
-                Log.i("User Data : ", cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3) + " " + cursor.getString(4));
-
-            } while (cursor.moveToNext());
-        }
-
-        sqLiteDatabase.close();
         return cursor;
     }
 
@@ -377,7 +389,29 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return allLocalUsersIdsList;
     }
 
-    public boolean addUserLocal(String groupUniqueId, LocalUserModel LocalUserModel) {
+    public boolean addExistingUserLocal(String groupUniqueId, String localUserId) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(LocalUsersProfilesRelation.LUID, localUserId);
+        contentValues.put(LocalUsersProfilesRelation.GROUP_ID, groupUniqueId);
+
+        boolean returnVal;
+
+        try {
+            long insert = sqLiteDatabase.insert(LocalUsersProfilesRelation.LOCAL_USERS_PROFILES, null, contentValues);
+            returnVal = insert != -1;
+        } catch (Exception e) {
+            Log.i("Exception while adding Local user data   ", e.toString());
+            returnVal = false;
+        }
+
+        sqLiteDatabase.close();
+        return returnVal;
+    }
+
+
+    public boolean addNewUserLocal(String groupUniqueId, LocalUserModel LocalUserModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 

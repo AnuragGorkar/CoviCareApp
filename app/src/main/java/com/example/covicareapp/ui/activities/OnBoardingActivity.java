@@ -37,10 +37,12 @@ public class OnBoardingActivity extends AppCompatActivity {
         if (firebaseUser != null && firebaseUser.isEmailVerified()) {
             Intent intent = new Intent(OnBoardingActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else {
             Log.i("Here", "Not exists");
             Intent intent = new Intent(OnBoardingActivity.this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
         finish();
 

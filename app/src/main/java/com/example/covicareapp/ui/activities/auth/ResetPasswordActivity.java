@@ -77,6 +77,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
@@ -87,6 +88,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(ResetPasswordActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
