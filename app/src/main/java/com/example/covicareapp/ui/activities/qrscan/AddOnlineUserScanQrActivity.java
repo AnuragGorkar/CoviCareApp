@@ -89,9 +89,11 @@ public class AddOnlineUserScanQrActivity extends AppCompatActivity {
 
                         EncryptDecryptData encryptDecryptData = new EncryptDecryptData();
 
+                        Log.i("Result   ", result.getText());
+
                         email = encryptDecryptData.decryptEmail(result.getText());
 
-                        if (!email.contains("{Email=")) {
+                        if (!result.getText().contains("Data=") || !result.getText().contains("Salt=") || !result.getText().contains("Password=")) {
                             progressBar.setVisibility(View.GONE);
                             scannedCode.setTextColor(getColor(R.color.error_900));
                             scannedCode.setText("Scan valid QR code please");

@@ -14,11 +14,12 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
-        <activity android:name=".ui.activities.LocalUserVitalsInfoActivity"></activity>
+        <activity android:name=".ui.activities.OnlineUserVitalsInfoActivity"></activity>
+        <activity android:name=".ui.activities.LocalUserVitalsInfoActivity" />
         <activity android:name=".ui.activities.addedGroups.SelectExsitingLocalUserActivity" />
         <activity android:name=".ui.activities.qrscan.AddOnlineUserScanQrActivity" />
-        <activity android:name=".ui.activities.qrscan.OnlineScanQrActivity" />
-        <activity android:name=".ui.activities.qrscan.LocalScanQrActivity" />
+        <activity android:name=".ui.activities.qrscan.OnlineVitalsScanQrActivity" />
+        <activity android:name=".ui.activities.qrscan.LocalVitalsScanQrActivity" />
         <activity android:name=".ui.activities.addedGroups.SelectGroupActivity" />
         <activity android:name=".ui.activities.addedGroups.AddLocalUsersInfoActivity" />
         <activity android:name=".ui.activities.addedGroups.AddNewUserActivity" />

@@ -2,6 +2,7 @@ package com.example.covicareapp.ui.activities.addedGroups;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +45,11 @@ public class GroupAddedInfoActivity extends AppCompatActivity {
         groupOnlineUsersList = (ArrayList<String>) intent.getSerializableExtra("groupOnlineUsersList");
         groupOfflineUsers = intent.getStringExtra("groupOfflineUsers");
         groupOfflineUsersList = (ArrayList<String>) intent.getSerializableExtra("groupOfflineUsersList");
+
+        if (groupName == null)
+            Log.i("groupName", "Group Name is Null");
+        if (groupDateCreated == null)
+            Log.i("groupDateCreated", "Group Date Created is Null");
 
         // UI Hooks
         materialToolbar = findViewById(R.id.toolbar);

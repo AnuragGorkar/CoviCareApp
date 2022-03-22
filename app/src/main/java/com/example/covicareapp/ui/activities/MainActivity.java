@@ -29,7 +29,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
 import com.example.covicareapp.logic.EncryptDecryptData;
 import com.example.covicareapp.ui.activities.addedGroups.SelectGroupActivity;
-import com.example.covicareapp.ui.fragments.GroupAddedToFragment;
+import com.example.covicareapp.ui.fragments.GroupsAddedToFragment;
 import com.example.covicareapp.ui.fragments.HomeFragment;
 import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupsFragment;
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Menu menu;
     HashMap<String, Object> userData = new HashMap<String, Object>();
     ArrayList<String> groupsCreatedIds = new ArrayList<String>();
+    ArrayList<String> groupsAddedToIds = new ArrayList<String>();
     private AppBarConfiguration mAppBarConfiguration;
 
     @Override
@@ -124,13 +125,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 prevItemId = R.id.nav_profiles_added_to;
                 toolbar.setTitle("Groups Added to");
                 navigationView.setCheckedItem(R.id.nav_profiles_added_to);
-                showFragments(new GroupAddedToFragment(), false);
+                showFragments(new GroupsAddedToFragment(), false);
             } else if (fragmentName.equals("Added Groups")) {
                 prevItemId = R.id.nav_added_profiles;
                 toolbar.setTitle("Added Groups");
                 navigationView.setCheckedItem(R.id.nav_added_profiles);
                 showMenuOptions(false);
-                getFirebaseUserData();
+                getFirebaseUserData("Added Groups");
             }
 
         } else {
@@ -161,13 +162,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 prevItemId = id;
                 toolbar.setTitle("Groups Added to");
                 showMenuOptions(false);
-                showFragments(new GroupAddedToFragment(), false);
+                getFirebaseUserData("Groups Added to");
+                showFragments(new GroupsAddedToFragment(), false);
             }
             if (id == R.id.nav_added_profiles) {
                 prevItemId = id;
                 toolbar.setTitle("Added Groups");
                 showMenuOptions(false);
-                getFirebaseUserData();
+                getFirebaseUserData("Added Groups");
             }
         }
 
@@ -221,7 +223,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return super.onOptionsItemSelected(item);
     }
-
 
     private void showFragments(Fragment fragment, boolean showOptions) {
         showMenuOptions(showOptions);
@@ -319,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    public void getFirebaseUserData() {
+    public void getFirebaseUserData(String fragmentName) {
         loadingTv.setText("Loading Groups...");
         loadingTv.setVisibility(View.VISIBLE);
         loadingAnimation.setVisibility(View.VISIBLE);
@@ -343,17 +344,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot documentSnapshot = task.getResult();
                                     if (documentSnapshot.exists()) {
-                                        groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("groupsCreated");
-                                        groupsCreatedIds.remove(userData.get("email").toString());
+                                        if (fragmentName.equals("Groups Added to")) {
+                                            groupsAddedToIds = (ArrayList<String>) documentSnapshot.getData().get("groupsAddedTo");
 
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable("userData", userData);
-                                        bundle.putSerializable("groupsCreatedIds", groupsCreatedIds);
-                                        AddedGroupsFragment addedGroupOnlineUsersFragment = new AddedGroupsFragment();
-                                        addedGroupOnlineUsersFragment.setArguments(bundle);
-                                        loadingTv.setVisibility(View.GONE);
-                                        loadingAnimation.setVisibility(View.GONE);
-                                        showFragments(addedGroupOnlineUsersFragment, false);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable("userData", userData);
+                                            bundle.putSerializable("groupsAddedToIds", groupsAddedToIds);
+                                            AddedGroupsFragment addedGroupOnlineUsersFragment = new AddedGroupsFragment();
+                                            addedGroupOnlineUsersFragment.setArguments(bundle);
+                                            loadingTv.setVisibility(View.GONE);
+                                            loadingAnimation.setVisibility(View.GONE);
+                                            showFragments(addedGroupOnlineUsersFragment, false);
+
+                                        } else if (fragmentName.equals("Added Groups")) {
+                                            groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("groupsCreated");
+                                            groupsCreatedIds.remove(userData.get("email").toString());
+
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable("userData", userData);
+                                            bundle.putSerializable("groupsCreatedIds", groupsCreatedIds);
+                                            AddedGroupsFragment addedGroupOnlineUsersFragment = new AddedGroupsFragment();
+                                            addedGroupOnlineUsersFragment.setArguments(bundle);
+                                            loadingTv.setVisibility(View.GONE);
+                                            loadingAnimation.setVisibility(View.GONE);
+                                            showFragments(addedGroupOnlineUsersFragment, false);
+                                        }
                                     } else {
                                         // No Profile Created
 

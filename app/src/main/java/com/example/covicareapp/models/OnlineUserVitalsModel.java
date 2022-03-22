@@ -1,21 +1,19 @@
 package com.example.covicareapp.models;
 
-import java.sql.Timestamp;
-
 public class OnlineUserVitalsModel {
     double hbRating, o2Saturation, bodyTemp;
     int coughAnalysis;
-    String raspiId, raspiUId, userId, profileId, analysisResult;
-    Timestamp recDateTime;
+    String raspiId, raspiUId, userId, groupId, analysisResult;
+    Long recDateTime;
 
     public OnlineUserVitalsModel() {
     }
 
-    public OnlineUserVitalsModel(String userId, String raspiUId, String raspiId, String profileId, double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, Timestamp recDateTime, String analysisResult) {
+    public OnlineUserVitalsModel(String userId, String raspiUId, String raspiId, String groupId, double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, Long recDateTime, String analysisResult) {
         this.raspiId = raspiId;
         this.raspiUId = raspiUId;
         this.userId = userId;
-        this.profileId = profileId;
+        this.groupId = groupId;
         this.hbRating = hbRating;
         this.o2Saturation = o2Saturation;
         this.bodyTemp = bodyTemp;
@@ -30,7 +28,7 @@ public class OnlineUserVitalsModel {
                 ", userId='" + userId + '\'' +
                 ", raspiUId='" + raspiUId + '\'' +
                 ", raspiId='" + raspiId + '\'' +
-                ", profileId='" + profileId + '\'' +
+                ", groupId='" + groupId + '\'' +
                 ", hbRating=" + hbRating +
                 ", o2Saturation=" + o2Saturation +
                 ", bodyTemp=" + bodyTemp +
@@ -96,11 +94,11 @@ public class OnlineUserVitalsModel {
         this.userId = userId;
     }
 
-    public Timestamp getRecDateTime() {
+    public Long getRecDateTime() {
         return recDateTime;
     }
 
-    public void setRecDateTime(Timestamp recDateTime) {
+    public void setRecDateTime(Long recDateTime) {
         this.recDateTime = recDateTime;
     }
 
@@ -112,11 +110,11 @@ public class OnlineUserVitalsModel {
         this.analysisResult = analysisResult;
     }
 
-    public String getProfileId() {
-        return profileId;
+    public String getgroupId() {
+        return groupId;
     }
 
-    public void setProfileId(String profileId) {
-        this.profileId = profileId;
+    public void setgroupId(String groupId) {
+        this.groupId = groupId;
     }
 }

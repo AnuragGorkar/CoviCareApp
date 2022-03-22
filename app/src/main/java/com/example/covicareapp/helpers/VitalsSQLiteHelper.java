@@ -18,9 +18,8 @@ import com.example.covicareapp.models.LocalUserVitalsModel;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 public class VitalsSQLiteHelper extends SQLiteOpenHelper {
     public static final String COVICARE_DATA_DB = "covicareData.db";
@@ -115,7 +114,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         contentValues.put(OnlineUsersData.EMAIL_ID, onlineUserVitalsModel.getUserId());
         contentValues.put(OnlineUsersData.RASPI_UID, onlineUserVitalsModel.getRaspiUId());
         contentValues.put(OnlineUsersData.RASPI_ID, onlineUserVitalsModel.getRaspiId());
-        contentValues.put(OnlineUsersData.GROUP_ID, onlineUserVitalsModel.getProfileId());
+        contentValues.put(OnlineUsersData.GROUP_ID, onlineUserVitalsModel.getgroupId());
         contentValues.put(OnlineUsersData.O_2_VAL, onlineUserVitalsModel.getO2Saturation());
         contentValues.put(OnlineUsersData.HB_VAL, onlineUserVitalsModel.getHbRating());
         contentValues.put(OnlineUsersData.TEMP_VAL, onlineUserVitalsModel.getBodyTemp());
@@ -212,8 +211,6 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 String recDateTime = cursor.getString(8);
                 String analysisResult = cursor.getString(9);
 
-                Timestamp recTimestamp = Timestamp.valueOf(recDateTime);
-
                 Log.i("userId : ", userId);
                 Log.i("raspiUId : ", raspiUId);
                 Log.i("raspiId : ", raspiId);
@@ -223,9 +220,9 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 Log.i("bodyTemp : ", String.valueOf(bodyTemp));
                 Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
                 Log.i("recDateTime : ", recDateTime);
-                Log.i("recTimestamp : ", String.valueOf(recTimestamp));
+                Log.i("recTimestamp : ", String.valueOf(recDateTime));
 
-                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recTimestamp, analysisResult);
+                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, Double.valueOf(hbRating), Double.valueOf(o2Saturation), Double.valueOf(bodyTemp), Integer.valueOf(coughAnalysis), Long.valueOf(recDateTime), analysisResult);
                 allVitalsList.add(onlineUserVitalsModel);
 
             } while (cursor.moveToNext());
@@ -270,7 +267,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 Log.i("recDateTime : ", recDateTime);
                 Log.i("recTimestamp : ", String.valueOf(recTimestamp));
 
-                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recTimestamp, analysisResult);
+                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recTimestamp.getTime(), analysisResult);
                 allVitalsList.add(onlineUserVitalsModel);
 
             } while (cursor.moveToNext());
@@ -410,7 +407,6 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-
     public boolean addNewUserLocal(String groupUniqueId, LocalUserModel LocalUserModel) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -536,21 +532,20 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return returnVal;
     }
 
-    public boolean addOneVitalsEntryLocal(LocalUserVitalsModel LocalUserVitalsModel) {
+    public boolean addOneVitalsEntryLocal(LocalUserVitalsModel LocalUserVitalsModel, String uniqueGroupId) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-        Timestamp timestamp = LocalUserVitalsModel.getRecDateTime();
-        Date date = new Date(timestamp.getTime());
+        Log.i("Unique Group Id:", uniqueGroupId);
 
         contentValues.put(LocalUsersData.LUID, LocalUserVitalsModel.getUserId());
         contentValues.put(LocalUsersData.RASPI_ID, LocalUserVitalsModel.getRaspiId());
+        contentValues.put(LocalUsersData.GROUP_ID, uniqueGroupId);
         contentValues.put(LocalUsersData.O_2_VAL, LocalUserVitalsModel.getO2Saturation());
         contentValues.put(LocalUsersData.HB_VAL, LocalUserVitalsModel.getHbRating());
         contentValues.put(LocalUsersData.TEMP_VAL, LocalUserVitalsModel.getBodyTemp());
         contentValues.put(LocalUsersData.COUGH_VAL, LocalUserVitalsModel.getCoughAnalysis());
-        contentValues.put(LocalUsersData.DATE_REC, dateFormat.format(date));
+        contentValues.put(LocalUsersData.DATE_REC, LocalUserVitalsModel.getRecDateTime());
         contentValues.put(LocalUsersData.ANALYSIS_RES, LocalUserVitalsModel.getAnalysisResult());
 
         boolean returnVal;
@@ -616,48 +611,46 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
 
     }
 
-//    public List<OnlineUserVitalsModel> getAllVitalsListLocal() {
-//        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
-//
-//        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-//
-//        String queryString = "SELECT * FROM " + ONLINE_USERS_DATA;
-//
-//        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                String userId = cursor.getString(0);
-//                String raspiUId = cursor.getString(1);
-//                String raspiId = cursor.getString(2);
-//                float hbRating = cursor.getFloat(3);
-//                float o2Saturation = cursor.getFloat(4);
-//                float bodyTemp = cursor.getFloat(5);
-//                int coughAnalysis = cursor.getInt(6);
-//                String recDateTime = cursor.getString(7);
-//                String analysisResult = cursor.getString(8);
-//
-//                Timestamp recTimestamp = Timestamp.valueOf(recDateTime);
-//
-//                Log.i("userId : ", userId);
-//                Log.i("raspiUId : ", raspiUId);
-//                Log.i("raspiId : ", raspiId);
-//                Log.i("hbRating : ", String.valueOf(hbRating));
-//                Log.i("o2Saturation : ", String.valueOf(o2Saturation));
-//                Log.i("bodyTemp : ", String.valueOf(bodyTemp));
-//                Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
-//                Log.i("recDateTime : ", recDateTime);
-//                Log.i("recTimestamp : ", String.valueOf(recTimestamp));
-//
-//                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiId, raspiUId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recTimestamp, analysisResult);
-//                allVitalsList.add(onlineUserVitalsModel);
-//
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        sqLiteDatabase.close();
-//        return allVitalsList;
-//    }
+    public List<LocalUserVitalsModel> getAllVitalsListLocal() {
+        List<LocalUserVitalsModel> allVitalsList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String queryString = "SELECT * FROM " + LocalUsersData.LOCAL_USERS_DATA;
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String userId = cursor.getString(0);
+                String raspiId = cursor.getString(1);
+                String groupId = cursor.getString(2);
+                float o2Saturation = cursor.getFloat(3);
+                float hbRating = cursor.getFloat(4);
+                float bodyTemp = cursor.getFloat(5);
+                int coughAnalysis = cursor.getInt(6);
+                String recDateTime = cursor.getString(7);
+                String analysisResult = cursor.getString(8);
+
+                Log.i("userId : ", userId);
+                Log.i("raspiId : ", raspiId);
+                Log.i("groupId : ", groupId);
+                Log.i("hbRating : ", String.valueOf(hbRating));
+                Log.i("o2Saturation : ", String.valueOf(o2Saturation));
+                Log.i("bodyTemp : ", String.valueOf(bodyTemp));
+                Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
+                Log.i("recDateTime : ", recDateTime);
+                Log.i("recTimestamp : ", recDateTime);
+
+                LocalUserVitalsModel localUserVitalsModel = new LocalUserVitalsModel(hbRating, o2Saturation, bodyTemp, coughAnalysis, raspiId, userId, analysisResult, Long.valueOf(recDateTime));
+                allVitalsList.add(localUserVitalsModel);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allVitalsList;
+    }
 
 //    public List<OnlineUserVitalsModel> getVitalsForUserListLocal(String userUniqueId) {
 //        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();

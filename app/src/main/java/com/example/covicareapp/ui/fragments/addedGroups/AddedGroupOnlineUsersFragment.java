@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covicareapp.R;
 import com.example.covicareapp.models.OnlineUserModel;
-import com.example.covicareapp.ui.activities.addedGroups.AddNewUserActivity;
+import com.example.covicareapp.ui.activities.OnlineUserVitalsInfoActivity;
 import com.example.covicareapp.ui.activities.qrscan.AddOnlineUserScanQrActivity;
 import com.example.covicareapp.ui.adapters.OnlineUserAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -60,7 +60,7 @@ public class AddedGroupOnlineUsersFragment extends Fragment {
 
     //Variables
     String email, password;
-    String groupId, groupName, groupDateCreated, groupDescription, groupCreated, groupOnlineUsers, groupOfflineUsers;
+    String groupId, groupName, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers;
     ArrayList<String> groupOnlineUsersList, groupOfflineUsersList;
 
     // UI Variables
@@ -82,14 +82,14 @@ public class AddedGroupOnlineUsersFragment extends Fragment {
 
     OnlineUserAdapter userAdapter;
 
-    public static AddedGroupOnlineUsersFragment newInstance(@NonNull String groupId, String groupName, String groupDateCreated, String groupDescription, String groupCreated, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
+    public static AddedGroupOnlineUsersFragment newInstance(@NonNull String groupId, String groupName, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         AddedGroupOnlineUsersFragment fragment = new AddedGroupOnlineUsersFragment();
         Bundle args = new Bundle();
         args.putString("groupId", groupId);
         args.putString("groupName", groupName);
         args.putString("groupDateCreated", groupDateCreated);
         args.putString("groupDescription", groupDescription);
-        args.putString("groupCreated", groupCreated);
+        args.putString("groupDateCreated", groupDateCreated);
         args.putString("groupOnlineUsers", groupOnlineUsers);
         args.putString("groupOfflineUsers", groupOfflineUsers);
         args.putSerializable("groupOnlineUsersList", groupOnlineUsersList);
@@ -104,8 +104,9 @@ public class AddedGroupOnlineUsersFragment extends Fragment {
 
         Bundle args = getArguments();
         groupId = args.getString("groupId");
+        groupName = args.getString("groupName");
         groupDescription = args.getString("groupDescription");
-        groupCreated = args.getString("groupDateCreated");
+        groupDateCreated = args.getString("groupDateCreated");
         groupOnlineUsers = args.getString("groupOnlineUsers");
         groupOfflineUsers = args.getString("groupOfflineUsers");
         groupOnlineUsersList = (ArrayList<String>) args.getSerializable("groupOnlineUsersList");
@@ -165,18 +166,31 @@ public class AddedGroupOnlineUsersFragment extends Fragment {
                 public void OnItemClick(DocumentSnapshot documentSnapshot, int position) {
                     Map<String, Object> data = documentSnapshot.getData();
 
-                    Intent intent = new Intent(getActivity(), AddNewUserActivity.class);
-                    intent.putExtra("groupId", data.get("groupId").toString());
-                    intent.putExtra("groupName", data.get("groupName").toString());
+                    Intent intent = new Intent(getActivity(), OnlineUserVitalsInfoActivity.class);
+                    intent.putExtra("countryCode", data.get("countryCode").toString());
+                    intent.putExtra("countryName", data.get("countryName").toString());
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E, dd MMMM yyyy");
-                    Date date = ((Timestamp) data.get("dateCreated")).toDate();
-                    intent.putExtra("groupDateCreated", simpleDateFormat.format(date));
-                    intent.putExtra("groupDescription", data.get("groupInfo").toString());
-                    intent.putExtra("groupOnlineUsersList", (ArrayList<String>) data.get("groupUsers"));
-                    intent.putExtra("groupOnlineUsers", String.valueOf(((ArrayList<String>) data.get("groupUsers")).size()));
-                    intent.putExtra("groupOfflineUsersList", new ArrayList<String>());
-                    intent.putExtra("groupOfflineUsers", "0");
+                    Date date = ((Timestamp) data.get("dateOfBirth")).toDate();
+                    intent.putExtra("dateOfBirth", simpleDateFormat.format(date));
+                    intent.putExtra("email", data.get("email").toString());
+                    intent.putExtra("fullName", data.get("fullName").toString());
+                    intent.putExtra("gender", data.get("gender").toString());
+                    intent.putExtra("raspiUId", data.get("raspiUId").toString());
+                    intent.putExtra("phoneNumber", data.get("phoneNumber").toString());
+                    intent.putExtra("userId", data.get("userId").toString());
+
+                    intent.putExtra("groupId", groupId);
+                    intent.putExtra("groupName", groupName);
+                    intent.putExtra("groupDateCreated", groupDateCreated);
+                    intent.putExtra("groupDescription", groupDescription);
+                    intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+                    intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+                    intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+                    intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
+
+
                     startActivity(intent);
+                    getActivity().finish();
                 }
             });
 

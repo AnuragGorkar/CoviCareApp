@@ -1,18 +1,16 @@
 package com.example.covicareapp.models;
 
-import java.sql.Timestamp;
-
 public class LocalUserVitalsModel {
     double hbRating, o2Saturation, bodyTemp;
     int coughAnalysis;
     String raspiId, userId, analysisResult;
-    Timestamp recDateTime;
+    Long recDateTime;
 
     public LocalUserVitalsModel() {
 
     }
 
-    public LocalUserVitalsModel(double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, String raspiId, String userId, String analysisResult, Timestamp recDateTime) {
+    public LocalUserVitalsModel(double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, String raspiId, String userId, String analysisResult, Long recDateTime) {
         this.hbRating = hbRating;
         this.o2Saturation = o2Saturation;
         this.bodyTemp = bodyTemp;
@@ -93,11 +91,11 @@ public class LocalUserVitalsModel {
         this.analysisResult = analysisResult;
     }
 
-    public Timestamp getRecDateTime() {
+    public Long getRecDateTime() {
         return recDateTime;
     }
 
-    public void setRecDateTime(Timestamp recDateTime) {
+    public void setRecDateTime(Long recDateTime) {
         this.recDateTime = recDateTime;
     }
 }

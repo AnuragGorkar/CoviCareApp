@@ -36,8 +36,7 @@ public class EncryptDecryptData {
         int len = hexString.length() / 2;
         byte[] result = new byte[len];
         for (int i = 0; i < len; i++)
-            result[i] = Integer.valueOf(hexString.substring(2 * i, 2 * i + 2),
-                    16).byteValue();
+            result[i] = Integer.valueOf(hexString.substring(2 * i, 2 * i + 2), 16).byteValue();
         return result;
     }
 
@@ -120,11 +119,9 @@ public class EncryptDecryptData {
     }
 
     public String decryptEmail(String mapString) {
-
         mapString = mapString.substring(1, mapString.length() - 1);           //remove curly brackets
         String[] keyValuePairs = mapString.split(",");              //split the string to creat key-value pairs
         Map<String, Object> map = new HashMap<>();
-
 
         for (String pair : keyValuePairs)                        //iterate over the pairs
         {
@@ -135,6 +132,8 @@ public class EncryptDecryptData {
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword((String) map.get("Password"), (String) map.get("Salt")));
+
+
             byte[] textDecrypted = cipher.doFinal(toByte(map.get("Data").toString()));
             String result = new String(textDecrypted);
 
@@ -142,6 +141,44 @@ public class EncryptDecryptData {
         } catch (Exception e) {
             Log.i("Exception ", e.getMessage());
             return "Error";
+        }
+    }
+
+    public Map<String, Object> decryptVitals(String mapString) {
+        mapString = mapString.trim();
+        mapString = mapString.substring(1, mapString.length() - 1);
+
+        String[] keyValuePairs = mapString.split(",");              //split the string to creat key-value pairs
+        Map<String, Object> map = new HashMap<>();
+
+        for (String pair : keyValuePairs)                        //iterate over the pairs
+        {
+            String[] entry = pair.split("=", 2);
+            map.put(entry[0].trim(), entry[1].trim());          //add them to the hashmap and trim whitespaces
+        }
+
+        Map<String, Object> returnMap = new HashMap<>();
+
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword((String) map.get("Password"), (String) map.get("Salt")));
+
+            byte[] textDecrypted = cipher.doFinal(toByte(map.get("Data").toString()));
+            String result = new String(textDecrypted);
+
+            result = result.substring(1, result.length() - 1);
+            String[] resultKeyValuePairs = result.split(",");              //split the string to creat key-value pairs
+
+            for (String pair : resultKeyValuePairs)                        //iterate over the pairs
+            {
+                String[] entry = pair.split(":");
+                returnMap.put(entry[0].trim(), entry[1].trim());          //add them to the hashmap and trim whitespaces
+            }
+
+            return returnMap;
+        } catch (Exception e) {
+            Log.i("Exception while decrypting data", e.getMessage());
+            return returnMap;
         }
     }
 }

@@ -33,7 +33,7 @@ public class AddedGroupLocalUsersFragment extends Fragment implements LocalUsers
     VitalsSQLiteHelper vitalsSQLiteHelper;
     View rootView;
     //Variables
-    String groupId, groupName, groupDateCreated, groupDescription, groupCreated, groupOnlineUsers, groupOfflineUsers;
+    String groupId, groupName, groupDateCreated, groupDescription, groupOnlineUsers, groupOfflineUsers;
     ArrayList<String> groupOnlineUsersList, groupOfflineUsersList;
 
     // UI Variables
@@ -45,14 +45,13 @@ public class AddedGroupLocalUsersFragment extends Fragment implements LocalUsers
     FloatingActionButton addLocalUserFab;
     MaterialButton addNewLocalUser, addExistingLocalUser;
 
-    public static AddedGroupLocalUsersFragment newInstance(@NonNull String groupId, String groupName, String groupDateCreated, String groupDescription, String groupCreated, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
+    public static AddedGroupLocalUsersFragment newInstance(@NonNull String groupId, String groupName, String groupDateCreated, String groupDescription, String groupOnlineUsers, String groupOfflineUsers, ArrayList<String> groupOnlineUsersList, ArrayList<String> groupOfflineUsersList) {
         AddedGroupLocalUsersFragment fragment = new AddedGroupLocalUsersFragment();
         Bundle args = new Bundle();
         args.putString("groupId", groupId);
         args.putString("groupName", groupName);
         args.putString("groupDateCreated", groupDateCreated);
         args.putString("groupDescription", groupDescription);
-        args.putString("groupCreated", groupCreated);
         args.putString("groupOnlineUsers", groupOnlineUsers);
         args.putString("groupOfflineUsers", groupOfflineUsers);
         args.putSerializable("groupOnlineUsersList", groupOnlineUsersList);
@@ -70,7 +69,6 @@ public class AddedGroupLocalUsersFragment extends Fragment implements LocalUsers
         groupName = args.getString("groupName");
         groupDateCreated = args.getString("groupDateCreated");
         groupDescription = args.getString("groupDescription");
-        groupCreated = args.getString("groupDateCreated");
         groupOnlineUsers = args.getString("groupOnlineUsers");
         groupOfflineUsers = args.getString("groupOfflineUsers");
         groupOnlineUsersList = (ArrayList<String>) args.getSerializable("groupOnlineUsersList");
@@ -106,6 +104,8 @@ public class AddedGroupLocalUsersFragment extends Fragment implements LocalUsers
 
         localUsersAdapter = new LocalUsersAdapter(getActivity(), cursor, "AddedGroupLocalUsersFragment");
         localUsersAdapter.setGroupId(groupId);
+        localUsersAdapter.setGroupInfo(groupId, groupName, groupDateCreated, groupDescription, groupOfflineUsers, groupOnlineUsers, groupOnlineUsersList, groupOfflineUsersList);
+
         recyclerView.setAdapter(localUsersAdapter);
 
         if (cursor.getCount() == 0) {

@@ -132,6 +132,16 @@ public class LocalUsersAdapter extends RecyclerView.Adapter<LocalUsersAdapter.Lo
         Intent intent = new Intent(mContext, LocalUserVitalsInfoActivity.class);
         intent.putExtra("local_ID", user_id);
         intent.putExtra("local_luid", user_luid);
+
+        intent.putExtra("groupId", groupId);
+        intent.putExtra("groupName", groupName);
+        intent.putExtra("groupDateCreated", groupDateCreated);
+        intent.putExtra("groupDescription", groupDescription);
+        intent.putExtra("groupOnlineUsersList", groupOnlineUsersList);
+        intent.putExtra("groupOnlineUsers", groupOnlineUsers);
+        intent.putExtra("groupOfflineUsers", groupOfflineUsers);
+        intent.putExtra("groupOfflineUsersList", groupOfflineUsersList);
+
         mContext.startActivity(intent);
     }
 
@@ -157,6 +167,8 @@ public class LocalUsersAdapter extends RecyclerView.Adapter<LocalUsersAdapter.Lo
         if (vitalsSQLiteHelper.addExistingUserLocal(groupId, user_luid)) {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(mContext, R.anim.slide_in_right, R.anim.slide_out_left);
             Intent intent = new Intent(mContext, GroupAddedInfoActivity.class);
+
+
             intent.putExtra("groupId", groupId);
             intent.putExtra("groupName", groupName);
             intent.putExtra("groupDateCreated", groupDateCreated);

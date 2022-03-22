@@ -78,9 +78,8 @@ public class AddedGroupInfoFragment extends Fragment {
 
         Log.i("The number of local users are", vitalsSQLiteHelper.getCountForRecyclerViewForGroup(groupId));
 
-
         ValueAnimator animator = new ValueAnimator();
-        animator.setObjectValues(0, Integer.parseInt((String) vitalsSQLiteHelper.getCountForRecyclerViewForGroup(groupId)) + Integer.parseInt((String) groupOnlineUsers));
+        animator.setObjectValues(0, Integer.parseInt(vitalsSQLiteHelper.getCountForRecyclerViewForGroup(groupId)) + Integer.parseInt(groupOnlineUsers));
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
                 totalUsersTextView.setText(String.valueOf(animation.getAnimatedValue()));
