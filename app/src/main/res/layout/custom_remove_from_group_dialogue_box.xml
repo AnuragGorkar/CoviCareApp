@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_600"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageButton
+            android:id="@+id/close_dialogue"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:background="@color/black_600"
+            android:src="@drawable/ic_baseline_close_24"
+            android:tint="@color/white_50" />
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_outline_person_remove_24"
+            android:tint="@color/purple_200" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Do you want to remove yourself from"
+            android:textAlignment="center"
+            android:textColor="@color/error_400"
+            android:textSize="24dp" />
+
+        <TextView
+            android:id="@+id/group_name_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="GROUP NAME ?"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white_50"
+            android:textSize="26dp" />
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_indicator"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:indeterminateTint="@color/purple_200"
+            android:paddingVertical="7dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/yes_remove_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/success_400"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="7dp"
+                android:text="Yes"
+                android:textAllCaps="false"
+                android:textColor="@color/black_900"
+                android:textSize="20sp"
+                app:cornerRadius="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/no_remove_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/error_400"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="7dp"
+                android:text="No"
+                android:textAllCaps="false"
+                android:textColor="@color/black_900"
+                android:textSize="20sp"
+                app:cornerRadius="10dp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>
+

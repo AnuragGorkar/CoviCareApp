@@ -107,7 +107,7 @@ public class AddedGroupsFragment extends Fragment {
         addNewGroupFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showAddProfileDialogue();
+                showAddGroupDialogue();
             }
         });
 
@@ -174,7 +174,7 @@ public class AddedGroupsFragment extends Fragment {
             addedGroupsAdapter.stopListening();
     }
 
-    public void showAddProfileDialogue() {
+    public void showAddGroupDialogue() {
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.custom_add_group_dialogue_box);
 

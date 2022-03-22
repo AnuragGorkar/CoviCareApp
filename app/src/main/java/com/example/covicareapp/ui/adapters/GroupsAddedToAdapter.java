@@ -44,6 +44,7 @@ public class GroupsAddedToAdapter extends FirestoreRecyclerAdapter<GroupsAddedTo
         void OnItemClick(DocumentSnapshot documentSnapshot, int position);
     }
 
+
     public class GroupsAddedToHolder extends RecyclerView.ViewHolder {
 
         // UI Variables for Card
@@ -58,4 +59,5 @@ public class GroupsAddedToAdapter extends FirestoreRecyclerAdapter<GroupsAddedTo
             groupAddedBy = itemView.findViewById(R.id.group_created_by);
         }
     }
+
 }

@@ -1,10 +1,13 @@
 package com.example.covicareapp.ui.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,7 @@ import com.example.covicareapp.R;
 import com.example.covicareapp.models.GroupsAddedToModel;
 import com.example.covicareapp.ui.adapters.GroupsAddedToAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +37,11 @@ public class GroupsAddedToFragment extends Fragment {
     //UI Variables
     RecyclerView recyclerView;
     ImageView errorImage;
+    ImageButton closeDialogueButton;
     TextView errorText;
+    TextView groupName;
+    ProgressBar progressBar;
+    MaterialButton yesRemoveButton, noRemoveButton;
 
     // User Data
     HashMap<String, Object> userDataVal;
@@ -116,8 +124,19 @@ public class GroupsAddedToFragment extends Fragment {
 
             recyclerView.setAdapter(groupsAddedToAdapter);
 
-        }
+//            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+//                    ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+//                @Override
+//                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//                    return false;
+//                }
+//
+//                @Override
+//                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//                }
+//            }).attachToRecyclerView(recyclerView);
 
+        }
     }
 
     protected void showSnackbar(String messageStr, String actionStr, String resultState) {
@@ -154,5 +173,48 @@ public class GroupsAddedToFragment extends Fragment {
         // as all the snackbar wont have the action button
         snackbar.show();
 
+    }
+
+    public void showRemoveFromGroupDialogue(int position) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.custom_remove_from_group_dialogue_box);
+
+        // UI Hooks
+        closeDialogueButton = dialog.findViewById(R.id.close_dialogue);
+        progressBar = dialog.findViewById(R.id.progress_indicator);
+        yesRemoveButton = dialog.findViewById(R.id.yes_remove_button);
+        noRemoveButton = dialog.findViewById(R.id.no_remove_button);
+        groupName = dialog.findViewById(R.id.group_name_text_view);
+
+        progressBar.setVisibility(View.GONE);
+
+        yesRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
+        noRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        closeDialogueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.60);
+
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_toolbar_background);
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
     }
 }
