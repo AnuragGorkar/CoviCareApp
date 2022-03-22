@@ -72,7 +72,6 @@ public class AddedGroupsFragment extends Fragment {
 
     AddedGroupsAdapter addedGroupsAdapter;
 
-
     public static AddedGroupsFragment newInstance(@NonNull HashMap<String, Object> userData, @NonNull ArrayList<String> groupsCreatedIds) {
         AddedGroupsFragment fragment = new AddedGroupsFragment();
         Bundle args = new Bundle();

@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -75,14 +76,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<String> groupsAddedToIds = new ArrayList<String>();
     private AppBarConfiguration mAppBarConfiguration;
 
+    ConstraintLayout addedGroups, groupsAddedTo, home, vitalsHistory;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //      UI Hooks
-        toolbar = findViewById(R.id.toolbar);
+//        addedGroups = findViewById(R.id.added_groups_fragment);
+//        groupsAddedTo = findViewById(R.id.groups_added_to_fragment);
+//        home = findViewById(R.id.home_fragment);
+//        vitalsHistory = findViewById(R.id.vitals_history_fragment);
 
+        toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         loadingAnimation = findViewById(R.id.loading_lottie);
@@ -110,23 +117,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Get from previous activity which fragment to open
         Intent intent = getIntent();
         String fragmentName = intent.getStringExtra("Fragment");
+//        groupsAddedTo.setVisibility(View.GONE);
+//        addedGroups.setVisibility(View.GONE);
+//        home.setVisibility(View.GONE);
+//        vitalsHistory.setVisibility(View.GONE);
         if (fragmentName != null) {
             if (fragmentName.equals("Home")) {
+//                home.setVisibility(View.VISIBLE);
                 prevItemId = R.id.nav_home;
                 toolbar.setTitle("CoviCare");
                 navigationView.setCheckedItem(R.id.nav_home);
                 showFragments(new HomeFragment(), true);
             } else if (fragmentName.equals("Vitals History")) {
+//                vitalsHistory.setVisibility(View.VISIBLE);
                 prevItemId = R.id.nav_vitals_history;
                 toolbar.setTitle("Vitals History");
                 navigationView.setCheckedItem(R.id.nav_vitals_history);
                 showFragments(new VitalsHistoryFragment(), false);
             } else if (fragmentName.equals("Groups Added to")) {
+//                groupsAddedTo.setVisibility(View.VISIBLE);
                 prevItemId = R.id.nav_profiles_added_to;
                 toolbar.setTitle("Groups Added to");
                 navigationView.setCheckedItem(R.id.nav_profiles_added_to);
-                showFragments(new GroupsAddedToFragment(), false);
+                getFirebaseUserData("Groups Added to");
             } else if (fragmentName.equals("Added Groups")) {
+//                addedGroups.setVisibility(View.VISIBLE);
                 prevItemId = R.id.nav_added_profiles;
                 toolbar.setTitle("Added Groups");
                 navigationView.setCheckedItem(R.id.nav_added_profiles);
@@ -145,27 +160,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+//        addedGroups.setVisibility(View.GONE);
+//        groupsAddedTo.setVisibility(View.GONE);
+//        home.setVisibility(View.GONE);
+//        vitalsHistory.setVisibility(View.GONE);
         if (id != prevItemId) {
             if (id == R.id.nav_home) {
+//                home.setVisibility(View.VISIBLE);
                 prevItemId = id;
                 toolbar.setTitle("CoviCare");
                 showMenuOptions(true);
                 showFragments(new HomeFragment(), true);
             }
             if (id == R.id.nav_vitals_history) {
+//                vitalsHistory.setVisibility(View.VISIBLE);
                 prevItemId = id;
                 toolbar.setTitle("Vitals History");
                 showMenuOptions(false);
                 showFragments(new VitalsHistoryFragment(), false);
             }
             if (id == R.id.nav_profiles_added_to) {
+//                groupsAddedTo.setVisibility(View.VISIBLE);
                 prevItemId = id;
                 toolbar.setTitle("Groups Added to");
                 showMenuOptions(false);
                 getFirebaseUserData("Groups Added to");
-                showFragments(new GroupsAddedToFragment(), false);
             }
             if (id == R.id.nav_added_profiles) {
+//                addedGroups.setVisibility(View.VISIBLE);
                 prevItemId = id;
                 toolbar.setTitle("Added Groups");
                 showMenuOptions(false);
@@ -231,8 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        transaction.replace(R.id.frame_layout, fragment, null)
-                .commit();
+        transaction.replace(R.id.frame_layout, fragment, null).commit();
     }
 
     @Override
@@ -347,14 +368,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         if (fragmentName.equals("Groups Added to")) {
                                             groupsAddedToIds = (ArrayList<String>) documentSnapshot.getData().get("groupsAddedTo");
 
+                                            Log.i("User Data    ", userData.toString());
+
                                             Bundle bundle = new Bundle();
                                             bundle.putSerializable("userData", userData);
                                             bundle.putSerializable("groupsAddedToIds", groupsAddedToIds);
-                                            AddedGroupsFragment addedGroupOnlineUsersFragment = new AddedGroupsFragment();
-                                            addedGroupOnlineUsersFragment.setArguments(bundle);
+                                            GroupsAddedToFragment groupsAddedToFragment = new GroupsAddedToFragment();
+                                            groupsAddedToFragment.setArguments(bundle);
                                             loadingTv.setVisibility(View.GONE);
                                             loadingAnimation.setVisibility(View.GONE);
-                                            showFragments(addedGroupOnlineUsersFragment, false);
+                                            showFragments(groupsAddedToFragment, false);
 
                                         } else if (fragmentName.equals("Added Groups")) {
                                             groupsCreatedIds = (ArrayList<String>) documentSnapshot.getData().get("groupsCreated");

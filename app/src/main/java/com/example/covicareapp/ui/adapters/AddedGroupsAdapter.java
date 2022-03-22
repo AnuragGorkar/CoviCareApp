@@ -16,13 +16,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 public class AddedGroupsAdapter extends FirestoreRecyclerAdapter<AddedGroupsModel, AddedGroupsAdapter.AddedGroupsHolder> {
 
-
-    /**
-     * Create a new RecyclerView adapter that listens to a Firestore Query.  See {@link
-     * FirestoreRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
     private AddedGroupsAdapter.OnItemClickListener listener;
 
     public AddedGroupsAdapter(@NonNull FirestoreRecyclerOptions<AddedGroupsModel> options) {

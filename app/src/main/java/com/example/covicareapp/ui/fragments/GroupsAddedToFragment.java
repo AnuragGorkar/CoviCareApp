@@ -4,25 +4,48 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.models.GroupsAddedToModel;
+import com.example.covicareapp.ui.adapters.GroupsAddedToAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GroupsAddedToFragment extends Fragment {
 
+    View rootView;
+
     //UI Variables
     RecyclerView recyclerView;
+    ImageView errorImage;
+    TextView errorText;
 
     // User Data
     HashMap<String, Object> userDataVal;
     ArrayList<String> groupsAddedToIdsVal;
+
+    // Firebase Variables
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+    FirebaseFirestore firebaseFirestore;
+    CollectionReference userCollectionReference, allGroupsCollectionReference;
+
+    GroupsAddedToAdapter groupsAddedToAdapter;
 
 
     public static GroupsAddedToFragment newInstance(@NonNull HashMap<String, Object> userData, @NonNull ArrayList<String> groupsAddedToIds) {
@@ -35,13 +58,23 @@ public class GroupsAddedToFragment extends Fragment {
         return fragment;
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_groups_added_to, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_groups_added_to, container, false);
         Bundle args = getArguments();
-
         userDataVal = (HashMap<String, Object>) args.getSerializable("userData");
         groupsAddedToIdsVal = (ArrayList<String>) args.getSerializable("groupsAddedToIds");
+
+        errorImage = rootView.findViewById(R.id.error_image);
+        errorText = rootView.findViewById(R.id.error_text);
+
+        errorText.setVisibility(View.GONE);
+        errorImage.setVisibility(View.GONE);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        userCollectionReference = firebaseFirestore.collection("users");
+        allGroupsCollectionReference = firebaseFirestore.collection("allGroups");
 
         initRecyclerView();
 
@@ -49,13 +82,42 @@ public class GroupsAddedToFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (groupsAddedToAdapter != null)
+            groupsAddedToAdapter.startListening();
+
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
-//        if (addedGroupsAdapter != null)
-//            addedGroupsAdapter.stopListening();
+        if (groupsAddedToAdapter != null)
+            groupsAddedToAdapter.stopListening();
     }
 
     public void initRecyclerView() {
+        recyclerView = rootView.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        if (groupsAddedToIdsVal.isEmpty()) {
+            errorText.setVisibility(View.VISIBLE);
+            errorImage.setVisibility(View.VISIBLE);
+        } else {
+            errorText.setVisibility(View.GONE);
+            errorImage.setVisibility(View.GONE);
+
+            Query query = allGroupsCollectionReference.whereIn("groupId", groupsAddedToIdsVal);
+
+            FirestoreRecyclerOptions<GroupsAddedToModel> options = new FirestoreRecyclerOptions.Builder<GroupsAddedToModel>().setQuery(query, GroupsAddedToModel.class).build();
+
+            groupsAddedToAdapter = new GroupsAddedToAdapter(options);
+
+            recyclerView.setAdapter(groupsAddedToAdapter);
+
+        }
+
     }
 
     protected void showSnackbar(String messageStr, String actionStr, String resultState) {
