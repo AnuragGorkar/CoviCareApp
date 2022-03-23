@@ -1,6 +1,7 @@
 package com.example.covicareapp.ui.fragments;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.ui.activities.qrscan.ContinuousMonitorScanQRActivity;
 import com.example.covicareapp.ui.activities.qrscan.ScanQrActivity;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -94,14 +96,14 @@ public class HomeFragment extends Fragment {
         continuousRecordVitals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                requestCameraPermission(view, "ContinuousMonitorScanQRActivity");
             }
         });
 
         oneTimeRecordVitals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestCameraPermission(view);
+                requestCameraPermission(view, "ScanQRActivity");
             }
         });
 
@@ -116,13 +118,21 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void requestCameraPermission(View view) {
+    public void requestCameraPermission(View view, String activity) {
         Dexter.withContext(getActivity()).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
             @Override
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
-                Intent intent = new Intent(getActivity().getApplicationContext(), ScanQrActivity.class);
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (activity == "ScanQRActivity") {
+                    Intent intent = new Intent(getActivity().getApplicationContext(), ScanQrActivity.class);
+                    getActivity().startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else if (activity == "ContinuousMonitorScanQRActivity") {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.slide_in_right, R.anim.slide_out_left);
+                    Intent intent = new Intent(getActivity(), ContinuousMonitorScanQRActivity.class);
+                    startActivity(intent, options.toBundle());
+                    getActivity().finish();
+                }
+
             }
 
             @Override

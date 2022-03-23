@@ -17,7 +17,6 @@ import com.example.covicareapp.models.LocalUserModel;
 import com.example.covicareapp.models.LocalUserVitalsModel;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -254,20 +253,18 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 String recDateTime = cursor.getString(8);
                 String analysisResult = cursor.getString(9);
 
-                Timestamp recTimestamp = Timestamp.valueOf(recDateTime);
+//                Log.i("userId : ", userId);
+//                Log.i("raspiUId : ", raspiUId);
+//                Log.i("raspiId : ", raspiId);
+//                Log.i("profileId : ", profileId);
+//                Log.i("hbRating : ", String.valueOf(hbRating));
+//                Log.i("o2Saturation : ", String.valueOf(o2Saturation));
+//                Log.i("bodyTemp : ", String.valueOf(bodyTemp));
+//                Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
+//                Log.i("recDateTime : ", recDateTime);
+//                Log.i("recTimestamp : ", recDateTime);
 
-                Log.i("userId : ", userId);
-                Log.i("raspiUId : ", raspiUId);
-                Log.i("raspiId : ", raspiId);
-                Log.i("profileId : ", profileId);
-                Log.i("hbRating : ", String.valueOf(hbRating));
-                Log.i("o2Saturation : ", String.valueOf(o2Saturation));
-                Log.i("bodyTemp : ", String.valueOf(bodyTemp));
-                Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
-                Log.i("recDateTime : ", recDateTime);
-                Log.i("recTimestamp : ", String.valueOf(recTimestamp));
-
-                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recTimestamp.getTime(), analysisResult);
+                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, Long.valueOf(recDateTime), analysisResult);
                 allVitalsList.add(onlineUserVitalsModel);
 
             } while (cursor.moveToNext());
@@ -276,6 +273,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.close();
         return allVitalsList;
     }
+
 
     //    For Local Users
     public Cursor getCursorForRecyclerViewForNotInGroup(String groupUniqueId) {
@@ -652,46 +650,44 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return allVitalsList;
     }
 
-//    public List<OnlineUserVitalsModel> getVitalsForUserListLocal(String userUniqueId) {
-//        List<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
-//
-//        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-//
-//        String queryString = "SELECT * FROM " + ONLINE_USERS_DATA + " WHERE " + EMAIL_ID + " = '" + userUniqueId + "'";
-//
-//        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                String userId = cursor.getString(0);
-//                String raspiUId = cursor.getString(1);
-//                String raspiId = cursor.getString(2);
-//                float hbRating = cursor.getFloat(3);
-//                float o2Saturation = cursor.getFloat(4);
-//                float bodyTemp = cursor.getFloat(5);
-//                int coughAnalysis = cursor.getInt(6);
-//                String recDateTime = cursor.getString(7);
-//                String analysisResult = cursor.getString(8);
-//
-//                Timestamp recTimestamp = Timestamp.valueOf(recDateTime);
-//
+    public List<LocalUserVitalsModel> getVitalsForUserListLocal(String userUniqueId) {
+        List<LocalUserVitalsModel> allVitalsList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String queryString = "SELECT * FROM " + LocalUsersData.LOCAL_USERS_DATA + " WHERE " + LocalUsersData.LUID + " = '" + userUniqueId + "'";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String userId = cursor.getString(0);
+                String raspiId = cursor.getString(1);
+                String groupId = cursor.getString(2);
+                float o2Saturation = cursor.getFloat(3);
+                float hbRating = cursor.getFloat(4);
+                float bodyTemp = cursor.getFloat(5);
+                int coughAnalysis = cursor.getInt(6);
+                String recDateTime = cursor.getString(7);
+                String analysisResult = cursor.getString(8);
+
 //                Log.i("userId : ", userId);
-//                Log.i("raspiUId : ", raspiUId);
 //                Log.i("raspiId : ", raspiId);
+//                Log.i("groupId : ", groupId);
 //                Log.i("hbRating : ", String.valueOf(hbRating));
 //                Log.i("o2Saturation : ", String.valueOf(o2Saturation));
 //                Log.i("bodyTemp : ", String.valueOf(bodyTemp));
 //                Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
 //                Log.i("recDateTime : ", recDateTime);
-//                Log.i("recTimestamp : ", String.valueOf(recTimestamp));
-//
-//                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiId, raspiUId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recTimestamp, analysisResult);
-//                allVitalsList.add(onlineUserVitalsModel);
-//
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        sqLiteDatabase.close();
-//        return allVitalsList;
-//    }
+//                Log.i("recTimestamp : ", recDateTime);
+
+                LocalUserVitalsModel localUserVitalsModel = new LocalUserVitalsModel(hbRating, o2Saturation, bodyTemp, coughAnalysis, raspiId, userId, analysisResult, Long.valueOf(recDateTime));
+                allVitalsList.add(localUserVitalsModel);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allVitalsList;
+    }
 }

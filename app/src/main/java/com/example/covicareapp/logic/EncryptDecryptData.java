@@ -32,6 +32,14 @@ public class EncryptDecryptData {
         return originalKey;
     }
 
+    public static SecretKey getKeyFromPassword64(String password, String salt)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 64, 256);
+        SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
+        return originalKey;
+    }
+
     public static byte[] toByte(String hexString) {
         int len = hexString.length() / 2;
         byte[] result = new byte[len];
@@ -144,6 +152,34 @@ public class EncryptDecryptData {
         }
     }
 
+    public String decryptURLContinuous(String mapString) {
+        mapString = mapString.trim();
+        mapString = mapString.substring(1, mapString.length() - 1);           //remove curly brackets
+        String[] keyValuePairs = mapString.split(",");              //split the string to creat key-value pairs
+        Map<String, Object> map = new HashMap<>();
+
+        for (String pair : keyValuePairs)                        //iterate over the pairs
+        {
+            String[] entry = pair.split("=", 2);
+            map.put(entry[0].trim(), entry[1].trim());          //add them to the hashmap and trim whitespaces
+        }
+
+        try {
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword64((String) map.get("Password"), (String) map.get("Salt")));
+
+            Log.i("Data  ", map.get("Data").toString());
+
+            byte[] textDecrypted = cipher.doFinal(toByte(map.get("Data").toString()));
+            String result = new String(textDecrypted);
+
+            return result;
+        } catch (Exception e) {
+            Log.i("Exception ", e.getMessage());
+            return "Error";
+        }
+    }
+
     public Map<String, Object> decryptVitals(String mapString) {
         mapString = mapString.trim();
         mapString = mapString.substring(1, mapString.length() - 1);
@@ -161,7 +197,7 @@ public class EncryptDecryptData {
 
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword((String) map.get("Password"), (String) map.get("Salt")));
+            cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword64((String) map.get("Password"), (String) map.get("Salt")));
 
             byte[] textDecrypted = cipher.doFinal(toByte(map.get("Data").toString()));
             String result = new String(textDecrypted);

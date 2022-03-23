@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.example.covicareapp.ui.activities.addedGroups.GroupAddedInfoActivity;
 import com.example.covicareapp.ui.activities.qrscan.OnlineVitalsScanQrActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -72,6 +73,9 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
         addVitalsFab = findViewById(R.id.add_vitals_fab);
 
         textView.setText(fullName + " " + email + " " + userId + " " + groupId + " " + raspiUId);
+
+        VitalsSQLiteHelper vitalsSQLiteHelper = new VitalsSQLiteHelper(this);
+        Log.i("Vitals Data for user", String.valueOf(vitalsSQLiteHelper.getVitalsForUserListOnline(userId)));
 
         addVitalsFab.setOnClickListener(new View.OnClickListener() {
             @Override

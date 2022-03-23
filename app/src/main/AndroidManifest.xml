@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,18 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
-        <activity android:name=".ui.activities.OnlineUserVitalsInfoActivity"></activity>
+        <activity android:name=".ui.activities.qrscan.ContinuousMonitorScanQRActivity"></activity>
+        <activity android:name=".ui.activities.ContinuousDataActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+
+        </activity>
+        <activity android:name=".ui.activities.OnlineUserVitalsInfoActivity" />
         <activity android:name=".ui.activities.LocalUserVitalsInfoActivity" />
         <activity android:name=".ui.activities.addedGroups.SelectExsitingLocalUserActivity" />
         <activity android:name=".ui.activities.qrscan.AddOnlineUserScanQrActivity" />

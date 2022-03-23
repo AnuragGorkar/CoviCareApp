@@ -3,6 +3,7 @@ package com.example.covicareapp.ui.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.covicareapp.R;
+import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.example.covicareapp.ui.activities.addedGroups.GroupAddedInfoActivity;
 import com.example.covicareapp.ui.activities.qrscan.LocalVitalsScanQrActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -59,6 +61,9 @@ public class LocalUserVitalsInfoActivity extends AppCompatActivity {
         addVitalsFab = findViewById(R.id.add_vitals_fab);
 
         textView.setText("Display Local Users Vitals Info from SQLite Here\n" + localLUID);
+
+        VitalsSQLiteHelper vitalsSQLiteHelper = new VitalsSQLiteHelper(this);
+        Log.i("Vitals Data for user", String.valueOf(vitalsSQLiteHelper.getVitalsForUserListLocal(localLUID)));
 
         addVitalsFab.setOnClickListener(new View.OnClickListener() {
             @Override
