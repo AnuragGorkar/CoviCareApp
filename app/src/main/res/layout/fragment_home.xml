@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/home_fragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,96 +7,211 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.HomeFragment">
 
-    <ScrollView
-        android:id="@+id/scrollView"
+<!--    <ScrollView-->
+<!--        android:id="@+id/scrollView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+<!--    </ScrollView>-->
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ScrollView>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/scanct_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="@string/scan_ct_image"
-        android:textColor="@color/white_50"
-        app:layout_constraintBottom_toBottomOf="@+id/scan_ct_fab"
-        app:layout_constraintEnd_toStartOf="@+id/scan_ct_fab"
-        app:layout_constraintTop_toTopOf="@+id/scan_ct_fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/scan_ct_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/purple_200"
-        android:src="@drawable/ic_outline_document_scanner_24"
-        android:text="Record Vitals"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/one_time_monitoring_fab"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/one_time_record_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="@string/one_time_record"
-        android:textColor="@color/white_50"
-        app:layout_constraintBottom_toBottomOf="@+id/one_time_monitoring_fab"
-        app:layout_constraintEnd_toStartOf="@+id/one_time_monitoring_fab"
-        app:layout_constraintTop_toTopOf="@+id/one_time_monitoring_fab" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/one_time_monitoring_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/purple_200"
-        android:src="@drawable/ic_baseline_file_open_24"
-        android:text="Record Vitals"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/continuous_monitoring_fab"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView" />
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/continuous_monitoring_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:text="@string/continuous_monitor"
-        android:textColor="@color/white_50"
-        app:layout_constraintBottom_toBottomOf="@+id/continuous_monitoring_fab"
-        app:layout_constraintEnd_toStartOf="@+id/continuous_monitoring_fab"
-        app:layout_constraintTop_toTopOf="@+id/continuous_monitoring_fab" />
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/continuous_monitoring_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/purple_200"
-        android:src="@drawable/ic_baseline_cloud_sync_24"
-        android:text="Record Vitals"
-        app:borderWidth="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/record_vitals_efab"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView" />
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:horizontalSpacing="15dp"
+            android:numColumns="2"
+
+            android:verticalSpacing="10dp"
+            tools:listitem="@layout/grid_item" />
 
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/record_vitals_efab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/record_vitals"
-        app:icon="@drawable/ic_outline_medical_information_24"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView" />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="24dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/image_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/preds_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginVertical="8dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="Positive Probability : "
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/pred"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/choose_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorSecondary"
+            android:text="Choose Image" />
+
+        <Button
+            android:id="@+id/capture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorSecondary"
+
+            android:text="Capture Image" />
+
+        <Button
+            android:id="@+id/scan_qr_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorSecondary"
+            android:text="Scan QR Code" />
+
+        <Button
+            android:id="@+id/question_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorSecondary"
+            android:text="Evaluator" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorSecondary"
+            android:text="Logout" />
+
+
+    </LinearLayout>
+
+
+<!--    <com.google.android.material.textview.MaterialTextView-->
+<!--        android:id="@+id/scanct_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:text="@string/scan_ct_image"-->
+<!--        android:textColor="@color/white_50"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/scan_ct_fab"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/scan_ct_fab"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/scan_ct_fab" />-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/scan_ct_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:backgroundTint="@color/purple_200"-->
+<!--        android:src="@drawable/ic_outline_document_scanner_24"-->
+<!--        android:text="Record Vitals"-->
+<!--        app:borderWidth="0dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/one_time_monitoring_fab"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/scrollView" />-->
+
+<!--    <com.google.android.material.textview.MaterialTextView-->
+<!--        android:id="@+id/one_time_record_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:text="@string/one_time_record"-->
+<!--        android:textColor="@color/white_50"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/one_time_monitoring_fab"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/one_time_monitoring_fab"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/one_time_monitoring_fab" />-->
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/one_time_monitoring_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:backgroundTint="@color/purple_200"-->
+<!--        android:src="@drawable/ic_baseline_file_open_24"-->
+<!--        android:text="Record Vitals"-->
+<!--        app:borderWidth="0dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/continuous_monitoring_fab"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/scrollView" />-->
+
+<!--    <com.google.android.material.textview.MaterialTextView-->
+<!--        android:id="@+id/continuous_monitoring_tv"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:text="@string/continuous_monitor"-->
+<!--        android:textColor="@color/white_50"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/continuous_monitoring_fab"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/continuous_monitoring_fab"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/continuous_monitoring_fab" />-->
+
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/continuous_monitoring_fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:backgroundTint="@color/purple_200"-->
+<!--        android:src="@drawable/ic_baseline_cloud_sync_24"-->
+<!--        android:text="Record Vitals"-->
+<!--        app:borderWidth="0dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/record_vitals_efab"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/scrollView" />-->
+
+
+<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--        android:id="@+id/record_vitals_efab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        android:text="@string/record_vitals"-->
+<!--        app:icon="@drawable/ic_outline_medical_information_24"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/scrollView"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/scrollView" />-->
+
+</RelativeLayout>

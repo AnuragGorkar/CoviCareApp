@@ -34,6 +34,10 @@ android {
             }
         }
     }
+    buildFeatures {
+        viewBinding true
+        mlModelBinding true
+    }
 }
 
 dependencies {
@@ -53,6 +57,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:24.0.1'
     // FirebaseUI for Cloud Firestore
     implementation 'com.firebaseui:firebase-ui-firestore:8.0.0'
+    implementation project(path: ':scanlibrary')
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="questions">
+
+        <item>@string/question1</item>
+        <item>@array/question_1_options</item>
+        <item>@string/question2</item>
+        <item>@array/question_2_options</item>
+        <item>@string/question3</item>
+        <item>@array/question_3_options</item>
+        <item>@string/question4</item>
+        <item>@array/question_4_options</item>
+        <item>@string/question5</item>
+        <item>@array/question_5_options</item>
+        <item>@string/question6</item>
+        <item>@array/question_6_options</item>
+        <item>@string/question7</item>
+        <item>@array/question_8_options</item>
+        <item>@string/question8</item>
+        <item>@array/question_8_options</item>
+
+
+    </array>
+
+
+    <string-array name="question_1_options" />
+
+    <string-array name="question_2_options">
+        <item>Male</item>
+        <item>1</item>
+        <item>Female</item>
+        <item>0</item>
+        <item>Other</item>
+        <item>2</item>
+
+    </string-array>
+
+    <string-array name="question_3_options">
+
+        <item>Yes</item>
+        <item>1</item>
+        <item>No</item>
+        <item>0</item>
+
+    </string-array>
+
+    <string-array name="question_4_options">
+
+        <item>Yes</item>
+        <item>2</item>
+        <item>No</item>
+        <item>1</item>
+        <item>Not Sure</item>
+        <item>0</item>
+
+    </string-array>
+
+
+    <string-array name="question_5_options">
+
+        <item>Yes</item>
+        <item>2</item>
+        <item>No</item>
+        <item>0</item>
+        <item>Don\'t know</item>
+        <item>1</item>
+
+    </string-array>
+
+    <string-array name="question_6_options">
+
+        <item>Yes</item>
+        <item>2</item>
+        <item>No</item>
+        <item>1</item>
+        <item>Don\'t know</item>
+        <item>0</item>
+
+    </string-array>
+
+    <string-array name="question_7_options">
+
+        <item>Don\'t know</item>
+        <item>0</item>
+        <item>Somewhat difficult</item>
+        <item>1</item>
+        <item>Somewhat easy</item>
+        <item>2</item>
+        <item>Very difficult</item>
+        <item>3</item>
+        <item>Very easy</item>
+        <item>4</item>
+
+    </string-array>
+
+    <string-array name="question_8_options">
+
+        <item>Don\'t know</item>
+        <item>0</item>
+        <item>Never</item>
+        <item>1</item>
+        <item>Often</item>
+        <item>2</item>
+        <item>Rarely</item>
+        <item>3</item>
+        <item>Sometimes</item>
+        <item>4</item>
+
+    </string-array>
+
+
+</resources>

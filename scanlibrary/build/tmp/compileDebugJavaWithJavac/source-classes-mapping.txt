@@ -1,0 +1,54 @@
+com/scanlibrary/ScanFragment.java
+ com.scanlibrary.ScanFragment
+ com.scanlibrary.ScanFragment$1
+ com.scanlibrary.ScanFragment$ScanAsyncTask
+ com.scanlibrary.ScanFragment$ScanButtonClickListener
+com/scanlibrary/ScanConstants.java
+ com.scanlibrary.ScanConstants
+com/scanlibrary/PickImageFragment.java
+ com.scanlibrary.PickImageFragment
+ com.scanlibrary.PickImageFragment$1
+ com.scanlibrary.PickImageFragment$CameraButtonClickListener
+ com.scanlibrary.PickImageFragment$GalleryClickListener
+com/scanlibrary/ScanActivity.java
+ com.scanlibrary.ScanActivity
+com/scanlibrary/PolygonView.java
+ com.scanlibrary.PolygonView
+ com.scanlibrary.PolygonView$1
+ com.scanlibrary.PolygonView$MidPointTouchListenerImpl
+ com.scanlibrary.PolygonView$TouchListenerImpl
+com/scanlibrary/BuildConfig.java
+ com.scanlibrary.BuildConfig
+com/scanlibrary/SingleButtonDialogFragment.java
+ com.scanlibrary.SingleButtonDialogFragment
+ com.scanlibrary.SingleButtonDialogFragment$1
+com/scanlibrary/ResultFragment.java
+ com.scanlibrary.ResultFragment
+ com.scanlibrary.ResultFragment$1
+ com.scanlibrary.ResultFragment$BWButtonClickListener
+ com.scanlibrary.ResultFragment$BWButtonClickListener$1
+ com.scanlibrary.ResultFragment$BWButtonClickListener$1$1
+ com.scanlibrary.ResultFragment$BWButtonClickListener$1$2
+ com.scanlibrary.ResultFragment$DoneButtonClickListener
+ com.scanlibrary.ResultFragment$DoneButtonClickListener$1
+ com.scanlibrary.ResultFragment$DoneButtonClickListener$1$1
+ com.scanlibrary.ResultFragment$GrayButtonClickListener
+ com.scanlibrary.ResultFragment$GrayButtonClickListener$1
+ com.scanlibrary.ResultFragment$GrayButtonClickListener$1$1
+ com.scanlibrary.ResultFragment$GrayButtonClickListener$1$2
+ com.scanlibrary.ResultFragment$MagicColorButtonClickListener
+ com.scanlibrary.ResultFragment$MagicColorButtonClickListener$1
+ com.scanlibrary.ResultFragment$MagicColorButtonClickListener$1$1
+ com.scanlibrary.ResultFragment$MagicColorButtonClickListener$1$2
+ com.scanlibrary.ResultFragment$OriginalButtonClickListener
+ com.scanlibrary.ResultFragment$RTButtonClickListener
+ com.scanlibrary.ResultFragment$RTButtonClickListener$1
+ com.scanlibrary.ResultFragment$RTButtonClickListener$1$1
+ com.scanlibrary.ResultFragment$RTButtonClickListener$1$2
+com/scanlibrary/Utils.java
+ com.scanlibrary.Utils
+com/scanlibrary/ProgressDialogFragment.java
+ com.scanlibrary.ProgressDialogFragment
+ com.scanlibrary.ProgressDialogFragment$1
+com/scanlibrary/IScanner.java
+ com.scanlibrary.IScanner

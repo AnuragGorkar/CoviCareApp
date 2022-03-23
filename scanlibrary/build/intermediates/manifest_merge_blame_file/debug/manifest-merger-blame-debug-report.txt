@@ -1,0 +1,67 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.scanlibrary" >
+4
+5    <uses-sdk
+6        android:minSdkVersion="19"
+6-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml
+7        android:targetSdkVersion="30" />
+7-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml
+8
+9    <uses-feature
+9-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:4:5-6:35
+10        android:name="android.hardware.camera"
+10-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:5:9-47
+11        android:required="true" />
+11-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:6:9-32
+12
+13    <uses-permission android:name="android.permission.CAMERA" />
+13-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:8:5-65
+13-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:8:22-62
+14    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+14-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:9:5-80
+14-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:9:22-77
+15    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+15-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:10:5-81
+15-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:10:22-78
+16
+17    <application
+17-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:11:5-31:19
+18        android:allowBackup="true"
+18-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:12:9-35
+19        android:hardwareAccelerated="true"
+19-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:14:9-43
+20        android:label="@string/app_name"
+20-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:15:9-41
+21        android:largeHeap="true" >
+21-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:13:9-33
+22        <activity
+22-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:16:9-20:20
+23            android:name="com.scanlibrary.ScanActivity"
+23-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:17:13-41
+24            android:configChanges="orientation|screenSize"
+24-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:18:13-59
+25            android:label="@string/app_name" >
+25-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:19:13-45
+26        </activity>
+27
+28        <provider
+28-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:22:9-30:20
+29            android:name="androidx.core.content.FileProvider"
+29-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:23:13-62
+30            android:authorities="com.scanlibrary.provider"
+30-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:24:13-59
+31            android:exported="false"
+31-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:25:13-37
+32            android:grantUriPermissions="true" >
+32-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:26:13-47
+33            <meta-data
+33-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:27:13-29:57
+34                android:name="android.support.FILE_PROVIDER_PATHS"
+34-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:28:17-67
+35                android:resource="@xml/provider_paths" />
+35-->C:\Users\prana\StudioProjects\CoviCareApp\scanlibrary\src\main\AndroidManifest.xml:29:17-55
+36        </provider>
+37    </application>
+38
+39</manifest>

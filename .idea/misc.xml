@@ -14,10 +14,20 @@
         <entry key="..\:/Projects/CoviCareApp/app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
         <entry key="..\:/Projects/CoviCareApp/app/src/main/res/menu/home.xml" value="0.25" />
         <entry key="..\:/Projects/CoviCareApp/app/src/main/res/menu/options_app_bar.xml" value="0.25" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/ic_capture_image.xml" value="0.124" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/ic_pick_image.xml" value="0.124" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/ic_scan_qr.xml" value="0.124" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_display_image.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_main.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_quiz.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/app_bar_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/fragment_contact_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/grid_item.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

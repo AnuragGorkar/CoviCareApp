@@ -14,7 +14,13 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.CoviCareApp">
-        <activity android:name=".ui.activities.OnlineUserVitalsInfoActivity"></activity>
+        <activity
+            android:name=".ui.activities.QuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.DisplayImageActivity"
+            android:exported="false" />
+        <activity android:name=".ui.activities.OnlineUserVitalsInfoActivity" />
         <activity android:name=".ui.activities.LocalUserVitalsInfoActivity" />
         <activity android:name=".ui.activities.addedGroups.SelectExsitingLocalUserActivity" />
         <activity android:name=".ui.activities.qrscan.AddOnlineUserScanQrActivity" />

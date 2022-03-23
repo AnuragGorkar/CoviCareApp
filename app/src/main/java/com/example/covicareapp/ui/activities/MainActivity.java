@@ -1,7 +1,9 @@
 package com.example.covicareapp.ui.activities;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +18,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -28,6 +32,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.covicareapp.R;
+import com.example.covicareapp.databinding.ActivityMainBinding;
 import com.example.covicareapp.logic.EncryptDecryptData;
 import com.example.covicareapp.ui.activities.addedGroups.SelectGroupActivity;
 import com.example.covicareapp.ui.fragments.GroupsAddedToFragment;
@@ -36,6 +41,7 @@ import com.example.covicareapp.ui.fragments.VitalsHistoryFragment;
 import com.example.covicareapp.ui.fragments.addedGroups.AddedGroupsFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +49,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.scanlibrary.ScanConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageView qr_code;
     TextView qr_info;
     LinearLayout select_qr_type_layout, show_qr_layout;
-    Toolbar toolbar;
+    MaterialToolbar toolbar;
     DrawerLayout drawerLayout;
     ImageButton closeDialogueButton, backDialogueButton;
     ActionBarDrawerToggle actionBarDrawerToggle;
@@ -76,12 +83,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ArrayList<String> groupsAddedToIds = new ArrayList<String>();
     private AppBarConfiguration mAppBarConfiguration;
 
+
+    private static final int RESULT_LOAD_IMAGE = 101;
+    private static final int CAMERA_REQUEST_CODE = 99;
+    private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUEST_CODE = 102;
+    private static final int SCAN_QR_CODE_REQUEST_CODE = 103;
+    int preference = ScanConstants.OPEN_CAMERA;
+    AlertDialog alertDialog;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
+    private ActivityMainBinding mBinding;
+
+
     ConstraintLayout addedGroups, groupsAddedTo, home, vitalsHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        mBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(mBinding.getRoot());
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA},
+                    PERMISSION_REQUEST_CODE);
+        }
 
         //      UI Hooks
 //        addedGroups = findViewById(R.id.added_groups_fragment);
@@ -90,10 +119,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        vitalsHistory = findViewById(R.id.vitals_history_fragment);
 
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationIconTint(getColor(R.color.teal_200));
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         loadingAnimation = findViewById(R.id.loading_lottie);
         loadingTv = findViewById(R.id.loading_text);
+        setSupportActionBar(toolbar);
 
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
