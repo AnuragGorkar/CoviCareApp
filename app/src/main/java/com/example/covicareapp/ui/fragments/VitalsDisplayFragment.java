@@ -26,6 +26,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -131,8 +132,9 @@ public class VitalsDisplayFragment extends Fragment {
                 calendar.add(Calendar.DATE, -7);
                 vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnlineBetween(userId, calendar.getTime().getTime(), Calendar.getInstance().getTime().getTime());
 
-
-                Log.d(TAG, "getData: week vitals data : " + vitalsData.toString());
+                Log.d(TAG, "getData: userId : " + userId);
+                Log.d(TAG, "getData: between : " + calendar.getTime().getTime() + " and " + Calendar.getInstance().getTime().getTime());
+                vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnlineBetween(userId, calendar.getTime().getTime(), Calendar.getInstance().getTime().getTime());
 
                 setData();
 
@@ -145,12 +147,13 @@ public class VitalsDisplayFragment extends Fragment {
 
                 calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, -30);
-                vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnlineBetween(userId,
-                        calendar.getTime().getTime(),
-                        Calendar.getInstance().getTime().getTime());
+                Log.d(TAG, "getData: calendar time from : " + calendar.getTime().getTime());
+                Log.d(TAG, "getData: to : " + Calendar.getInstance().getTime().getTime());
+                Log.d(TAG, "getData: week vitals data : " + vitalsData.toString());
 
-                Log.d(TAG, "getData: month vitals data : " + vitalsData.toString());
+                vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnlineBetween(userId, calendar.getTime().getTime(), Calendar.getInstance().getTime().getTime());
 
+                Log.d(TAG, "getData: vitals Data : " + vitalsData);
                 setData();
 
                 xAxis.setValueFormatter(new XAxisValueFormatter(Constants.MONTH));
@@ -161,6 +164,8 @@ public class VitalsDisplayFragment extends Fragment {
 
                 calendar = Calendar.getInstance();
                 calendar.add(Calendar.MONTH, -12);
+                Log.d(TAG, "getData: calendar time from : " + calendar.getTime().getTime());
+                Log.d(TAG, "getData: to : " + Calendar.getInstance().getTime().getTime());
                 vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnlineBetween(userId, calendar.getTime().getTime(), Calendar.getInstance().getTime().getTime());
                 Log.d(TAG, "getData: year vitals data : " + vitalsData.toString());
 
@@ -202,6 +207,8 @@ public class VitalsDisplayFragment extends Fragment {
 
             }
         }
+
+        values.sort(new EntryXComparator());
 
         LineDataSet lineDataSet = new LineDataSet(values, getLineDataName());
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);

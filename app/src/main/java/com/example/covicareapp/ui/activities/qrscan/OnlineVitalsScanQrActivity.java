@@ -18,7 +18,6 @@ import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.example.covicareapp.logic.EncryptDecryptData;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
 import com.example.covicareapp.ui.activities.OnlineUserVitalsInfoActivity;
-import com.google.firebase.Timestamp;
 import com.google.zxing.Result;
 
 import java.util.ArrayList;
@@ -86,9 +85,8 @@ public class OnlineVitalsScanQrActivity extends AppCompatActivity {
 
                             Log.i("Vitals  ", vitals.toString());
 
-                            Long time = Timestamp.now().getSeconds();
 
-                            OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), groupId, Double.valueOf((String) vitals.get("hb")), Double.valueOf((String) vitals.get("o2")), Double.valueOf((String) vitals.get("temp")), Integer.valueOf((String) vitals.get("cough_value")), time, "Analysis Result");
+                            OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), groupId, Double.valueOf((String) vitals.get("hb")), Double.valueOf((String) vitals.get("o2")), Double.valueOf((String) vitals.get("temp")), Integer.valueOf((String) vitals.get("cough_value")), Long.valueOf(String.valueOf(vitals.get("timeStamp"))), "Analysis Result");
 
                             List<OnlineUserVitalsModel> onlineUserVitalsModelList = new ArrayList<OnlineUserVitalsModel>();
 
