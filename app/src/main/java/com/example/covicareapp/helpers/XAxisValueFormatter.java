@@ -1,7 +1,5 @@
 package com.example.covicareapp.helpers;
 
-import android.util.Log;
-
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
@@ -22,8 +20,8 @@ public class XAxisValueFormatter extends ValueFormatter {
     public String getAxisLabel(float value, AxisBase axis) {
 
         long milliSeconds = (long) value;
-        Log.d("TEMP", "getAxisLabel: axis label value : " + milliSeconds);
-        System.out.println(milliSeconds);
+//        Log.d("TEMP", "getAxisLabel: axis label value : " + milliSeconds);
+//        System.out.println(milliSeconds);
         DateFormat formatter;
         switch (pagerType) {
             case Constants.WEEK:

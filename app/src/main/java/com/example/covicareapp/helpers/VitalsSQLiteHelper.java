@@ -43,7 +43,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                         + OnlineUsersData.HB_VAL + " REAL NOT NULL, "
                         + OnlineUsersData.TEMP_VAL + " REAL NOT NULL, "
                         + OnlineUsersData.COUGH_VAL + " INTEGER NOT NULL, "
-                        + DATE_REC + " TEXT NOT NULL, "
+                        + DATE_REC + " LONG NOT NULL, "
                         + OnlineUsersData.ANALYSIS_RES + " TEXT NOT NULL, "
                         + OnlineUsersData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
 //                        + " PRIMARY KEY(" + OnlineUsersData.RASPI_UID + "," + OnlineUsersData.DATE_REC + "));";
@@ -71,7 +71,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                         + LocalUsersData.HB_VAL + " REAL NOT NULL ,  "
                         + LocalUsersData.TEMP_VAL + " REAL NOT NULL ,  "
                         + LocalUsersData.COUGH_VAL + " INTEGER NOT NULL ,  "
-                        + LocalUsersData.DATE_REC + " TEXT NOT NULL ,  "
+                        + LocalUsersData.DATE_REC + " LONG NOT NULL ,  "
                         + LocalUsersData.ANALYSIS_RES + " TEXT NOT NULL ,  "
                         + LocalUsersData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
 //                        + "FOREIGN KEY (" + LocalUsersData.LUID + ")"
@@ -252,7 +252,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 float o2Saturation = cursor.getFloat(5);
                 float bodyTemp = cursor.getFloat(6);
                 int coughAnalysis = cursor.getInt(7);
-                String recDateTime = cursor.getString(8);
+                long recDateTime = cursor.getLong(8);
                 String analysisResult = cursor.getString(9);
 
 //                Log.i("userId : ", userId);
@@ -272,7 +272,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
-        sqLiteDatabase.close();
+//        sqLiteDatabase.close();
         return allVitalsList;
     }
 
@@ -281,7 +281,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
-        String queryString = "SELECT * FROM " + OnlineUsersData.ONLINE_USERS_DATA + " WHERE " + OnlineUsersData.EMAIL_ID + " = '" + userUniqueId + "'" + " AND " +  OnlineUsersData.DATE_REC + " BETWEEN " + from  + " AND " + to + ";";
+        String queryString = "SELECT * FROM " + OnlineUsersData.ONLINE_USERS_DATA + " WHERE " + OnlineUsersData.EMAIL_ID + " = '" + userUniqueId + "'" + " AND " +  OnlineUsersData.DATE_REC + " BETWEEN " + from  + " AND " + to + " ORDER BY " + DATE_REC + " ASC;";
 
         Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
 
@@ -295,7 +295,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 float o2Saturation = cursor.getFloat(5);
                 float bodyTemp = cursor.getFloat(6);
                 int coughAnalysis = cursor.getInt(7);
-                String recDateTime = cursor.getString(8);
+                long recDateTime = cursor.getLong(8);
                 String analysisResult = cursor.getString(9);
 
 //                Log.i("userId : ", userId);
@@ -309,13 +309,13 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
 //                Log.i("recDateTime : ", recDateTime);
 //                Log.i("recTimestamp : ", recDateTime);
 
-                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, Long.valueOf(recDateTime), analysisResult);
+                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, recDateTime, analysisResult);
                 allVitalsList.add(onlineUserVitalsModel);
 
             } while (cursor.moveToNext());
         }
         cursor.close();
-        sqLiteDatabase.close();
+//        sqLiteDatabase.close();
         return allVitalsList;
     }
 

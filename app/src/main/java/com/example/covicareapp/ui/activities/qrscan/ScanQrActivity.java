@@ -2,6 +2,7 @@ package com.example.covicareapp.ui.activities.qrscan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -64,6 +65,8 @@ public class ScanQrActivity extends AppCompatActivity {
 
                         Map<String, Object> vitals = encryptDecryptData.decryptVitals(result.getText());
 
+                        Log.d(TAG, "run: vitals : " + vitals);
+
 
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -79,49 +82,49 @@ public class ScanQrActivity extends AppCompatActivity {
                                     Log.d(TAG, "onSuccess: snapshot : " + snapshot.getData());
                                     Map<String, Object> map = snapshot.getData();
                                     Log.d(TAG, "onSuccess: raspiUId : " + map.get("raspiUId"));
-                                    String raspiUId = (String) map.get("raspiUId");
+                                    String raspiUId = (String)  map.get("raspiUId");
 
 
-                                    OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), userId,
-                                            Double.valueOf((String) vitals.get("hb")),
-                                            Double.valueOf((String) vitals.get("o2")),
-                                            Double.valueOf((String) vitals.get("temp")),
-                                            Integer.valueOf((String) vitals.get("cough_value")),
-                                            Long.valueOf(String.valueOf(vitals.get("timeStamp"))),
-                                            "Analysis Result");
+
+                                    OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), userId, Double.valueOf((String) vitals.get("hb")), Double.valueOf((String) vitals.get("o2")), Double.valueOf((String) vitals.get("temp")), Integer.valueOf((String) vitals.get("cough_value")), Long.valueOf(String.valueOf(vitals.get("timeStamp"))), "Analysis Result");
+
 
 
                                     VitalsSQLiteHelper vitalsSQLiteHelper = new VitalsSQLiteHelper(ScanQrActivity.this);
 
                                     vitalsSQLiteHelper.addOneVitalsEntryOnline(onlineUserVitalsModel);
+                                    try {
+                                        Log.i("Data from QR", String.valueOf(encryptDecryptData.decryptVitals(result.getText())));
 
-                                    Log.i("Data from QR", String.valueOf(encryptDecryptData.decryptVitals(result.getText())));
+                                        scannedCode.setText("Vitals Extracted Successfully");
+                                        scannedCode.setTextColor(getColor(R.color.success_400));
 
-                                    scannedCode.setText("Vitals Extracted Successfully");
-                                    scannedCode.setTextColor(getColor(R.color.success_400));
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                progressBar.setVisibility(View.VISIBLE);
+                                                // Do something after 5s = 5000ms
+                                                scannedCode.setText("Analysing Vitals...");
+                                                scannedCode.setTextColor(getColor(R.color.purple_200));
 
-//                                    final Handler handler = new Handler();
-//                                    handler.postDelayed(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//                                            progressBar.setVisibility(View.VISIBLE);
-//                                            // Do something after 5s = 5000ms
-//                                            scannedCode.setText("Analysing Vitals...");
-//                                            scannedCode.setTextColor(getColor(R.color.purple_200));
-//
-//                                            final Handler handler = new Handler();
-//                                            handler.postDelayed(new Runnable() {
-//                                                @Override
-//                                                public void run() {
-//                                                    // WHO Logic here
+//                                                final Handler handler = new Handler();
+//                                                handler.postDelayed(new Runnable() {
+//                                                    @Override
+//                                                    public void run() {
+//                                                        // WHO Logic here
 //
 //
-//                                                }
-//                                            }, 800);
-//
-//                                        }
-//                                    }, 600);
+//                                                    }
+//                                                }, 800);
 
+                                            }
+                                        }, 600);
+
+
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
 
                                     // Todo analyse result and show score for succiptibility using WHO rules and then nnavigate to the vitals history activity
 
