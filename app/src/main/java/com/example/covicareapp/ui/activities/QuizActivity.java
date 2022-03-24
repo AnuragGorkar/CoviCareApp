@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -76,19 +77,23 @@ public class QuizActivity extends AppCompatActivity {
         updateOptions();
 
         mBinding.next.setOnClickListener(v -> {
-            int age = Integer.parseInt((mBinding.ageEdittext.getText().toString()));
-            if (age < 0 || age > 150) {
-                mBinding.ageEdittext.setText("");
-                mBinding.ageEdittext.setError("Please enter valid age");
+            if (Objects.requireNonNull(mBinding.ageEdittext.getText()).toString().isEmpty()) {
+                mBinding.ageEdittext.setError("Please enter age");
             } else {
-                float x_min = 5, x_max = 72;
-                float score = (age - x_min) / (x_max - x_min);
+                int age = Integer.parseInt((mBinding.ageEdittext.getText().toString()));
+                if (age < 0 || age > 150) {
+                    mBinding.ageEdittext.setText("");
+                    mBinding.ageEdittext.setError("Please enter valid age");
+                } else {
+                    float x_min = 5, x_max = 72;
+                    float score = (age - x_min) / (x_max - x_min);
 
 
-                scores.add((float) score);
-                currentQuestionIndex++;
-                updateOptions();
-                configureView();
+                    scores.add((float) score);
+                    currentQuestionIndex++;
+                    updateOptions();
+                    configureView();
+                }
             }
         });
 
@@ -134,6 +139,11 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     private void configureView() {
 
@@ -145,10 +155,14 @@ public class QuizActivity extends AppCompatActivity {
 
             if (question.equals("Age")) {
                 mBinding.ageEdittext.setVisibility(View.VISIBLE);
+                mBinding.textInputLayout.setVisibility(View.VISIBLE);
                 mBinding.optionsGroup.setVisibility(View.GONE);
+                mBinding.question.setVisibility(View.GONE);
                 mBinding.next.setVisibility(View.VISIBLE);
             } else {
                 mBinding.ageEdittext.setVisibility(View.GONE);
+                mBinding.question.setVisibility(View.VISIBLE);
+                mBinding.textInputLayout.setVisibility(View.GONE);
                 mBinding.optionsGroup.setVisibility(View.VISIBLE);
                 mBinding.next.setVisibility(View.GONE);
 

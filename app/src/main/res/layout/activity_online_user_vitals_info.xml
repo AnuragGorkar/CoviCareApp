@@ -4,155 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/transparent"
-    android:weightSum="4"
+    android:orientation="vertical"
     tools:context=".ui.activities.OnlineUserVitalsInfoActivity">
 
-    <LinearLayout
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="@color/transparent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_marginHorizontal="40dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rect_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/purple_500"
+        app:tabTextAppearance="@style/TabLayout"
+        app:tabTextColor="@color/black">
 
-        <LinearLayout
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:background="@drawable/tab_indicator"
-            android:gravity="center"
-            android:orientation="vertical">
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:focusedByDefault="true"
 
-            <TextView
-                android:id="@+id/vital_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="36 \u2103"
-                android:textColor="@color/black"
-                android:textSize="28sp" />
+            android:text="Week" />
 
-            <TextView
-                android:id="@+id/vital_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Temperature"
-                android:textColor="@color/black" />
 
-        </LinearLayout>
-    </LinearLayout>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Month" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Year" />
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginBottom="20dp"
-
-
-            >
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/leftVitalCard"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                app:cardBackgroundColor="@color/black_200">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="8dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/left_vital_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="72bmp"
-                        android:textColor="@color/colorSecondary"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/left_vital_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Pulse"
-                        android:textColor="@color/colorSecondary" />
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@android:color/darker_gray" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/rightVitalCard"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@color/black_200">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/right_vital_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="97%"
-
-                        android:textColor="@color/colorSecondary"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/right_vital_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="SpO2"
-                        android:textColor="@color/colorSecondary" />
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_vitals_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
+
         android:src="@drawable/ic_baseline_add_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_alignParentEnd="true"
+        />
+
 </LinearLayout>

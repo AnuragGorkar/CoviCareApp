@@ -79,7 +79,13 @@ public class ScanQrActivity extends AppCompatActivity {
 
 
 
-                                    OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), userId, Double.valueOf((String) vitals.get("hb")), Double.valueOf((String) vitals.get("o2")), Double.valueOf((String) vitals.get("temp")), Integer.valueOf((String) vitals.get("cough_value")), Long.valueOf(String.valueOf(vitals.get("timeStamp"))), "Analysis Result");
+                                    OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), userId,
+                                            Double.valueOf((String) vitals.get("hb")),
+                                            Double.valueOf((String) vitals.get("o2")),
+                                            Double.valueOf((String) vitals.get("temp")),
+                                            Integer.valueOf((String) vitals.get("cough_value")),
+                                            Long.valueOf(String.valueOf(vitals.get("timeStamp"))),
+                                            "Analysis Result");
 
 
 

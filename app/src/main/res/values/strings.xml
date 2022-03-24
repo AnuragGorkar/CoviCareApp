@@ -138,4 +138,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="positive">POSITIVE</string>
     <string name="negative">NEGATIVE</string>
+    <string name="enter_age">Age</string>
+    <string name="mental_health_evaluator">Mental Health Evaluator</string>
 </resources>

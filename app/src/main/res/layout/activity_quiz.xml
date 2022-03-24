@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black_700"
+    android:padding="10dp"
     tools:context=".ui.activities.QuizActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_toolbar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_24"
+            app:title="@string/mental_health_evaluator" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:id="@+id/questions_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/app_bar_layout"
         android:layout_centerHorizontal="true"
         android:orientation="vertical"
         android:visibility="gone">
@@ -26,22 +47,57 @@
             android:gravity="center"
             android:text="@string/question"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
-
-        <EditText
-            android:id="@+id/age_edittext"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/question"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="32dp"
-            android:background="@color/colorSecondary"
-            android:hint="Age"
-            android:importantForAutofill="no"
-            android:inputType="number"
-            android:padding="16dp"
-            android:visibility="gone" />
+            android:layout_marginVertical="5dp"
+            android:hint="@string/enter_age"
+            android:textColorHint="@color/white_800"
+            android:textSize="18sp"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/purple_200"
+            app:boxStrokeErrorColor="@color/error_400"
+            app:boxStrokeWidthFocused="2dp"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/white_800"
+            app:hintEnabled="true"
+            app:hintTextColor="@color/purple_200"
+            app:startIconTint="@color/white_800">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/age_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto"
+                android:inputType="number"
+                android:textColor="@color/white_50" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/age_edittext"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@id/question"-->
+<!--                    -->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_margin="32dp"-->
+<!--                    android:background="@color/black_600"-->
+<!--                    -->
+<!--                    android:hint="Age"-->
+<!--                    android:importantForAutofill="no"-->
+<!--                    android:inputType="number"-->
+<!--                    android:padding="16dp"-->
+<!--                    android:visibility="gone" />-->
 
         <LinearLayout
             android:id="@+id/options_group"
@@ -51,54 +107,59 @@
             android:layout_centerHorizontal="true"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/option1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="16dp"
                 android:text="option1"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="10dp" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/option2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="8dp"
                 android:text="option2"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="10dp" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/option3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="8dp"
                 android:text="option3"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="10dp" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/option4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="8dp"
                 android:text="option4"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="10dp" />
 
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/option5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="32dp"
                 android:layout_marginTop="8dp"
                 android:text="option5"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                app:cornerRadius="10dp" />
         </LinearLayout>
 
 
@@ -126,8 +187,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_centerInParent="true"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -149,14 +210,14 @@
             <TextView
                 android:id="@+id/status"
                 android:layout_width="match_parent"
-                android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/report_normal"
                 android:textColor="@color/green"
                 android:textSize="25sp" />
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/return_back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -166,7 +227,8 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
-            android:text="@string/return_back" />
+            android:text="@string/return_back"
+            app:cornerRadius="10dp" />
 
     </RelativeLayout>
 

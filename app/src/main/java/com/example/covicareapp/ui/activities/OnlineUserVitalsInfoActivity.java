@@ -2,7 +2,6 @@ package com.example.covicareapp.ui.activities;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.covicareapp.R;
 import com.example.covicareapp.databinding.ActivityOnlineUserVitalsInfoBinding;
@@ -19,16 +19,18 @@ import com.example.covicareapp.helpers.XAxisValueFormatter;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
 import com.example.covicareapp.ui.activities.addedGroups.GroupAddedInfoActivity;
 import com.example.covicareapp.ui.activities.qrscan.OnlineVitalsScanQrActivity;
+import com.example.covicareapp.ui.adapters.ViewPagerFragmentAdapter;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -39,6 +41,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
 
@@ -58,8 +61,13 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
     int currentVital = Constants.TEMPERATURE_ID;
     int leftCardVital = Constants.PULSE_ID;
     int rightCardVital = Constants.SPO2_ID;
-    ActivityOnlineUserVitalsInfoBinding binding;
     private ArrayList<OnlineUserVitalsModel> vitalsData;
+
+    private ActivityOnlineUserVitalsInfoBinding binding;
+    ViewPager2 viewPager;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,44 +113,80 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
         Log.i("Vitals Data for user", String.valueOf(vitalsSQLiteHelper.getVitalsForUserListOnline(userId)));
 
 
-        binding.leftVitalCard.setOnClickListener(view1 -> {
-            int temp = currentVital;
-            currentVital = leftCardVital;
-            leftCardVital = temp;
-            setData();
-        });
+//        SharedPreferences preferences = requireActivity().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        String userId  = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
 
-        binding.rightVitalCard.setOnClickListener(view1 -> {
-            int temp = currentVital;
-            currentVital = rightCardVital;
-            rightCardVital = temp;
-            setData();
-        });
+        ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), getLifecycle());
+        adapter.setViewPagerItemArrayList(userId);
+        viewPager = binding.pager;
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(1);
 
-        binding.vitalValue.setText(String.valueOf(0));
-        chart = binding.chart;
 
-        getData(userId);
+        new TabLayoutMediator(binding.tabLayout, binding.pager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Week");
+                    break;
+                case 1:
+                    tab.setText("Month");
+                    break;
+                case 2:
+                    tab.setText("Year");
+                    break;
 
-        XAxis xAxis = chart.getXAxis();
-        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
-        xAxis.setPosition(position);
-        xAxis.enableGridDashedLine(2f, 7f, 0f);
-        xAxis.setTextColor(Color.WHITE);
-//        xAxis.setAxisMaximum(5f);
-//        xAxis.setAxisMinimum(0f);
-//        xAxis.setLabelCount(6, true);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setGranularity(1f);
-        xAxis.setLabelRotationAngle(315f);
-        chart.getDescription().setEnabled(false);
+            }
+        }).attach();
 
-        YAxis axisLeft = chart.getAxisLeft();
-        axisLeft.setTextColor(Color.WHITE);
-        YAxis axisRight = chart.getAxisRight();
-        axisRight.setTextColor(Color.WHITE);
-        addVitalsFab.setOnClickListener(view -> requestCameraPermission(view));
-
+//
+//        for (int i = 0; i < binding.tabLayout.getTabCount(); i++) {
+//
+//            TextView tv = (TextView) LayoutInflater.from(getActivity())
+//                    .inflate(R.layout.custom_tab, null);
+//
+//            Objects.requireNonNull(binding.tabLayout.getTabAt(i)).setCustomView(tv);
+//        }
+//
+//
+//        binding.leftVitalCard.setOnClickListener(view1 -> {
+//            int temp = currentVital;
+//            currentVital = leftCardVital;
+//            leftCardVital = temp;
+//            setData();
+//        });
+//
+//        binding.rightVitalCard.setOnClickListener(view1 -> {
+//            int temp = currentVital;
+//            currentVital = rightCardVital;
+//            rightCardVital = temp;
+//            setData();
+//        });
+//
+//        binding.vitalValue.setText(String.valueOf(0));
+//        chart = binding.chart;
+//
+//        getData(userId);
+//
+//        XAxis xAxis = chart.getXAxis();
+//        XAxis.XAxisPosition position = XAxis.XAxisPosition.BOTTOM;
+//        xAxis.setPosition(position);
+//        xAxis.enableGridDashedLine(2f, 7f, 0f);
+//        xAxis.setTextColor(Color.WHITE);
+////        xAxis.setAxisMaximum(5f);
+////        xAxis.setAxisMinimum(0f);
+////        xAxis.setLabelCount(6, true);
+//        xAxis.setGranularityEnabled(true);
+//        xAxis.setGranularity(1f);
+//        xAxis.setLabelRotationAngle(315f);
+//        chart.getDescription().setEnabled(false);
+//
+//        YAxis axisLeft = chart.getAxisLeft();
+//        axisLeft.setTextColor(Color.WHITE);
+//        YAxis axisRight = chart.getAxisRight();
+//        axisRight.setTextColor(Color.WHITE);
+//        addVitalsFab.setOnClickListener(view -> requestCameraPermission(view));
+//
 
     }
 
@@ -168,16 +212,16 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
     }
 
     private void updateNoData() {
-        binding.vitalValue.setText("No Data");
-        binding.leftVitalValue.setText("No Data");
-        binding.rightVitalValue.setText("No Data");
+//        binding.vitalValue.setText("No Data");
+//        binding.leftVitalValue.setText("No Data");
+//        binding.rightVitalValue.setText("No Data");
     }
 
-    private void setVitalInfo(OnlineUserVitalsModel vital) {
-        updateVitalInfoUI(vital, leftCardVital, binding.leftVitalValue, binding.leftVitalName);
-        updateVitalInfoUI(vital, rightCardVital, binding.rightVitalValue, binding.rightVitalName);
-        updateVitalInfoUI(vital, currentVital, binding.vitalValue, binding.vitalName);
-    }
+//    private void setVitalInfo(OnlineUserVitalsModel vital) {
+//        updateVitalInfoUI(vital, leftCardVital, binding.leftVitalValue, binding.leftVitalName);
+//        updateVitalInfoUI(vital, rightCardVital, binding.rightVitalValue, binding.rightVitalName);
+//        updateVitalInfoUI(vital, currentVital, binding.vitalValue, binding.vitalName);
+//    }
 
     private void updateVitalInfoUI(OnlineUserVitalsModel vital, int switchOn, TextView vitalValue, TextView vitalName) {
         String value;
@@ -213,7 +257,7 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
         ArrayList<Entry> values = new ArrayList<>();
         OnlineUserVitalsModel lastVital = vitalsData.get(vitalsData.size() - 1);
 
-        setVitalInfo(lastVital);
+//        setVitalInfo(lastVital);
 
         for (OnlineUserVitalsModel vital : vitalsData) {
             switch (currentVital) {
