@@ -1,9 +1,10 @@
 package com.example.covicareapp.ui.activities.qrscan;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,6 @@ import com.example.covicareapp.R;
 import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.example.covicareapp.logic.EncryptDecryptData;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
-import com.example.covicareapp.ui.activities.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,6 +34,7 @@ public class ScanQrActivity extends AppCompatActivity {
     CodeScanner codeScanner;
     CodeScannerView codeScannerView;
     TextView scannedCode;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,9 @@ public class ScanQrActivity extends AppCompatActivity {
         //        UI Hooks
         codeScannerView = findViewById(R.id.scanner_view);
         scannedCode = findViewById(R.id.scanned_value);
+        progressBar = findViewById(R.id.progress_indicator);
+
+        progressBar.setVisibility(View.GONE);
 
         codeScanner = new CodeScanner(this, codeScannerView);
 
@@ -53,7 +57,6 @@ public class ScanQrActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         Log.i("The result from the QR Code", result.getText());
-                        scannedCode.setText(result.getText());
 
                         EncryptDecryptData encryptDecryptData = new EncryptDecryptData();
 
@@ -94,11 +97,39 @@ public class ScanQrActivity extends AppCompatActivity {
                                     vitalsSQLiteHelper.addOneVitalsEntryOnline(onlineUserVitalsModel);
                                     try {
                                         Log.i("Data from QR", String.valueOf(encryptDecryptData.decryptVitals(result.getText())));
+
+                                        scannedCode.setText("Vitals Extracted Successfully");
+                                        scannedCode.setTextColor(getColor(R.color.success_400));
+
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                progressBar.setVisibility(View.VISIBLE);
+                                                // Do something after 5s = 5000ms
+                                                scannedCode.setText("Analysing Vitals...");
+                                                scannedCode.setTextColor(getColor(R.color.purple_200));
+
+                                                final Handler handler = new Handler();
+                                                handler.postDelayed(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        // WHO Logic here
+
+
+                                                    }
+                                                }, 800);
+
+                                            }
+                                        }, 600);
+
+
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                     }
 
                                     // Todo analyse result and show score for succiptibility using WHO rules and then nnavigate to the vitals history activity
+
 
 //                                    Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
 //                                    intent.putExtra("Vitals Data", result.getText());

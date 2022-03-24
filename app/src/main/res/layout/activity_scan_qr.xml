@@ -23,6 +23,17 @@
         app:frameThickness="2dp"
         app:maskColor="#77000000" />
 
+    <ProgressBar
+        android:id="@+id/progress_indicator"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/purple_200"
+        android:paddingVertical="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/scanned_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/scanned_value"
         android:layout_width="wrap_content"
