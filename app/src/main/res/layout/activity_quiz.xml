@@ -163,7 +163,7 @@
         </LinearLayout>
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/next"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -173,6 +173,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="32dp"
+            app:cornerRadius="10dp"
             android:text="@string/next" />
     </RelativeLayout>
 

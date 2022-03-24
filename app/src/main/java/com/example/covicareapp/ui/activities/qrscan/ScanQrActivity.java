@@ -98,13 +98,15 @@ public class ScanQrActivity extends AppCompatActivity {
                                         e.printStackTrace();
                                     }
 
-                                    Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
-                                    intent.putExtra("Vitals Data", result.getText());
-                                    intent.putExtra("Fragment", "Vitals History");
+                                    // Todo analyse result and show score for succiptibility using WHO rules and then nnavigate to the vitals history activity
 
-                                    startActivity(intent);
-                                    finish();
-                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+//                                    Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
+//                                    intent.putExtra("Vitals Data", result.getText());
+//                                    intent.putExtra("Fragment", "Vitals History");
+//
+//                                    startActivity(intent);
+//                                    finish();
+//                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                                 }
                             }
                         });

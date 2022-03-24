@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +28,7 @@ import java.util.Objects;
 
 public class QuizActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     private static final String TAG = "QuizActivity";
     private final ArrayList<String> questions = new ArrayList<>();
     private final ArrayList<String> options = new ArrayList<>();
@@ -70,6 +72,13 @@ public class QuizActivity extends AppCompatActivity {
         mBinding.scoreLayout.setVisibility(View.GONE);
         mBinding.ageEdittext.setVisibility(View.VISIBLE);
         mBinding.optionsGroup.setVisibility(View.GONE);
+
+        mBinding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         questionsData = getResources().obtainTypedArray(R.array.questions);
 
