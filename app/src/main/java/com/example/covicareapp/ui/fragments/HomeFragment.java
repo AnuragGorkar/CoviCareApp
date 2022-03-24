@@ -1,7 +1,5 @@
 package com.example.covicareapp.ui.fragments;
 
-import static android.app.Activity.RESULT_OK;
-
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,8 +18,8 @@ import com.example.covicareapp.helpers.Constants;
 import com.example.covicareapp.interfaces.OnHomePageClickListener;
 import com.example.covicareapp.models.HomePageButton;
 import com.example.covicareapp.ui.activities.DisplayImageActivity;
-import com.example.covicareapp.ui.activities.MainActivity;
 import com.example.covicareapp.ui.activities.QuizActivity;
+import com.example.covicareapp.ui.activities.qrscan.ContinuousMonitorScanQRActivity;
 import com.example.covicareapp.ui.activities.qrscan.ScanQrActivity;
 import com.example.covicareapp.ui.adapters.GridViewAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,6 +33,8 @@ import com.scanlibrary.ScanActivity;
 import com.scanlibrary.ScanConstants;
 
 import java.util.ArrayList;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class HomeFragment extends Fragment implements OnHomePageClickListener {
@@ -135,11 +135,10 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
 
         ArrayList<HomePageButton> homepageButtons = new ArrayList<>();
 
-
         homepageButtons.add(new HomePageButton(getString(R.string.capture_image), R.drawable.ic_capture_image, Constants.CAPTURE_IMAGE));
         homepageButtons.add(new HomePageButton(getString(R.string.pick_image), R.drawable.ic_pick_image, Constants.PICK_IMAGE));
-        homepageButtons.add(new HomePageButton(getString(R.string.scan_qr_code), R.drawable.ic_scan_qr, Constants.SCAN_QR));
-        homepageButtons.add(new HomePageButton(getString(R.string.vital_history), R.drawable.ic_vital_history, Constants.VITALS_HISTORY));
+        homepageButtons.add(new HomePageButton("Scan Vitals QR", R.drawable.ic_scan_qr, Constants.SCAN_QR));
+        homepageButtons.add(new HomePageButton("Monitor Vitals", R.drawable.ic_baseline_monitor_heart_24, Constants.MONITOR_VITALS));
         homepageButtons.add(new HomePageButton(getString(R.string.evaluate_mental_health), R.drawable.ic_eval_mental_temp, Constants.MENTAL_HEALTH));
 
         GridViewAdapter adapter = new GridViewAdapter(getActivity(), homepageButtons, this);
@@ -175,7 +174,6 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
             }
         }).check();
     }
-
 
     protected void showSnackbar(View view, String messageStr, String actionStr, String resultState) {
         // pass the mSnackbarLayout as the view
@@ -229,12 +227,10 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
                 startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
                 break;
             case Constants.SCAN_QR:
-
                 startActivity(new Intent(getActivity(), ScanQrActivity.class));
                 break;
-            case Constants.VITALS_HISTORY:
-
-                Intent intent1 = new Intent(getActivity(), MainActivity.class);
+            case Constants.MONITOR_VITALS:
+                Intent intent1 = new Intent(getActivity(), ContinuousMonitorScanQRActivity.class);
                 intent1.putExtra("Fragment", "Vitals History");
                 startActivity(intent1);
                 break;

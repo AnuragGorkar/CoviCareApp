@@ -88,7 +88,6 @@ public class VitalsDisplayFragment extends Fragment {
             setData();
         });
 
-
         Bundle args = getArguments();
 
         assert args != null;

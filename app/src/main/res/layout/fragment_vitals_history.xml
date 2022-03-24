@@ -14,9 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="40dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/rect_back"
+        android:background="@color/black_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,17 +23,15 @@
         app:tabIndicatorHeight="0dp"
         app:tabMode="fixed"
         app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/purple_500"
+        app:tabSelectedTextColor="@color/purple_200"
         app:tabTextAppearance="@style/TabLayout"
-        app:tabTextColor="@color/black">
+        app:tabTextColor="@color/grey">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:focusedByDefault="true"
-
             android:text="Week" />
-
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

@@ -18,7 +18,8 @@ public class Constants {
     public static final int CAPTURE_IMAGE = 1;
     public static final int PICK_IMAGE = 2;
     public static final int SCAN_QR = 3;
-    public static final int VITALS_HISTORY = 4;
+    public static final int MONITOR_VITALS = 4;
+    //    public static final int VITALS_HISTORY = 4;
     public static final int MENTAL_HEALTH = 5;
     public static final int WEEK = 6;
     public static final int MONTH = 7;
@@ -26,7 +27,6 @@ public class Constants {
     public static final int TEMPERATURE_ID = 9;
     public static final int PULSE_ID = 10;
     public static final int SPO2_ID = 11;
-
 
 
     public static final String DATABASE_NAME = "CoviCare-Database";
