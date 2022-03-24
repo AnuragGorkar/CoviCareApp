@@ -26,6 +26,7 @@ public class Constants {
     public static final int TEMPERATURE_ID = 9;
     public static final int PULSE_ID = 10;
     public static final int SPO2_ID = 11;
+    public static final int COUGH_SOUND = 12;
 
 
 

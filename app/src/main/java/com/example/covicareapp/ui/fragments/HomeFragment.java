@@ -19,6 +19,7 @@ import com.example.covicareapp.databinding.FragmentHomeBinding;
 import com.example.covicareapp.helpers.Constants;
 import com.example.covicareapp.interfaces.OnHomePageClickListener;
 import com.example.covicareapp.models.HomePageButton;
+import com.example.covicareapp.ui.activities.CoughActivity;
 import com.example.covicareapp.ui.activities.DisplayImageActivity;
 import com.example.covicareapp.ui.activities.MainActivity;
 import com.example.covicareapp.ui.activities.QuizActivity;
@@ -141,6 +142,7 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
         homepageButtons.add(new HomePageButton(getString(R.string.scan_qr_code), R.drawable.ic_scan_qr, Constants.SCAN_QR));
         homepageButtons.add(new HomePageButton(getString(R.string.vital_history), R.drawable.ic_vital_history, Constants.VITALS_HISTORY));
         homepageButtons.add(new HomePageButton(getString(R.string.evaluate_mental_health), R.drawable.ic_eval_mental_temp, Constants.MENTAL_HEALTH));
+        homepageButtons.add(new HomePageButton(getString(R.string.cough_sound_classifier), R.drawable.ic_download_1, Constants.COUGH_SOUND));
 
         GridViewAdapter adapter = new GridViewAdapter(getActivity(), homepageButtons, this);
 
@@ -242,6 +244,8 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
 
                 startActivity(new Intent(getActivity(), QuizActivity.class));
                 break;
+            case Constants.COUGH_SOUND:
+                startActivity(new Intent(getActivity(), CoughActivity.class));
 
             default:
                 throw new IllegalStateException("Unexpected value: " + homePageButton.getButtonId());

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:allowBackup="true"
@@ -52,6 +53,9 @@
         </activity>
         <activity android:name=".ui.activities.addedGroups.GroupAddedInfoActivity" />
         <activity android:name=".ui.activities.qrscan.ScanQrActivity" />
+        <activity
+            android:name=".ui.activities.CoughActivity"
+            android:exported="true" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:label="@string/title_activity_home"

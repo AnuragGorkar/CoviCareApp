@@ -135,6 +135,7 @@
     <string name="scan_qr_code">Scan QR Code</string>
     <string name="vital_history">Vital History</string>
     <string name="evaluate_mental_health">Mental Health</string>
+    <string name="cough_sound_classifier">Cough Sound Classifier</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="positive">POSITIVE</string>
     <string name="negative">NEGATIVE</string>
