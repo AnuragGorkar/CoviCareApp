@@ -78,8 +78,7 @@ public class ScanQrActivity extends AppCompatActivity {
                                     Log.d(TAG, "onSuccess: snapshot : " + snapshot.getData());
                                     Map<String, Object> map = snapshot.getData();
                                     Log.d(TAG, "onSuccess: raspiUId : " + map.get("raspiUId"));
-                                    String raspiUId = (String)  map.get("raspiUId");
-
+                                    String raspiUId = (String) map.get("raspiUId");
 
 
                                     OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), userId,
@@ -91,42 +90,37 @@ public class ScanQrActivity extends AppCompatActivity {
                                             "Analysis Result");
 
 
-
                                     VitalsSQLiteHelper vitalsSQLiteHelper = new VitalsSQLiteHelper(ScanQrActivity.this);
 
                                     vitalsSQLiteHelper.addOneVitalsEntryOnline(onlineUserVitalsModel);
-                                    try {
-                                        Log.i("Data from QR", String.valueOf(encryptDecryptData.decryptVitals(result.getText())));
 
-                                        scannedCode.setText("Vitals Extracted Successfully");
-                                        scannedCode.setTextColor(getColor(R.color.success_400));
+                                    Log.i("Data from QR", String.valueOf(encryptDecryptData.decryptVitals(result.getText())));
 
-                                        final Handler handler = new Handler();
-                                        handler.postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                progressBar.setVisibility(View.VISIBLE);
-                                                // Do something after 5s = 5000ms
-                                                scannedCode.setText("Analysing Vitals...");
-                                                scannedCode.setTextColor(getColor(R.color.purple_200));
+                                    scannedCode.setText("Vitals Extracted Successfully");
+                                    scannedCode.setTextColor(getColor(R.color.success_400));
 
-                                                final Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        // WHO Logic here
+                                    final Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressBar.setVisibility(View.VISIBLE);
+                                            // Do something after 5s = 5000ms
+                                            scannedCode.setText("Analysing Vitals...");
+                                            scannedCode.setTextColor(getColor(R.color.purple_200));
 
-
-                                                    }
-                                                }, 800);
-
-                                            }
-                                        }, 600);
+                                            final Handler handler = new Handler();
+                                            handler.postDelayed(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    // WHO Logic here
 
 
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                                }
+                                            }, 800);
+
+                                        }
+                                    }, 600);
+
 
                                     // Todo analyse result and show score for succiptibility using WHO rules and then nnavigate to the vitals history activity
 
