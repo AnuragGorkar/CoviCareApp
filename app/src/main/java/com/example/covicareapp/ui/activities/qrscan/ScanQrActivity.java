@@ -1,7 +1,7 @@
 package com.example.covicareapp.ui.activities.qrscan;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -17,6 +17,7 @@ import com.example.covicareapp.R;
 import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.example.covicareapp.logic.EncryptDecryptData;
 import com.example.covicareapp.models.OnlineUserVitalsModel;
+import com.example.covicareapp.ui.activities.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -99,39 +100,39 @@ public class ScanQrActivity extends AppCompatActivity {
                                     scannedCode.setText("Vitals Extracted Successfully");
                                     scannedCode.setTextColor(getColor(R.color.success_400));
 
-                                    final Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressBar.setVisibility(View.VISIBLE);
-                                            // Do something after 5s = 5000ms
-                                            scannedCode.setText("Analysing Vitals...");
-                                            scannedCode.setTextColor(getColor(R.color.purple_200));
-
-                                            final Handler handler = new Handler();
-                                            handler.postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    // WHO Logic here
-
-
-                                                }
-                                            }, 800);
-
-                                        }
-                                    }, 600);
+//                                    final Handler handler = new Handler();
+//                                    handler.postDelayed(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//                                            progressBar.setVisibility(View.VISIBLE);
+//                                            // Do something after 5s = 5000ms
+//                                            scannedCode.setText("Analysing Vitals...");
+//                                            scannedCode.setTextColor(getColor(R.color.purple_200));
+//
+//                                            final Handler handler = new Handler();
+//                                            handler.postDelayed(new Runnable() {
+//                                                @Override
+//                                                public void run() {
+//                                                    // WHO Logic here
+//
+//
+//                                                }
+//                                            }, 800);
+//
+//                                        }
+//                                    }, 600);
 
 
                                     // Todo analyse result and show score for succiptibility using WHO rules and then nnavigate to the vitals history activity
 
 
-//                                    Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
-//                                    intent.putExtra("Vitals Data", result.getText());
-//                                    intent.putExtra("Fragment", "Vitals History");
-//
-//                                    startActivity(intent);
-//                                    finish();
-//                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                                    Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
+                                    intent.putExtra("Vitals Data", result.getText());
+                                    intent.putExtra("Fragment", "Vitals History");
+
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                                 }
                             }
                         });

@@ -46,7 +46,6 @@ public class VitalsHistoryFragment extends Fragment {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);
 
-
         new TabLayoutMediator(binding.tabLayout, binding.pager, (tab, position) -> {
             switch (position) {
                 case 0:

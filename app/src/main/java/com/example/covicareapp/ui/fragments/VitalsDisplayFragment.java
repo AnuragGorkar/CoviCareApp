@@ -127,9 +127,10 @@ public class VitalsDisplayFragment extends Fragment {
         switch (pagerType) {
             case Constants.WEEK:
 
-                vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnline(userId);
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DATE, -7);
+                vitalsData = vitalsSQLiteHelper.getVitalsForUserListOnlineBetween(userId, calendar.getTime().getTime(), Calendar.getInstance().getTime().getTime());
+
 
                 Log.d(TAG, "getData: week vitals data : " + vitalsData.toString());
 
