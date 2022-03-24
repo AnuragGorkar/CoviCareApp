@@ -20,9 +20,11 @@ import com.example.covicareapp.ui.activities.addedGroups.GroupAddedInfoActivity;
 import com.example.covicareapp.ui.activities.qrscan.OnlineVitalsScanQrActivity;
 import com.example.covicareapp.ui.adapters.ViewPagerFragmentAdapter;
 import com.github.mikephil.charting.charts.LineChart;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -38,6 +40,8 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
 
     private static final String TAG = "OnlineUserVitalsInfoActivity";
     //Variables
+
+    MaterialToolbar toolbar;
     String countryCode, countryName;
     String groupId, groupName, groupDateCreated, groupDescription, groupCreated, groupOnlineUsers, groupOfflineUsers;
     ArrayList<String> groupOnlineUsersList, groupOfflineUsersList;
@@ -96,17 +100,24 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
         // UI Hooks
         textView = findViewById(R.id.textView);
         addVitalsFab = findViewById(R.id.add_vitals_fab);
+        toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        toolbar.setTitle(fullName + "'s Vitals");
 
 //        textView.setText(fullName + " " + email + " " + userId + " " + groupId + " " + raspiUId);
 
 
-<<<<<<< HEAD
 //        SharedPreferences preferences = requireActivity().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String userId  = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
-=======
+        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
         Log.e(TAG, "onCreate: userId : " + userId);
->>>>>>> 0e44f14f9f16368d6013f76cdeddd9879a556f5c
 
         ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), getLifecycle());
         adapter.setViewPagerItemArrayList(userId);
