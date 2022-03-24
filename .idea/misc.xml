@@ -17,12 +17,17 @@
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/ic_capture_image.xml" value="0.124" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/ic_pick_image.xml" value="0.124" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/ic_scan_qr.xml" value="0.124" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/drawable/tab_selector.xml" value="0.124" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_display_image.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_main.xml" value="0.11302083333333333" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_online_user_vitals_info.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/activity_quiz.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/app_bar_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/custom_tab.xml" value="0.11302083333333333" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/fragment_contact_details.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/fragment_vitals_display.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/fragment_vitals_history.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/prana/StudioProjects/CoviCareApp/app/src/main/res/layout/grid_item.xml" value="0.25416666666666665" />
       </map>
     </option>

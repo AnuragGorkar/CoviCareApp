@@ -17,7 +17,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/transparent"
         android:orientation="vertical">
 
 
@@ -92,14 +92,14 @@
             android:backgroundTint="@color/colorSecondary"
             android:text="Choose Image" />
 
-        <Button
-            android:id="@+id/capture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/colorSecondary"
+<!--        <Button-->
+<!--            android:id="@+id/capture"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:backgroundTint="@color/colorSecondary"-->
 
-            android:text="Capture Image" />
+<!--            android:text="Capture Image" />-->
 
         <Button
             android:id="@+id/scan_qr_code"

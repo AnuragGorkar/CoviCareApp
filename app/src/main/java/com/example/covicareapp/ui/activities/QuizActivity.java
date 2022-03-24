@@ -178,9 +178,6 @@ public class QuizActivity extends AppCompatActivity {
                 Toast.makeText(QuizActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-
-//            infer();
-
         }
     }
 

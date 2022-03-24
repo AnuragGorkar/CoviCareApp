@@ -13,12 +13,23 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.covicareapp.R;
+import com.example.covicareapp.helpers.VitalsSQLiteHelper;
 import com.example.covicareapp.logic.EncryptDecryptData;
+import com.example.covicareapp.models.OnlineUserVitalsModel;
 import com.example.covicareapp.ui.activities.MainActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.zxing.Result;
+
+import java.util.Map;
+import java.util.Objects;
 
 public class ScanQrActivity extends AppCompatActivity {
 
+    private static final String TAG = "ScanQrActivity";
     //    UI Variables
     CodeScanner codeScanner;
     CodeScannerView codeScannerView;
@@ -46,17 +57,52 @@ public class ScanQrActivity extends AppCompatActivity {
 
                         EncryptDecryptData encryptDecryptData = new EncryptDecryptData();
 
-                        try {
-                            Log.i("Data from QR", encryptDecryptData.decryptEmail(result.getText()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
 
-                        Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
-                        intent.putExtra("Vitals Data", result.getText());
-                        startActivity(intent);
-                        finish();
-                        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                        Map<String, Object> vitals = encryptDecryptData.decryptVitals(result.getText());
+
+
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+                        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
+
+                        db.collection("users").whereEqualTo("email", userId).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                Log.d(TAG, "onSuccess: " + queryDocumentSnapshots.toString());
+                                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                    Log.d(TAG, "onSuccess: snapshot : " + snapshot.getData());
+                                    Map<String, Object> map = snapshot.getData();
+                                    Log.d(TAG, "onSuccess: raspiUId : " + map.get("raspiUId"));
+                                    String raspiUId = (String)  map.get("raspiUId");
+
+
+
+                                    OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, (String) vitals.get("raspiId"), userId, Double.valueOf((String) vitals.get("hb")), Double.valueOf((String) vitals.get("o2")), Double.valueOf((String) vitals.get("temp")), Integer.valueOf((String) vitals.get("cough_value")), Long.valueOf(String.valueOf(vitals.get("timeStamp"))), "Analysis Result");
+
+
+
+                                    VitalsSQLiteHelper vitalsSQLiteHelper = new VitalsSQLiteHelper(ScanQrActivity.this);
+
+                                    vitalsSQLiteHelper.addOneVitalsEntryOnline(onlineUserVitalsModel);
+                                    try {
+                                        Log.i("Data from QR", String.valueOf(encryptDecryptData.decryptVitals(result.getText())));
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    Intent intent = new Intent(ScanQrActivity.this, MainActivity.class);
+                                    intent.putExtra("Vitals Data", result.getText());
+                                    intent.putExtra("Fragment", "Vitals History");
+
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                                }
+                            }
+                        });
+
                     }
                 });
             }

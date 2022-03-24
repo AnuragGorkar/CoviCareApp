@@ -19,18 +19,19 @@ public class EncryptDecryptData {
     private static final String UNICODE_FORMAT = "UTF-8";
 
     private final static String HEX = "0123456789ABCDEF";
+    private static final String TAG = "EncryptDecryptData";
 
     public EncryptDecryptData() {
 
     }
 
-    public static SecretKey getKeyFromPassword(String password, String salt)
-            throws NoSuchAlgorithmException, InvalidKeySpecException {
-        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 256, 256);
-        SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
-        return originalKey;
-    }
+//    public static SecretKey getKeyFromPassword(String password, String salt)
+//            throws NoSuchAlgorithmException, InvalidKeySpecException {
+//        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+//        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 256, 256);
+//        SecretKey originalKey = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
+//        return originalKey;
+//    }
 
     public static SecretKey getKeyFromPassword64(String password, String salt)
             throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -107,7 +108,7 @@ public class EncryptDecryptData {
         try {
             String password = getAlphaNumericString(6);
             String salt = getAlphaNumericString(5);
-            SecretKey key = getKeyFromPassword(password, salt);
+            SecretKey key = getKeyFromPassword64(password, salt);
 
             Cipher cipher = Cipher.getInstance("AES");
 
@@ -127,7 +128,9 @@ public class EncryptDecryptData {
     }
 
     public String decryptEmail(String mapString) {
+        mapString = mapString.trim();
         mapString = mapString.substring(1, mapString.length() - 1);           //remove curly brackets
+
         String[] keyValuePairs = mapString.split(",");              //split the string to creat key-value pairs
         Map<String, Object> map = new HashMap<>();
 
@@ -139,7 +142,7 @@ public class EncryptDecryptData {
 
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword((String) map.get("Password"), (String) map.get("Salt")));
+            cipher.init(Cipher.DECRYPT_MODE, getKeyFromPassword64((String) map.get("Password"), (String) map.get("Salt")));
 
 
             byte[] textDecrypted = cipher.doFinal(toByte(map.get("Data").toString()));
@@ -147,7 +150,8 @@ public class EncryptDecryptData {
 
             return result;
         } catch (Exception e) {
-            Log.i("Exception ", e.getMessage());
+            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
             return "Error";
         }
     }

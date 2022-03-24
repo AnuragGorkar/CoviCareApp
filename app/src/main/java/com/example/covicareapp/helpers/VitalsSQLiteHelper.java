@@ -1,5 +1,7 @@
 package com.example.covicareapp.helpers;
 
+import static com.example.covicareapp.helpers.VitalsContract.OnlineUsersData.DATE_REC;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -41,7 +43,7 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                         + OnlineUsersData.HB_VAL + " REAL NOT NULL, "
                         + OnlineUsersData.TEMP_VAL + " REAL NOT NULL, "
                         + OnlineUsersData.COUGH_VAL + " INTEGER NOT NULL, "
-                        + OnlineUsersData.DATE_REC + " TEXT NOT NULL, "
+                        + DATE_REC + " TEXT NOT NULL, "
                         + OnlineUsersData.ANALYSIS_RES + " TEXT NOT NULL, "
                         + OnlineUsersData._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ");";
 //                        + " PRIMARY KEY(" + OnlineUsersData.RASPI_UID + "," + OnlineUsersData.DATE_REC + "));";
@@ -108,17 +110,17 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
 //        Timestamp timestamp = onlineUserVitalsModel.getRecDateTime();
 //        Date date = new Date(timestamp.getTime());
 
-        String timestampNow = String.valueOf(com.google.firebase.Timestamp.now().getSeconds());
+//        String timestampNow = String.valueOf(com.google.firebase.Timestamp.now().getSeconds());
 
         contentValues.put(OnlineUsersData.EMAIL_ID, onlineUserVitalsModel.getUserId());
         contentValues.put(OnlineUsersData.RASPI_UID, onlineUserVitalsModel.getRaspiUId());
         contentValues.put(OnlineUsersData.RASPI_ID, onlineUserVitalsModel.getRaspiId());
-        contentValues.put(OnlineUsersData.GROUP_ID, onlineUserVitalsModel.getgroupId());
-        contentValues.put(OnlineUsersData.O_2_VAL, onlineUserVitalsModel.getO2Saturation());
-        contentValues.put(OnlineUsersData.HB_VAL, onlineUserVitalsModel.getHbRating());
-        contentValues.put(OnlineUsersData.TEMP_VAL, onlineUserVitalsModel.getBodyTemp());
+        contentValues.put(OnlineUsersData.GROUP_ID, onlineUserVitalsModel.getGroupId());
+        contentValues.put(OnlineUsersData.O_2_VAL, onlineUserVitalsModel.getSp02());
+        contentValues.put(OnlineUsersData.HB_VAL, onlineUserVitalsModel.getPulse());
+        contentValues.put(OnlineUsersData.TEMP_VAL, onlineUserVitalsModel.getTemperature());
         contentValues.put(OnlineUsersData.COUGH_VAL, onlineUserVitalsModel.getCoughAnalysis());
-        contentValues.put(OnlineUsersData.DATE_REC, timestampNow);
+        contentValues.put(DATE_REC, onlineUserVitalsModel.getRecDateTime());
         contentValues.put(OnlineUsersData.ANALYSIS_RES, onlineUserVitalsModel.getAnalysisResult());
 
         boolean returnVal;
@@ -130,8 +132,8 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
             Log.i("Exception while adding vitals data   ", e.toString());
             returnVal = false;
         }
-
-        sqLiteDatabase.close();
+//TODO close
+//        sqLiteDatabase.close();
         return returnVal;
     }
 
@@ -274,6 +276,48 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
         return allVitalsList;
     }
 
+    public  ArrayList<OnlineUserVitalsModel> getVitalsForUserListOnlineBetween(String userUniqueId, Long from, Long to) {
+        ArrayList<OnlineUserVitalsModel> allVitalsList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        String queryString = "SELECT * FROM " + OnlineUsersData.ONLINE_USERS_DATA + " WHERE " + OnlineUsersData.EMAIL_ID + " = '" + userUniqueId + "'" + " AND " +  OnlineUsersData.DATE_REC + " BETWEEN " + from  + " AND " + to + ";";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String userId = cursor.getString(0);
+                String raspiUId = cursor.getString(1);
+                String raspiId = cursor.getString(2);
+                String profileId = cursor.getString(3);
+                float hbRating = cursor.getFloat(4);
+                float o2Saturation = cursor.getFloat(5);
+                float bodyTemp = cursor.getFloat(6);
+                int coughAnalysis = cursor.getInt(7);
+                String recDateTime = cursor.getString(8);
+                String analysisResult = cursor.getString(9);
+
+//                Log.i("userId : ", userId);
+//                Log.i("raspiUId : ", raspiUId);
+//                Log.i("raspiId : ", raspiId);
+//                Log.i("profileId : ", profileId);
+//                Log.i("hbRating : ", String.valueOf(hbRating));
+//                Log.i("o2Saturation : ", String.valueOf(o2Saturation));
+//                Log.i("bodyTemp : ", String.valueOf(bodyTemp));
+//                Log.i("coughAnalysis : ", String.valueOf(coughAnalysis));
+//                Log.i("recDateTime : ", recDateTime);
+//                Log.i("recTimestamp : ", recDateTime);
+
+                OnlineUserVitalsModel onlineUserVitalsModel = new OnlineUserVitalsModel(userId, raspiUId, raspiId, profileId, hbRating, o2Saturation, bodyTemp, coughAnalysis, Long.valueOf(recDateTime), analysisResult);
+                allVitalsList.add(onlineUserVitalsModel);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return allVitalsList;
+    }
 
     //    For Local Users
     public Cursor getCursorForRecyclerViewForNotInGroup(String groupUniqueId) {

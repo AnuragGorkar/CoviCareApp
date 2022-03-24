@@ -20,6 +20,7 @@ import com.example.covicareapp.helpers.Constants;
 import com.example.covicareapp.interfaces.OnHomePageClickListener;
 import com.example.covicareapp.models.HomePageButton;
 import com.example.covicareapp.ui.activities.DisplayImageActivity;
+import com.example.covicareapp.ui.activities.MainActivity;
 import com.example.covicareapp.ui.activities.QuizActivity;
 import com.example.covicareapp.ui.activities.qrscan.ScanQrActivity;
 import com.example.covicareapp.ui.adapters.GridViewAdapter;
@@ -147,32 +148,6 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
 //        CourseGVAdapter adapter = new CourseGVAdapter(this, courseModelArrayList);
 //        coursesGV.setAdapter(adapter);
 
-
-        mBinding.chooseImage.setOnClickListener(v -> {
-            mBinding.imageName.setVisibility(View.VISIBLE);
-            Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, RESULT_LOAD_IMAGE);
-        });
-
-
-        mBinding.capture.setOnClickListener(v -> {
-            mBinding.imageName.setVisibility(View.GONE);
-            Intent i = new Intent(getActivity(), ScanActivity.class);
-            i.putExtra(ScanConstants.OPEN_INTENT_PREFERENCE, preference);
-            startActivityForResult(i, CAMERA_REQUEST_CODE);
-
-        });
-
-        mBinding.questionList.setOnClickListener(v -> {
-
-//            startActivity(new Intent(getActivity(), QuizActivity.class));
-        });
-
-        mBinding.scanQrCode.setOnClickListener(v -> {
-            captureImage();
-        });
-
-
         return rootView;
     }
 
@@ -259,7 +234,9 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
                 break;
             case Constants.VITALS_HISTORY:
 
-//                startActivity(new Intent(getActivity(), VitalsActivity.class));
+                Intent intent1 = new Intent(getActivity(), MainActivity.class);
+                intent1.putExtra("Fragment", "Vitals History");
+                startActivity(intent1);
                 break;
             case Constants.MENTAL_HEALTH:
 

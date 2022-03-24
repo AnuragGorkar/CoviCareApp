@@ -1,7 +1,7 @@
 package com.example.covicareapp.models;
 
 public class OnlineUserVitalsModel {
-    double hbRating, o2Saturation, bodyTemp;
+    double pulse, sp02, temperature;
     int coughAnalysis;
     String raspiId, raspiUId, userId, groupId, analysisResult;
     Long recDateTime;
@@ -9,14 +9,14 @@ public class OnlineUserVitalsModel {
     public OnlineUserVitalsModel() {
     }
 
-    public OnlineUserVitalsModel(String userId, String raspiUId, String raspiId, String groupId, double hbRating, double o2Saturation, double bodyTemp, int coughAnalysis, Long recDateTime, String analysisResult) {
+    public OnlineUserVitalsModel(String userId, String raspiUId, String raspiId, String groupId, double pulse, double sp02, double temperature, int coughAnalysis, Long recDateTime, String analysisResult) {
         this.raspiId = raspiId;
         this.raspiUId = raspiUId;
         this.userId = userId;
         this.groupId = groupId;
-        this.hbRating = hbRating;
-        this.o2Saturation = o2Saturation;
-        this.bodyTemp = bodyTemp;
+        this.pulse = pulse;
+        this.sp02 = sp02;
+        this.temperature = temperature;
         this.coughAnalysis = coughAnalysis;
         this.recDateTime = recDateTime;
         this.analysisResult = analysisResult;
@@ -29,37 +29,45 @@ public class OnlineUserVitalsModel {
                 ", raspiUId='" + raspiUId + '\'' +
                 ", raspiId='" + raspiId + '\'' +
                 ", groupId='" + groupId + '\'' +
-                ", hbRating=" + hbRating +
-                ", o2Saturation=" + o2Saturation +
-                ", bodyTemp=" + bodyTemp +
+                ", hbRating=" + pulse +
+                ", o2Saturation=" + sp02 +
+                ", bodyTemp=" + temperature +
                 ", coughAnalysis=" + coughAnalysis +
                 ", recDateTime=" + recDateTime +
                 ", analysisResult='" + analysisResult + '\'' +
                 '}';
     }
 
-    public double getHbRating() {
-        return hbRating;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setHbRating(double hbRating) {
-        this.hbRating = hbRating;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
-    public double getO2Saturation() {
-        return o2Saturation;
+    public double getPulse() {
+        return pulse;
     }
 
-    public void setO2Saturation(double o2Saturation) {
-        this.o2Saturation = o2Saturation;
+    public void setPulse(double pulse) {
+        this.pulse = pulse;
     }
 
-    public double getBodyTemp() {
-        return bodyTemp;
+    public double getSp02() {
+        return sp02;
     }
 
-    public void setBodyTemp(double bodyTemp) {
-        this.bodyTemp = bodyTemp;
+    public void setSp02(double sp02) {
+        this.sp02 = sp02;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
     }
 
     public int getCoughAnalysis() {
@@ -108,13 +116,5 @@ public class OnlineUserVitalsModel {
 
     public void setAnalysisResult(String analysisResult) {
         this.analysisResult = analysisResult;
-    }
-
-    public String getgroupId() {
-        return groupId;
-    }
-
-    public void setgroupId(String groupId) {
-        this.groupId = groupId;
     }
 }
