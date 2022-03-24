@@ -231,6 +231,7 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
                 break;
             case Constants.MONITOR_VITALS:
                 Intent intent1 = new Intent(getActivity(), ContinuousMonitorScanQRActivity.class);
+//                Intent intent1 = new Intent(getActivity(), ContinuousDataActivity.class);
                 intent1.putExtra("Fragment", "Vitals History");
                 startActivity(intent1);
                 break;

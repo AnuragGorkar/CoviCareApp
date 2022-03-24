@@ -112,7 +112,6 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
 //        TODO DATA
         Log.i("Vitals Data for user", String.valueOf(vitalsSQLiteHelper.getVitalsForUserListOnline(userId)));
 
-
 //        SharedPreferences preferences = requireActivity().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         String userId  = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();

@@ -32,17 +32,17 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:focusedByDefault="true"
-            android:text="Week" />
+            android:text="Weekly" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Month" />
+            android:text="Monthly" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Year" />
+            android:text="Yearly" />
 
 
     </com.google.android.material.tabs.TabLayout>
