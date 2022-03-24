@@ -58,4 +58,10 @@
         <item name="android:colorBackground">@color/black_600</item>
         <item name="background">@drawable/custom_toolbar_background</item>
     </style>
+
+    <style name="TabLayout" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
 </resources>
