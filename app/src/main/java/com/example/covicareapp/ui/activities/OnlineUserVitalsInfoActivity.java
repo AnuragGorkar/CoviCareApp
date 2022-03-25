@@ -24,7 +24,6 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.google.firebase.auth.FirebaseAuth;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -115,9 +114,9 @@ public class OnlineUserVitalsInfoActivity extends AppCompatActivity {
 
 
 //        SharedPreferences preferences = requireActivity().getSharedPreferences(Constants.SHARED_PREFS, MODE_PRIVATE);
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
-        Log.e(TAG, "onCreate: userId : " + userId);
+//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+//        String userId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
+//        Log.e(TAG, "onCreate: userId : " + userId);
 
         ViewPagerFragmentAdapter adapter = new ViewPagerFragmentAdapter(getSupportFragmentManager(), getLifecycle());
         adapter.setViewPagerItemArrayList(userId);
