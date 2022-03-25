@@ -211,6 +211,7 @@ public class VitalsDisplayFragment extends Fragment {
         values.sort(new EntryXComparator());
 
         LineDataSet lineDataSet = new LineDataSet(values, getLineDataName());
+        chart.getLegend().setTextColor(Color.WHITE);
         lineDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
         Log.d(TAG, "setData: linedataset : " + lineDataSet);
