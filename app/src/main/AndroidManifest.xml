@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.CoviCareApp">
         <activity android:name=".ui.activities.qrscan.ContinuousMonitorScanQRActivity"></activity>
         <activity android:name=".ui.activities.ContinuousDataActivity">
