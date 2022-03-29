@@ -254,16 +254,19 @@ public class VitalsDisplayFragment extends Fragment {
             case Constants.TEMPERATURE_ID:
 
                 value = df.format(vital.getTemperature()) + " " + Constants.DEGREE_C;
+                Log.d(TAG, "updateVitalInfoUI: temp : " + value);
                 vitalValue.setText(value);
                 vitalName.setText(getString(R.string.temperature));
                 break;
             case Constants.SPO2_ID:
                 value = df.format(vital.getSp02()) + " %";
+                Log.d(TAG, "updateVitalInfoUI: spo2 : " + value);
                 vitalValue.setText(value);
                 vitalName.setText(getString(R.string.spo2));
                 break;
             case Constants.PULSE_ID:
                 value = df.format(vital.getPulse()) + " bpm";
+                Log.d(TAG, "updateVitalInfoUI: pulse : " + value);
                 vitalValue.setText(value);
                 vitalName.setText(getString(R.string.pulse));
                 break;

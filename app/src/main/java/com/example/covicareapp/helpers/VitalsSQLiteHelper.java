@@ -291,8 +291,8 @@ public class VitalsSQLiteHelper extends SQLiteOpenHelper {
                 String raspiUId = cursor.getString(1);
                 String raspiId = cursor.getString(2);
                 String profileId = cursor.getString(3);
-                float hbRating = cursor.getFloat(4);
-                float o2Saturation = cursor.getFloat(5);
+                float o2Saturation = cursor.getFloat(4);
+                float hbRating = cursor.getFloat(5);
                 float bodyTemp = cursor.getFloat(6);
                 int coughAnalysis = cursor.getInt(7);
                 long recDateTime = cursor.getLong(8);
