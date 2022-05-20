@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_toolbar_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/back_dialogue"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="left"
+                android:background="@color/black_600"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:tint="@color/white_50" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/close_dialogue"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="right"
+                android:background="@color/black_600"
+                android:src="@drawable/ic_baseline_close_24"
+                app:tint="@color/white_50" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/select_qr_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_titled_text_view"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/covid_identification_button"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="30dp"
+                        android:text="Covid Identification"
+                        android:textSize="14sp"
+                        app:cornerRadius="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:justificationMode="inter_word"
+                        android:text="Use the CNN model to infer if the selected CT-SCAN is of covid positive or negative patient"
+                        android:textColor="@color/white_50"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_alignParentTop="true"-->
+                <!--                    android:layout_marginStart="16dp"-->
+                <!--                    android:background="@color/black_600"-->
+                <!--                    android:paddingHorizontal="8dp"-->
+                <!--                    android:text="Add User to Group"-->
+                <!--                    android:textColor="@color/white_50"-->
+                <!--                    android:textSize="16sp" />-->
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/custom_titled_text_view"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/image_segmentation_image"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:text="Image Segmentation"
+                        android:textSize="14sp"
+                        app:cornerRadius="10dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:justificationMode="inter_word"
+                        android:text="Use U-Net model to detect, isolate and highlight the infected area in the CT-SCAN"
+                        android:textColor="@color/white_50"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--                <TextView-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_alignParentTop="true"-->
+                <!--                    android:layout_marginStart="16dp"-->
+                <!--                    android:background="@color/black_600"-->
+                <!--                    android:paddingHorizontal="8dp"-->
+                <!--                    android:text="Share Vitals"-->
+                <!--                    android:textColor="@color/white_50"-->
+                <!--                    android:textSize="16sp" />-->
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/share_by_qr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/qr_code_view"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:src="@drawable/ic_baseline_error_outline_24"
+                android:visibility="gone" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qr_info"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:text="Scan QR to add online user"
+                android:textAllCaps="true"
+                android:textColor="@color/purple_200"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

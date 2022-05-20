@@ -306,6 +306,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+
     public void showAddOnlineUserDialogue() {
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_show_qr_dialogue_box);

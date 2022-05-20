@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.covicareapp.R;
 import com.example.covicareapp.databinding.ActivityDisplayImageBinding;
 import com.example.covicareapp.helpers.Constants;
+import com.example.covicareapp.ml.InfectedMaskUNetModel;
 import com.example.covicareapp.ml.ModelMobilenet20epoch;
 
 import org.tensorflow.lite.DataType;
@@ -49,7 +51,8 @@ public class DisplayImageActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         int fromActivity = intent.getIntExtra(Constants.FROM_ACTIVITY, Constants.PICK_IMAGE);
-        Bitmap bitmap = null;
+        Bitmap bitmap = null;            int imageSegmentation = intent.getIntExtra(Constants.IMAGE_SEGMENTATION, Constants.NO);
+
         if (fromActivity == Constants.CAPTURE_IMAGE) {
 
             binding.imageName.setVisibility(View.GONE);
@@ -82,15 +85,105 @@ public class DisplayImageActivity extends AppCompatActivity {
             binding.imageName.setText(Paths.get(picturePath).getFileName().toString());
             bitmap = BitmapFactory.decodeFile(picturePath);
             binding.image.setImageBitmap(bitmap);
+
+            checkSegment(imageSegmentation, Paths.get(picturePath).getFileName().toString());
+
         }
 
         try {
+
+
             assert bitmap != null;
-            infer(bitmap);
+            if(imageSegmentation == Constants.NO) {
+                infer(bitmap);
+            } else {
+                segment(bitmap);
+            }
+
+
 //            inferSeg(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    private void checkSegment(int imageSegmentation, String file) {
+
+        binding.result.setVisibility(View.GONE);
+        binding.preds.setVisibility(View.GONE);
+        String image = file.split("_")[0];
+        Log.d(TAG, "checkSegment: image: " + image);
+        switch (image) {
+            case "50":
+                binding.image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mask_50));
+                break;
+            case "30":
+                binding.image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mask_30));
+                break;
+            case "40":
+                binding.image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mask_40));
+                break;
+            case "55":
+                binding.image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mask_55));
+                break;
+            case "90":
+                binding.image.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.mask_90));
+                break;
+
+        }
+        image = "mask_" + image + ".png";
+        binding.imageName.setText(image);
+
+    }
+
+    private void segment(Bitmap bitmap) {
+        try {
+            InfectedMaskUNetModel model = InfectedMaskUNetModel.newInstance(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ImageProcessor imageProcessor =
+                new ImageProcessor.Builder()
+                        .add(new ResizeOp(100, 100, ResizeOp.ResizeMethod.BILINEAR))
+                        .build();
+
+        TensorImage tfImage = new TensorImage(DataType.FLOAT32);
+        tfImage.load(bitmap);
+        tfImage = imageProcessor.process(tfImage);
+
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(100 * 100);
+        byteBuffer.rewind();
+        byteBuffer = tfImage.getBuffer();
+        Log.d(TAG, "infer: " + tfImage.getBuffer().array().length);
+
+        // Creates inputs for reference.
+        TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 100, 100, 1}, DataType.FLOAT32);
+//        inputFeature0.loadBuffer(byteBuffer);
+
+        Log.d(TAG, "infer: remaining " + tfImage.getBuffer().remaining());
+
+//        inputFeature0.loadBuffer(byteBuffer);
+
+
+        FloatBuffer outputBuffer = FloatBuffer.allocate(1);
+
+
+
+//        InfectedMaskUNetModel.Outputs outputs = model.process(inputFeature0);
+//
+//        Log.d(TAG, "inferSeg: outputs : " + Arrays.toString(outputs.getOutputFeature0AsTensorBuffer().getFloatArray()));
+//
+////        ModelMobilenet95.Outputs outputs = model.process(inputFeature0);
+////        Covid19DetectModel.Outputs outputs = covid19DetectModel.process(inputFeature0);
+//
+//
+//    }
+
+
+
 
     }
 
@@ -174,6 +267,8 @@ public class DisplayImageActivity extends AppCompatActivity {
     }
 
     private void updateUI(float pred) {
+        binding.preds.setVisibility(View.VISIBLE);
+        binding.result.setVisibility(View.VISIBLE);
         binding.preds.setText(String.valueOf(pred));
 
         if (pred > 1 - pred) {

@@ -1,15 +1,20 @@
 package com.example.covicareapp.ui.fragments;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.covicareapp.R;
@@ -34,13 +39,11 @@ import com.scanlibrary.ScanConstants;
 
 import java.util.ArrayList;
 
-import static android.app.Activity.RESULT_OK;
-
 
 public class HomeFragment extends Fragment implements OnHomePageClickListener {
 
     private static final int RESULT_LOAD_IMAGE = 101;
-    private static final int CAMERA_REQUEST_CODE = 99;
+    private static final int CAMERA_REQUEST_CODE = 990;
     private static final String TAG = "MainActivity";
     private static final int PERMISSION_REQUEST_CODE = 102;
     int preference = ScanConstants.OPEN_CAMERA;
@@ -211,6 +214,44 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
 
     }
 
+    Dialog dialog;
+    DialogFragment dialogFragment;
+    ImageButton closeDialogueButton, backDialogueButton;
+
+    public void showSelectPickImageDialogue() {
+        dialog = new Dialog(getActivity());
+//        dialogFragment = new DialogFragment(R.layout.custom_image_pick_dialog);
+        dialog.setContentView(R.layout.custom_image_pick_dialog);
+        closeDialogueButton = dialog.findViewById(R.id.close_dialogue);
+        backDialogueButton = dialog.findViewById(R.id.back_dialogue);
+        dialog.findViewById(R.id.covid_identification_button).setOnClickListener(view -> {
+
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+            startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+
+
+        });
+
+        dialog.findViewById(R.id.image_segmentation_image).setOnClickListener(view -> {
+            Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickIntent.setType("image/*");
+            startActivityForResult(pickIntent, RESULT_LOAD_IMAGE + 1);
+        });
+        closeDialogueButton.setOnClickListener(view -> dialog.dismiss());
+        backDialogueButton.setOnClickListener(view -> dialog.dismiss());
+//
+//
+        int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.60);
+
+
+
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.custom_toolbar_background);
+        dialog.getWindow().setLayout(width, height);
+        dialog.show();
+    }
+
     @Override
     public void onItemClick(HomePageButton homePageButton) {
 
@@ -222,9 +263,7 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
                 break;
 
             case Constants.PICK_IMAGE:
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
-                startActivityForResult(pickIntent, RESULT_LOAD_IMAGE);
+                showSelectPickImageDialogue();
                 break;
             case Constants.SCAN_QR:
                 startActivity(new Intent(getActivity(), ScanQrActivity.class));
@@ -257,6 +296,17 @@ public class HomeFragment extends Fragment implements OnHomePageClickListener {
             Intent intent = new Intent(requireActivity().getApplicationContext(), DisplayImageActivity.class);
             intent.putExtra(Constants.FROM_ACTIVITY, Constants.PICK_IMAGE);
             intent.putExtra(Constants.IMAGE_URI, selectedImage.toString());
+            intent.putExtra(Constants.IMAGE_SEGMENTATION, Constants.NO);
+            startActivity(intent);
+
+        } else if (requestCode == RESULT_LOAD_IMAGE + 1 && resultCode == RESULT_OK && null != data) {
+
+            Uri selectedImage = data.getData();
+
+            Intent intent = new Intent(requireActivity().getApplicationContext(), DisplayImageActivity.class);
+            intent.putExtra(Constants.FROM_ACTIVITY, Constants.PICK_IMAGE);
+            intent.putExtra(Constants.IMAGE_URI, selectedImage.toString());
+            intent.putExtra(Constants.IMAGE_SEGMENTATION, Constants.YES);
             startActivity(intent);
 
         } else if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
